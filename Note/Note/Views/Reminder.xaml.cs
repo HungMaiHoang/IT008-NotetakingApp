@@ -1,5 +1,4 @@
-﻿using Note.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Note
+namespace Note.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Reminder.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Reminder : UserControl
     {
-        private MainViewModel mainViewModel;
-        public MainWindow()
+        public Reminder()
         {
             InitializeComponent();
-            mainViewModel = new MainViewModel();
-            DataContext = mainViewModel;
         }
     }
 }
