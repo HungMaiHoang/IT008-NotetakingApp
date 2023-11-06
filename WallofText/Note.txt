@@ -1,0 +1,47 @@
+Take Note
+Ý tưởng: Keep, Notion, Evernote
+
+
+1. Màn hình đăng nhập
+- User Name
+- Password:
+	. Password ẩn
+	. Button hiện password
+- Button đăng nhập
+2. Main Screen
+- Menu chức năng:
+	. Ẩn/hiện tab
+	. Cài đặt
+	. Đổi bố cục note (View option)
+	. Các tab...
+	. 
+- Tab Note: chứa các note
+	. Pinned
+	. Notes
+- Tab Notebook: chứa các notebook, trong các notebook là các note/remider con
+	. notebook1:
+		. Pinned
+		. Notes
+- Tab Reminder
+- Tab Task
+- Tab Thùng rác: các note đã bị xóa
+
+3. Note 
+- Nhúng ảnh
+- Nhúng link
+- Font chữ
+- Bold, Italic, Underline, Strikethrough
+- Text Color
+- Basic Markdown Syntax
+- Text Alignment (căn lề)
+- Draw panel
+
+- Check Box
+- Table
+- Toogle list
+- Divider
+- Emoji
+- Equation
+
+4. Reminder
+5. Task
