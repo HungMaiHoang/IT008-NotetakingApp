@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Note
+namespace Note.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for miniNote.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class miniNote : UserControl
     {
-        public MainWindow()
+        public miniNote()
         {
             InitializeComponent();
         }
-
     }
 }

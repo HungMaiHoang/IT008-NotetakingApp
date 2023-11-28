@@ -4,9 +4,278 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Note"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:Note.ViewModel"
+        xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent">
+
+    <Window.DataContext>
+        <vm:NavigationVM/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="ButtonEX">
+            <Setter Property="Width" Value="263"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="#008080"></Setter>
+            <Setter Property="BorderBrush" Value="#008080"></Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="Buttonmini">
+            <Setter Property="Width" Value="263"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="#008080"></Setter>
+            <Setter Property="BorderBrush" Value="#008080"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=" 255"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+
+        </Grid.ColumnDefinitions>
+        <Grid Background="#008080" Grid.Column="0">
+            <Grid Height="30" Width="255" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
+                <Menu:Btn  Command="{Binding HomeCommand}"
+             IsChecked="True"
+          
+    Style="{StaticResource MaterialDesignFlatButton}" Height="33" Width="140">
+                    <Grid Height="30" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock  Text="Leaves"
+                                    FontSize="26"
+                                    FontFamily="Lucida HandWriting"
+                                    Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                </Menu:Btn>
+            </Grid>
+
+
+            <Grid Height="32" Width="255" VerticalAlignment="Top" Margin="0,90,0,0">
+                <Canvas Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Images/Leaves.png"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Canvas>
+                <Grid Width="150" Height=" 30">
+                    <TextBlock
+                               Text="Mai Hung" 
+                               Foreground="#FFFFFF " 
+                               FontSize="16" 
+                               FontFamily="Source Sans Pro" 
+                               FontWeight="SemiBold"
+                               Padding="7"
+                    ></TextBlock>
+                </Grid>
+                <Button
+                          BorderBrush="#008080"
+                        Background="#008080" 
+                        Width=" 25" Height="25"
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,25,0"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniButton" Cursor="Hand"
+                        >
+
+
+                    <materialDesign:PackIcon Kind="CogOutline"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                </Button>
+            </Grid>
+            <Button Width="200 " Height=" 35" VerticalAlignment="Top"
+                    Margin="0,150,0,0" Background="#40A0A0" BorderBrush="#2e9797"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4">
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Style="{StaticResource Image_Style}" Source="Images/ic24-search.png"/>
+                    <TextBlock Style="{StaticResource Text_Style}" Text="Search"/>
+                </Grid>
+
+            </Button>
+            <Button Width="200 " Height=" 35" VerticalAlignment="Top"
+        Margin="0,200,0,0" Background="#40A0A0" BorderBrush="#2e9797" 
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4">
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Style="{StaticResource Image_Style}" Source="Images/ic24-add.png"/>
+                    <TextBlock Style="{StaticResource Text_Style}"
+                               Text="New Note"/>
+                </Grid>
+            </Button>
+            <StackPanel 
+                Height="120" Width="255" HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,250,0,0">
+                <Menu:Btn  Command="{Binding NotesCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}"  Height="40" Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image  Style="{StaticResource Image_Style}" Source="Images/ic24-notes.png"/>
+                        <TextBlock  
+                               Text="Notes"  
+                               Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                </Menu:Btn>
+                <Menu:Btn
+                    Command="{Binding RemindersCommand}"
+                  
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="Images/bell.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock Style="{StaticResource Text_Style}"
+                                   Text="Reminders"/>
+                    </Grid>
+                </Menu:Btn>
+                <Menu:Btn 
+                    Command="{Binding TasksCommand}"
+                
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255" >
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="Images/checkmark-round.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock Style="{StaticResource Text_Style}"
+                                   Text="Tasks"/>
+                    </Grid>
+                </Menu:Btn>
+
+            </StackPanel>
+
+
+            <Grid Height="200" Width="255" Margin="0,380,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                      Background="#008080"
+                    >
+                <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <Expander HorizontalAlignment="Stretch" Header="Folders" Background=" #008080"
+                                    FontSize="18" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold" >
+
+                            <StackPanel
+                                Margin="24,8,24,16" 
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                <Button  Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                            </StackPanel>
+
+                        </Expander>
+                        <Border Style="{StaticResource HorizontalDividerBorder}" />
+                        <Expander
+                                HorizontalAlignment="Stretch"
+                                Header="Tags"
+                                Background=" #008080"
+                                FontSize="18" 
+                                Foreground="#FFFFFF" 
+                                FontFamily="Source Sans Pro" 
+                                FontWeight="SemiBold">
+                            <StackPanel
+                                 Margin="24,8,24,16"
+                                 Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                <TextBlock
+                                    Text="Your Content" />
+
+                            </StackPanel>
+                        </Expander>
+                        <Border Style="{StaticResource HorizontalDividerBorder}" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="125" Width="255">
+                <TextBlock VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Text=" More"
+                           Margin="10,5,0,0"
+                           FontSize="14"
+                           FontWeight="Thin"
+                           Style="{StaticResource Text_Style}"></TextBlock>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Width="255"
+                            Height="100">
+                    <Menu:Btn
+    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Height="20" Width="20" Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
+                   Text="Trash"/>
+                        </Grid>
+                    </Menu:Btn>
+                    <Menu:Btn
+Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Height="20" Width="20" Source="Images/archived.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
+               Text="Archived Notes"/>
+                        </Grid>
+                    </Menu:Btn>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Background="#FEF8E2" Grid.Column="1">
+            <ContentControl Content="{Binding CurrentView}">
+            </ContentControl>
+        </Grid>
     </Grid>
 </Window>
