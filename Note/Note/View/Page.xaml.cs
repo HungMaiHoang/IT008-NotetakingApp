@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Note.Views
+namespace Note.View
 {
     /// <summary>
-    /// Interaction logic for Note.xaml
+    /// Interaction logic for Page.xaml
     /// </summary>
-    public partial class Note : UserControl
+    public partial class Page : UserControl
     {
-        public Note()
+        public Page()
         {
             InitializeComponent();
         }

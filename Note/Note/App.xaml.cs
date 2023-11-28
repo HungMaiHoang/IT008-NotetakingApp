@@ -1,5 +1,4 @@
-﻿using Note.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,7 +12,6 @@ namespace Note
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {        
-        
+    {
     }
 }

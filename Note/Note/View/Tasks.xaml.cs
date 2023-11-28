@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Note.Views
+namespace Note.View
 {
     /// <summary>
-    /// Interaction logic for Reminder.xaml
+    /// Interaction logic for Tasks.xaml
     /// </summary>
-    public partial class Reminder : UserControl
+    public partial class Tasks : UserControl
     {
-        public Reminder()
+        public Tasks()
         {
             InitializeComponent();
         }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Note.Model;
 
-namespace Note.ViewModels
+namespace Note.ViewModel
 {
-    internal class BaseViewModel
+    internal class HomeVM 
     {
+        
     }
 }

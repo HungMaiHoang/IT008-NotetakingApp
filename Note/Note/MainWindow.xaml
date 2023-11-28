@@ -3,246 +3,279 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:ViewModels="clr-namespace:Note.ViewModels"
-        xmlns:Views="clr-namespace:Note.Views"
+        xmlns:local="clr-namespace:Note"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:Note.ViewModel"
+        xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
-        
-        ui:WindowHelper.UseModernWindowStyle="False"
-        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="MainWindow" Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent">
+
+    <Window.DataContext>
+        <vm:NavigationVM/>
+    </Window.DataContext>
+
     <Window.Resources>
-        <Style x:Key="RoundCorner" TargetType="{x:Type Button}">
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid x:Name="grid">
-                            <Border x:Name="border" CornerRadius="90" BorderThickness="0" Background="{TemplateBinding Background}">
-                                <!--<Border.Background>
-                                    <SolidColorBrush Color="White"/>
-                                </Border.Background>-->
-                                <ContentPresenter HorizontalAlignment="Center"
-                                          VerticalAlignment="Center">
-                                </ContentPresenter>
-                            </Border>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Border.Background" TargetName="border" Value="Aqua"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Border.Background" TargetName="border" Value="#FFBDBDB9"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" TargetName="grid" Value="0.25"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style TargetType="Button" x:Key="ButtonEX">
+            <Setter Property="Width" Value="263"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="#008080"></Setter>
+            <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>
-        <Style x:Key="TabControlStyle1" TargetType="{x:Type TabControl}">
-            <Setter Property="TabStripPlacement" Value="Left" />
-            <Setter Property="Margin" Value="0" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Background" Value="White" />
-            <Setter Property="Height" Value="355"/>
-            <Setter Property="Width" Value="798"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Name="ColumnDefinition0" />
-                                <ColumnDefinition Width="0" Name="ColumnDefinition1" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" Name="RowDefinition0" />
-                                <RowDefinition Height="*" Name="RowDefinition1" />
-                            </Grid.RowDefinitions>
 
-                            <Border x:Name="HeaderBorder" 
-                                    BorderBrush="Black" 
-                                    BorderThickness="0" 
-                                    CornerRadius="0" 
-                                    Background="White"
-                                    Margin="0,0,0,0">
-                                <TabPanel IsItemsHost="True"
-                                          Name="HeaderPanel" 
-                                          Panel.ZIndex="1" 
-                                          KeyboardNavigation.TabIndex="1"
-                                          Grid.Column="0" 
-                                          Grid.Row="0" />
-                            </Border>
-
-                            <Grid Name="ContentPanel" 
-                                  KeyboardNavigation.TabIndex="2" 
-                                  KeyboardNavigation.TabNavigation="Local" 
-                                  KeyboardNavigation.DirectionalNavigation="Contained" 
-                                  Grid.Column="0" 
-                                  Grid.Row="1">
-                                <Border Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}" 
-                                        BorderThickness="0"
-                                        CornerRadius="5">
-                                    <ContentPresenter Content="{TemplateBinding SelectedContent}" 
-                                                      ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
-                                                      ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" 
-                                                      ContentSource="SelectedContent" 
-                                                      Name="PART_SelectedContentHost" 
-                                                      Margin="0" 
-                                                      SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
-                                </Border>
-                            </Grid>
-                        </Grid>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="TabControl.TabStripPlacement" Value="Bottom">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="1" />
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
-                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="Auto" />
-                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="0,0,0,0" />
-                            </Trigger>
-                            <Trigger Property="TabControl.TabStripPlacement" Value="Left">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="0" />
-                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="1" />
-                                <Setter TargetName="ColumnDefinition0" Property="ColumnDefinition.Width" Value="Auto" />
-                                <Setter TargetName="ColumnDefinition1" Property="ColumnDefinition.Width" Value="*" />
-                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
-                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="0" />
-                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="0,0,0,0" />
-                            </Trigger>
-                            <Trigger Property="TabControl.TabStripPlacement" Value="Right">
-                                <Setter TargetName="HeaderPanel" Property="Grid.Row" Value="0" />
-                                <Setter TargetName="ContentPanel" Property="Grid.Row" Value="0" />
-                                <Setter TargetName="HeaderPanel" Property="Grid.Column" Value="1" />
-                                <Setter TargetName="ContentPanel" Property="Grid.Column" Value="0" />
-                                <Setter TargetName="ColumnDefinition0" Property="ColumnDefinition.Width" Value="*" />
-                                <Setter TargetName="ColumnDefinition1" Property="ColumnDefinition.Width" Value="Auto" />
-                                <Setter TargetName="RowDefinition0" Property="RowDefinition.Height" Value="*" />
-                                <Setter TargetName="RowDefinition1" Property="RowDefinition.Height" Value="0" />
-                                <Setter TargetName="HeaderBorder" Property="FrameworkElement.Margin" Value="0,0,0,0" />
-                            </Trigger>
-                            <Trigger Property="UIElement.IsEnabled" Value="False">
-                                <Setter Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
-            <Setter Property="Width" Value="133"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Image Name="img" Height="30" Width="30" Source="{Binding IconSource}" />
-                            <TextBlock Text="{Binding Name}" Margin="2,0,0,0" VerticalAlignment="Center" />
-                        </StackPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Border x:Name="PART_Border" BorderThickness="0" Margin="0" CornerRadius="0,20,20,0">
-                            <Border.Background>
-                                <SolidColorBrush Color="White"/>
-                            </Border.Background>
-                            <ContentPresenter ContentSource="Header" Margin="2" 
-                                              VerticalAlignment="Center"  
-                                              HorizontalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="PART_Border" Property="Border.Background" Value="#FFE9F19A" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True" SourceName="PART_Border">
-                                <Setter TargetName="PART_Border" Property="Border.Background" Value="#FFBDBDB9" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Color x:Key="detailMark">#FFA1A9B3</Color>
-        <SolidColorBrush x:Key="detailMarkBrush" Color="{StaticResource ResourceKey=detailMark}" />
-        <Style x:Key="flatTextBox" TargetType="{x:Type TextBox}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBox}">
-                        <Grid>
-                            <Rectangle  Stroke="{StaticResource ResourceKey=detailMarkBrush}" StrokeThickness="1"/>
-                            <TextBox Margin="1" Text="{TemplateBinding Text}" BorderThickness="0"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style TargetType="Button" x:Key="Buttonmini">
+            <Setter Property="Width" Value="263"></Setter>
+            <Setter Property="Height" Value="40"></Setter>
+            <Setter Property="FontSize" Value="18"></Setter>
+            <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
+            <Setter Property="FontWeight" Value="SemiBold"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Background" Value="#008080"></Setter>
+            <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <TextBox x:Name="SearchTextBox"
-                 HorizontalAlignment="Center" 
-                 Height="40" 
-                 Margin="0,20,0,0" 
-                 TextWrapping="Wrap"                  
-                 VerticalAlignment="Top" 
-                 Width="470"
-                 SelectionBrush="#FF2473AF" 
-                 Background="#FFBDBDB9" 
-                 BorderBrush="Black"
-                 Foreground="Black">
-        </TextBox>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=" 255"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+
+        </Grid.ColumnDefinitions>
+        <Grid Background="#008080" Grid.Column="0">
+            <Grid Height="30" Width="255" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
+                <Menu:Btn  Command="{Binding HomeCommand}"
+             IsChecked="True"
+          
+    Style="{StaticResource MaterialDesignFlatButton}" Height="33" Width="140">
+                    <Grid Height="30" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock  Text="Leaves"
+                                    FontSize="26"
+                                    FontFamily="Lucida HandWriting"
+                                    Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                </Menu:Btn>
+            </Grid>
+
+
+            <Grid Height="32" Width="255" VerticalAlignment="Top" Margin="0,90,0,0">
+                <Canvas Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="Images/Leaves.png"></ImageBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Canvas>
+                <Grid Width="150" Height=" 30">
+                    <TextBlock
+                               Text="Mai Hung" 
+                               Foreground="#FFFFFF " 
+                               FontSize="16" 
+                               FontFamily="Source Sans Pro" 
+                               FontWeight="SemiBold"
+                               Padding="7"
+                    ></TextBlock>
+                </Grid>
+                <Button
+                          BorderBrush="#008080"
+                        Background="#008080" 
+                        Width=" 25" Height="25"
+                        HorizontalAlignment="Right" 
+                        Margin="0,0,25,0"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniButton" Cursor="Hand"
+                        >
+
+
+                    <materialDesign:PackIcon Kind="CogOutline"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                </Button>
+            </Grid>
+            <Button Width="200 " Height=" 35" VerticalAlignment="Top"
+                    Margin="0,150,0,0" Background="#40A0A0" BorderBrush="#2e9797"
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4">
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Style="{StaticResource Image_Style}" Source="Images/ic24-search.png"/>
+                    <TextBlock Style="{StaticResource Text_Style}" Text="Search"/>
+                </Grid>
+
+            </Button>
+            <Button Width="200 " Height=" 35" VerticalAlignment="Top"
+        Margin="0,200,0,0" Background="#40A0A0" BorderBrush="#2e9797" 
+                    Style="{DynamicResource MaterialDesignFlatButton}">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="4">
+                        </Setter>
+                    </Style>
+                </Button.Resources>
+                <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image Style="{StaticResource Image_Style}" Source="Images/ic24-add.png"/>
+                    <TextBlock Style="{StaticResource Text_Style}"
+                               Text="New Note"/>
+                </Grid>
+            </Button>
+            <StackPanel 
+                Height="120" Width="255" HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Margin="0,250,0,0">
+                <Menu:Btn  Command="{Binding NotesCommand}"
+                    Style="{StaticResource MaterialDesignFlatButton}"  Height="40" Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image  Style="{StaticResource Image_Style}" Source="Images/ic24-notes.png"/>
+                        <TextBlock  
+                               Text="Notes"  
+                               Style="{StaticResource Text_Style}"/>
+                    </Grid>
+                </Menu:Btn>
+                <Menu:Btn
+                    Command="{Binding RemindersCommand}"
+                  
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="Images/bell.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock Style="{StaticResource Text_Style}"
+                                   Text="Reminders"/>
+                    </Grid>
+                </Menu:Btn>
+                <Menu:Btn 
+                    Command="{Binding TasksCommand}"
                 
-        <TextBlock IsHitTestVisible="False" 
-                   Text="Search..."
-                   FontWeight="Bold"
-                   VerticalAlignment="Top" 
-                   HorizontalAlignment="Center" 
-                   TextAlignment="Left"                   
-                   Margin="0,30,330,0" 
-                   Foreground="DarkGray"
-                   Width="100"
-                   Height="30">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
-        <Button Style="{DynamicResource RoundCorner}"
-                Height="40" 
-                Margin="700,20,0,0" 
-                VerticalAlignment="Top" 
-                Width="40"
-                Background="White">
-            <Image Source="Images/setting.png" Width="20" Height="20"/>
-        </Button>
-        <TabControl x:Name="OuterTabControl" Style="{DynamicResource TabControlStyle1}" ItemsSource="{Binding ViewDetail}" SelectedIndex="0" HorizontalAlignment="Center" Height="355" Width="798" Margin="0,79,0,0">
-            <TabControl.Resources>
-                <DataTemplate DataType="{x:Type ViewModels:NoteViewModel}">
-                    <Views:Note/>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type ViewModels:ReminderViewModel}">
-                    <Views:Reminder/>
-                </DataTemplate>
-                <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource TabItemStyle1}"/>
-            </TabControl.Resources>
-        </TabControl>
+                    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255" >
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Source="Images/checkmark-round.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock Style="{StaticResource Text_Style}"
+                                   Text="Tasks"/>
+                    </Grid>
+                </Menu:Btn>
+
+            </StackPanel>
+
+
+            <Grid Height="200" Width="255" Margin="0,380,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                      Background="#008080"
+                    >
+                <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}"
+                              VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+
+                        <Expander HorizontalAlignment="Stretch" Header="Folders" Background=" #008080"
+                                    FontSize="18" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold" >
+
+                            <StackPanel
+                                Margin="24,8,24,16" 
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                <Button  Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                                <Button Style="{DynamicResource  MaterialDesignFlatButton}"
+                                    HorizontalAlignment="Stretch" Background=" #008080"
+                                    FontSize="16" 
+                                    Foreground="#FFFFFF" 
+                                    FontFamily="Source Sans Pro" 
+                                    FontWeight="SemiBold"
+                                    BorderBrush="#008080"
+                                    Content="Note"
+                                />
+                            </StackPanel>
+
+                        </Expander>
+                        <Border Style="{StaticResource HorizontalDividerBorder}" />
+                        <Expander
+                                HorizontalAlignment="Stretch"
+                                Header="Tags"
+                                Background=" #008080"
+                                FontSize="18" 
+                                Foreground="#FFFFFF" 
+                                FontFamily="Source Sans Pro" 
+                                FontWeight="SemiBold">
+                            <StackPanel
+                                 Margin="24,8,24,16"
+                                 Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}">
+                                <TextBlock
+                                    Text="Your Content" />
+
+                            </StackPanel>
+                        </Expander>
+                        <Border Style="{StaticResource HorizontalDividerBorder}" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="125" Width="255">
+                <TextBlock VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Text=" More"
+                           Margin="10,5,0,0"
+                           FontSize="14"
+                           FontWeight="Thin"
+                           Style="{StaticResource Text_Style}"></TextBlock>
+                <StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            Width="255"
+                            Height="100">
+                    <Menu:Btn
+    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Height="20" Width="20" Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
+                   Text="Trash"/>
+                        </Grid>
+                    </Menu:Btn>
+                    <Menu:Btn
+Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Height="20" Width="20" Source="Images/archived.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
+               Text="Archived Notes"/>
+                        </Grid>
+                    </Menu:Btn>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Background="#FEF8E2" Grid.Column="1">
+            <ContentControl Content="{Binding CurrentView}">
+            </ContentControl>
+        </Grid>
     </Grid>
 </Window>
