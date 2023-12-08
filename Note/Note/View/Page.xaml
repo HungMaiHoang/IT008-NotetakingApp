@@ -95,11 +95,11 @@
                                 </StackPanel>
                             </ListBox.ToolTip>
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatBold}" />
+        Content="{materialDesign:PackIcon Kind=FormatBold}" MouseLeftButtonDown="BoldButton" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatItalic}" />
+        Content="{materialDesign:PackIcon Kind=FormatItalic}" MouseLeftButtonDown="ItalicButton" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatUnderline}" />
+        Content="{materialDesign:PackIcon Kind=FormatUnderline}" MouseLeftButtonDown="UnderLineButton" />
                         </ListBox>
                         <Separator />
                         <Label
@@ -124,5 +124,12 @@
                 </ToolBarTray>
             </Grid>
         </Grid>
+        <RichTextBox x:Name="TextBox" Grid.Row="1">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>

@@ -24,5 +24,70 @@ namespace Note.View
         {
             InitializeComponent();
         }
+
+        private void BoldButton(object sender, MouseButtonEventArgs e)
+        {
+            TextPointer selectionStart = TextBox.Selection.Start;
+            TextPointer selectionEnd = TextBox.Selection.End;
+            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
+            object IsBold = selectedTextRange.GetPropertyValue(TextElement.FontWeightProperty);
+            if (!IsBold.Equals(FontWeights.Bold))
+            {
+                ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Bold, selectionStart, selectionEnd);
+            }
+            else
+            {
+                ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Normal, selectionStart, selectionEnd);
+            }
+        }
+        private void ItalicButton(object sender, MouseButtonEventArgs e)
+        {
+            TextPointer selectionStart = TextBox.Selection.Start;
+            TextPointer selectionEnd = TextBox.Selection.End;
+            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
+            object IsBold = selectedTextRange.GetPropertyValue(TextElement.FontStyleProperty);
+            if (!IsBold.Equals(FontStyles.Italic))
+            {
+                ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Italic, selectionStart, selectionEnd);
+            }
+            else
+            {
+                ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Normal, selectionStart, selectionEnd);
+            }
+        }
+        private void UnderLineButton(object sender, MouseButtonEventArgs e)
+        {
+            TextPointer selectionStart = TextBox.Selection.Start;
+            TextPointer selectionEnd = TextBox.Selection.End;
+            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
+            object IsUnderline = selectedTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
+            if (!IsUnderline.Equals(TextDecorations.Underline))
+            {
+                ApplyFormattingText(Inline.TextDecorationsProperty, TextDecorations.Underline, selectionStart, selectionEnd);
+            }
+            else
+            {
+                ApplyFormattingText(Inline.TextDecorationsProperty, null, selectionStart, selectionEnd);
+            }
+        }
+        private void ApplyFormattingText(DependencyProperty property, object value, TextPointer selectionStart, TextPointer selectionEnd)
+        {
+            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
+            if (!selectedTextRange.IsEmpty)
+            {
+                TextBox.Focus();
+                selectedTextRange.ApplyPropertyValue(property, value);
+                selectedTextRange.Select(selectionStart, selectionEnd);
+            }
+        }
+        private void SetParagraphAlignment(TextAlignment alignment)
+        {
+            Paragraph paragraph = TextBox.Document.Blocks.FirstBlock as Paragraph;
+            if (paragraph != null)
+            {
+                TextBox.Focus();
+                paragraph.TextAlignment = alignment;
+            }
+        }
     }
 }
