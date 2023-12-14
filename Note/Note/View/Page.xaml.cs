@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -80,14 +81,25 @@ namespace Note.View
                 selectedTextRange.Select(selectionStart, selectionEnd);
             }
         }
-        private void SetParagraphAlignment(TextAlignment alignment)
+        //private void SetParagraphAlignment(TextAlignment alignment)
+        //{
+        //    Paragraph paragraph = TextBox.Document.Blocks.FirstBlock as Paragraph;
+        //    if (paragraph != null)
+        //    {
+        //        TextBox.Focus();
+        //        paragraph.TextAlignment = alignment;
+        //    }
+        //}
+
+        private void SaveButton(object sender, RoutedEventArgs e)
         {
-            Paragraph paragraph = TextBox.Document.Blocks.FirstBlock as Paragraph;
-            if (paragraph != null)
-            {
-                TextBox.Focus();
-                paragraph.TextAlignment = alignment;
-            }
+            string relativePath = "Note/Test.rtf";
+            string fullPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+            TextRange range;
+            FileStream stream;
+            range = new TextRange(TextBox.Document.ContentStart, TextBox.Document.ContentEnd);
+            stream = new FileStream(fullPath, FileMode.OpenOrCreate);
+            range.Save(stream, System.Windows.DataFormats.Rtf);
         }
     }
 }

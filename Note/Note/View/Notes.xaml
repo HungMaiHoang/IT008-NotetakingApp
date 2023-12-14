@@ -47,7 +47,7 @@
               VerticalScrollBarVisibility="Hidden">
                     <WrapPanel ItemWidth="300"
                     Height="550" >
-                        <view:miniNote Padding="10,10"></view:miniNote >
+                        <view:miniNote Padding="10,10" ></view:miniNote >
 
                         <view:miniNote Padding="10,10"></view:miniNote>
 
