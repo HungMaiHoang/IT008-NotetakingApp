@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.Utilities;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -98,8 +99,11 @@ namespace Note.View
             TextRange range;
             FileStream stream;
             range = new TextRange(TextBox.Document.ContentStart, TextBox.Document.ContentEnd);
-            stream = new FileStream(fullPath, FileMode.OpenOrCreate);
-            range.Save(stream, System.Windows.DataFormats.Rtf);
+            //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
+            //range.Save(stream, System.Windows.DataFormats.Rtf);
+
+            Data_Access da = new Data_Access();
+            da.SaveNote("test.rtf", range);
         }
     }
 }

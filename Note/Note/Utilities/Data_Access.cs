@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Driver.GridFS;
+using System.Windows.Documents;
+using System.IO;
+using System.Windows;
 
 namespace Note.Utilities
 {
@@ -39,6 +43,24 @@ namespace Note.Utilities
         {
             var notesCollection = ConnectToMongo<Note_Model>(NoteCollection);
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
+        }
+
+        public async void SaveNote(string filename ,TextRange rtfContent)
+        {
+            var client = new MongoClient(ConnectionString);
+            var db = client.GetDatabase(DatabaseName);
+            var gridFSBucket = new GridFSBucket(db);
+
+            using (var rtfMemoryStream = new MemoryStream())
+            {
+                rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
+                rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+
+                var fileId = await Task.Run(() =>
+                {
+                    return gridFSBucket.UploadFromStream(filename, rtfMemoryStream);
+                });
+            }
         }
     }
 }
