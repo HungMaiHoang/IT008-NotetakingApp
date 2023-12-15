@@ -1,17 +1,14 @@
 ﻿using MongoDB.Driver;
-using MongoDB.Driver.Core.Events;
 using Note.Model;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Note.Utilities
 {
-    internal class DataAccess
+    internal class Data_Access
     {
         private const string ConnectionString = "mongodb://localhost:27017";
         private const string DatabaseName = "Note_taking";
@@ -24,25 +21,24 @@ namespace Note.Utilities
             return db.GetCollection<T>(collection);
         }
 
-        public async Task<List<NoteModel>> GetAllNotes()
+        public async Task<List<Note_Model>> GetAllNotes()
         {
-            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            var notesCollection = ConnectToMongo<Note_Model>(NoteCollection);
             var results = await notesCollection.FindAsync(_ => true);
             return results.ToList();
         }
 
-        public Task CreateNote(NoteModel note)
+        public Task CreateNote(Note_Model note)
         {
-            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-            var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
+            var notesCollection = ConnectToMongo<Note_Model>(NoteCollection);
+            var filter = Builders<Note_Model>.Filter.Eq("Id", note.Id);
             return notesCollection.ReplaceOneAsync(filter, note, new ReplaceOptions { IsUpsert = true });
         }
 
-        public Task DeleteNote(NoteModel note)
+        public Task DeleteNote(Note_Model note)
         {
-            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            var notesCollection = ConnectToMongo<Note_Model>(NoteCollection);
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
         }
     }
-
 }

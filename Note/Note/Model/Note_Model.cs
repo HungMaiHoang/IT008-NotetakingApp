@@ -1,15 +1,14 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace Note.Model
 {
-    internal class NoteModel
+    internal class Note_Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
