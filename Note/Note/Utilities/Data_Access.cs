@@ -9,6 +9,8 @@ using MongoDB.Driver.GridFS;
 using System.Windows.Documents;
 using System.IO;
 using System.Windows;
+using MongoDB.Bson;
+using System.Windows.Controls;
 
 namespace Note.Utilities
 {
@@ -45,6 +47,8 @@ namespace Note.Utilities
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
         }
 
+        ObjectId myId;
+
         public async void SaveNote(string filename ,TextRange rtfContent)
         {
             var client = new MongoClient(ConnectionString);
@@ -60,7 +64,25 @@ namespace Note.Utilities
                 {
                     return gridFSBucket.UploadFromStream(filename, rtfMemoryStream);
                 });
+
+                myId = fileId;
             }
+        }
+
+        public async void LoadNote(ObjectId fileId, RichTextBox rtb)
+        {
+            fileId = myId;
+
+            var client = new MongoClient(ConnectionString);
+            var db = client.GetDatabase(DatabaseName);
+            var gridFSBucket = new GridFSBucket(db);
+
+            var rtfMemoryStream = new MemoryStream();
+            await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
+
+            rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+            var rtfRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            rtfRange.Load(rtfMemoryStream, DataFormats.Rtf);
         }
     }
 }

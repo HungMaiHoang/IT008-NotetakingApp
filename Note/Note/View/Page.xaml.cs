@@ -1,4 +1,5 @@
-﻿using Note.Utilities;
+﻿using MongoDB.Bson;
+using Note.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -92,6 +93,8 @@ namespace Note.View
         //    }
         //}
 
+        Data_Access da = new Data_Access();
+
         private void SaveButton(object sender, RoutedEventArgs e)
         {
             string relativePath = "Note/Test.rtf";
@@ -101,9 +104,13 @@ namespace Note.View
             range = new TextRange(TextBox.Document.ContentStart, TextBox.Document.ContentEnd);
             //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
             //range.Save(stream, System.Windows.DataFormats.Rtf);
-
-            Data_Access da = new Data_Access();
+            
             da.SaveNote("test.rtf", range);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            da.LoadNote(new ObjectId(), TextBox);
         }
     }
 }
