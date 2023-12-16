@@ -5,15 +5,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Note.Utilities;
+using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace Note.Model
 {
-    internal class NoteModel
+    internal class NoteModel : ViewModelBase
     {
+        
+        private ObjectId id;
+        private string title;
+        private DateTime lastEdited;        
+        private string headLine;
+        private ObjectId fileId;
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string FileId { get; set; }
+        public ObjectId Id { get => id; set { id = value; OnPropertyChanged(nameof(Id)); } }
+
+        [BsonElement("Title")]
+        public string Title { get => title; set { title = value; OnPropertyChanged(nameof(Title)); } }
+        [BsonElement("Last Edited")]
+        public DateTime LastEdited { get => lastEdited; set { lastEdited = value; OnPropertyChanged(nameof(LastEdited)); } }
+        [BsonElement("Head Line")]
+        public string HeadLine { get => headLine; set { headLine = value; OnPropertyChanged(nameof(HeadLine)); } }
+        [BsonElement("File Id")]
+        public ObjectId FileId { get => fileId; set { fileId = value; OnPropertyChanged(nameof(FileId)); } }
+        public NoteModel()
+        {
+            Title = "Title";
+            LastEdited = DateTime.UtcNow.Date;
+            HeadLine = "";
+
+            RichTextBox rtb = new RichTextBox();
+            TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            AsyncMethod(rtfContent);
+
+            //FileId = DataAccess.Instance.createdNoteId;
+        }
+        public async void AsyncMethod(TextRange rtfContent)
+        {
+            await Task.Run(async () =>
+            {
+                FileId = await DataAccess.Instance.CreateRTFNote(rtfContent);
+            });
+        }
     }
 }

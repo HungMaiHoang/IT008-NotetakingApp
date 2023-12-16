@@ -11,30 +11,67 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows;
+using System.Security.Permissions;
+using Note.ViewModel;
 
 namespace Note.Utilities
 {
     internal class DataAccess
     {
+        // Singleton
+        private static DataAccess _instance;
+        public static DataAccess Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new DataAccess();
+                }
+                return _instance;
+            }
+        }
+
         private const string ConnectionString = "mongodb://localhost:27017";
         private const string DatabaseName = "Note_taking";
         private const string NoteCollection = "Notes";
+        private const string rtfDocumentName = "document.rtf";
+
+        private MongoClient client;
+        private IMongoDatabase database;
+        public DataAccess()
+        {
+            client = new MongoClient(ConnectionString);
+            database = client.GetDatabase(DatabaseName);
+        }
 
         private IMongoCollection<T> ConnectToMongo<T>(in string collection)
         {
-            var client = new MongoClient(ConnectionString);
-            var db = client.GetDatabase(DatabaseName);
-            return db.GetCollection<T>(collection);
+            return database.GetCollection<T>(collection);
         }
 
-        public async Task<List<NoteModel>> GetAllNotes()
+        public List<NoteModel> GetAllNotes()
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var results = notesCollection.Find(_ => true);
+                return results.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public Task InsertNote(NoteModel note)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-            var results = await notesCollection.FindAsync(_ => true);
-            return results.ToList();
+            return notesCollection.InsertOneAsync(note);
         }
 
-        public Task CreateNote(NoteModel note)
+        public Task UpdateNote(NoteModel note)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
@@ -47,42 +84,69 @@ namespace Note.Utilities
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
         }
 
-        ObjectId myId;
+        public ObjectId createdNoteId;
 
-        public async void SaveNote(string filename, TextRange rtfContent)
+        /// <summary>
+        /// Create new rtf file in database
+        /// </summary>
+        /// <param name="rtfContent"></param>
+        public async Task<ObjectId> CreateRTFNote(TextRange rtfContent)
         {
-            var client = new MongoClient(ConnectionString);
-            var db = client.GetDatabase(DatabaseName);
-            var gridFSBucket = new GridFSBucket(db);
+            
+            var gridFSBucket = new GridFSBucket(database);
 
             using (var rtfMemoryStream = new MemoryStream())
             {
                 rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
                 rtfMemoryStream.Seek(0, SeekOrigin.Begin);
 
+                // GridFs update operation
                 var fileId = await Task.Run(() =>
                 {
-                    return gridFSBucket.UploadFromStream(filename, rtfMemoryStream);
+                    return gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
                 });
-
-                myId = fileId;
+                return fileId;
             }
         }
 
-        public async void LoadNote(ObjectId fileId, RichTextBox rtb)
+        /// <summary>
+        /// Save rtf file with Id in database
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="rtfContent"></param>
+        public async void SaveRTFNote(ObjectId fileId, TextRange rtfContent)
         {
-            fileId = myId;
+            var gridFSBucket = new GridFSBucket(database);
 
-            var client = new MongoClient(ConnectionString);
-            var db = client.GetDatabase(DatabaseName);
-            var gridFSBucket = new GridFSBucket(db);
+            using (var rtfMemoryStream = new MemoryStream())
+            {
+                rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
+                rtfMemoryStream.Seek(0, SeekOrigin.Begin);
 
+                // GridFS update operation
+                await Task.Run(() =>
+                {
+                    gridFSBucket.UploadFromStream(fileId, rtfDocumentName, rtfMemoryStream);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Load rtf file with Id
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <param name="rtfContent"></param>
+        public async void LoadRTFNote(ObjectId fileId, TextRange rtfContent)
+        {
+            var gridFSBucket = new GridFSBucket(database);
+
+            // GridFS download operation
             var rtfMemoryStream = new MemoryStream();
             await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
 
+            // Set RTF Content
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-            var rtfRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-            rtfRange.Load(rtfMemoryStream, DataFormats.Rtf);
+            rtfContent.Load(rtfMemoryStream, DataFormats.Rtf);
         }
     }
 }

@@ -105,7 +105,7 @@ namespace Note.View
             //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
             //range.Save(stream, System.Windows.DataFormats.Rtf);
             
-            da.SaveNote("test.rtf", range);
+            //da.CreateRTFNote(range);
         }
     }
 }

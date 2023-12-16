@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Note.Model;
+using Note.Utilities;
 namespace Note.ViewModel
 {
-    internal class PageVM
+    internal class PageVM : ViewModelBase
     {
     }
 }
