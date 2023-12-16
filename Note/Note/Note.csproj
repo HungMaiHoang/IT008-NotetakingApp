@@ -133,11 +133,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataAccess.cs" />
-    <Compile Include="Model\Note_Model.cs" />
-    <Compile Include="NoteModel.cs" />
+    <Compile Include="Model\NoteModel.cs" />
     <Compile Include="Utilities\Btn.cs" />
-    <Compile Include="Utilities\Data_Access.cs" />
+    <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />

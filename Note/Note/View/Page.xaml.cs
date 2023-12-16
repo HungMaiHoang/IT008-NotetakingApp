@@ -93,7 +93,7 @@ namespace Note.View
         //    }
         //}
 
-        Data_Access da = new Data_Access();
+        DataAccess da = new DataAccess();
 
         private void SaveButton(object sender, RoutedEventArgs e)
         {
@@ -106,11 +106,6 @@ namespace Note.View
             //range.Save(stream, System.Windows.DataFormats.Rtf);
             
             da.SaveNote("test.rtf", range);
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            da.LoadNote(new ObjectId(), TextBox);
         }
     }
 }

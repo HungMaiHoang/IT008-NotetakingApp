@@ -32,7 +32,6 @@
                            Text="Medium 20sp"
                            FontSize="32"
                            ></TextBlock>
-                <Button Click="Button_Click"/>
             </Grid>
             <Grid Grid.Row="1">
                 <ToolBarTray>

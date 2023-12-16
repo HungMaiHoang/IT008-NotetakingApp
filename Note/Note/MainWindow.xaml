@@ -23,7 +23,7 @@
             <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
             <Setter Property="FontWeight" Value="SemiBold"></Setter>
-            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter> 
             <Setter Property="Background" Value="#008080"></Setter>
             <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>

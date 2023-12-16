@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Note.Model
 {
-    internal class Note_Model
+    internal class NoteModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
