@@ -11,6 +11,8 @@ namespace Note.ViewModel
 {
     internal class MainWindowVM : ViewModelBase
     {
+        private MainWindow MyView;
+
         private ViewModelBase _currentView;
         public ViewModelBase CurrentView
         {
@@ -18,6 +20,7 @@ namespace Note.ViewModel
             set { _currentView = value; OnPropertyChanged(); }
         }
 
+        private BlankVM BlankView;
         private HomeVM HomeView;
         private NoteVM NotesView;
         private ReminderVM RemindersView;
@@ -41,18 +44,24 @@ namespace Note.ViewModel
         {
             NoteModel note = new NoteModel();
 
-
-            // Reload Note view
             DataAccess.Instance.InsertNote(note);
-            //NotesView = new NoteVM();
-            //CurrentView = NotesView;
-
 
             NotesView.ListNote.Add(note);
+
+            // Reload view
+            CurrentView = BlankView;
+            System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
+            {
+                CurrentView = NotesView;
+            });
+            
         }
 
-        public MainWindowVM()
+        public MainWindowVM(MainWindow view)
         {
+            MyView = view;
+
+            BlankView = new BlankVM();
             HomeView = new HomeVM();
             NotesView = new NoteVM();
             RemindersView = new ReminderVM();
@@ -65,7 +74,7 @@ namespace Note.ViewModel
             NewNoteCommand = new RelayCommand(NewNote);
 
             // Startup view
-            CurrentView = new HomeVM();
+            CurrentView = BlankView;
         }
     }
 }

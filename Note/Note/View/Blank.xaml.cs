@@ -1,5 +1,4 @@
-﻿using Note.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Note
+namespace Note.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Blank.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Blank : UserControl
     {
-        public MainWindow()
-        {            
+        public Blank()
+        {
             InitializeComponent();
-            DataContext = new MainWindowVM(this);
         }
     }
 }

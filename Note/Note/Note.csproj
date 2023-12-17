@@ -138,6 +138,7 @@
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
+    <Compile Include="ViewModel\BlankVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="Utilities\NavigationVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
@@ -145,6 +146,9 @@
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
+    <Compile Include="View\Blank.xaml.cs">
+      <DependentUpon>Blank.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
@@ -198,6 +202,10 @@
     <Page Include="Utilities\DataTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Blank.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Home.xaml">
       <SubType>Designer</SubType>

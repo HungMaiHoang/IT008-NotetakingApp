@@ -90,7 +90,7 @@ namespace Note.Utilities
         /// Create new rtf file in database
         /// </summary>
         /// <param name="rtfContent"></param>
-        public async Task<ObjectId> CreateRTFNote(TextRange rtfContent)
+        public ObjectId CreateRTFNote(TextRange rtfContent)
         {
             
             var gridFSBucket = new GridFSBucket(database);
@@ -101,10 +101,7 @@ namespace Note.Utilities
                 rtfMemoryStream.Seek(0, SeekOrigin.Begin);
 
                 // GridFs update operation
-                var fileId = await Task.Run(() =>
-                {
-                    return gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
-                });
+                var fileId = gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
                 return fileId;
             }
         }

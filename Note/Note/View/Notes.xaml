@@ -57,14 +57,15 @@
                                 <DataTemplate>
                                     <StackPanel>
                                         <materialDesign:Card Height="100" Width="280" UniformCornerRadius="10">
-                                            <Menu:Btn
+                                            <RadioButton
                                                 Command="{Binding PageCommand}"
-                                                IsChecked="True"
-                                                Style="{DynamicResource MaterialDesignFlatButton}" 
+                                                
+                                                Style="{DynamicResource MaterialDesignChoiceChipAccentRadioButton}" 
                                                 Background="#fff" 
                                                 Height="100" 
                                                 Width="280" 
-                                                Foreground="Black" >
+                                                Foreground="Black" 
+                                                GroupName="GroupNotes">
                                                 <Grid VerticalAlignment="Center" 
                                                   HorizontalAlignment="Center" 
                                                   Height="100" 
@@ -98,7 +99,7 @@
                                                         Style="{StaticResource MaterialDesignOverlineTextBlock}"
                                                         FontSize="14"/>
                                                 </Grid>
-                                            </Menu:Btn>
+                                            </RadioButton>
                                         </materialDesign:Card>
                                     </StackPanel>
                                 </DataTemplate>
@@ -130,7 +131,7 @@
                     <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Medium 20sp"
+                       Text="{Binding CurNote.Title}"
                        FontSize="32"
                        ></TextBlock>
                 </Grid>

@@ -40,16 +40,8 @@ namespace Note.Model
 
             RichTextBox rtb = new RichTextBox();
             TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-            AsyncMethod(rtfContent);
 
-            //FileId = DataAccess.Instance.createdNoteId;
-        }
-        public async void AsyncMethod(TextRange rtfContent)
-        {
-            await Task.Run(async () =>
-            {
-                FileId = await DataAccess.Instance.CreateRTFNote(rtfContent);
-            });
+            FileId = DataAccess.Instance.CreateRTFNote(rtfContent);
         }
     }
 }

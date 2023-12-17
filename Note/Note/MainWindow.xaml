@@ -11,11 +11,6 @@
         Title="MainWindow" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         Background="Transparent">
-
-    <Window.DataContext>
-        <vm:MainWindowVM/>
-    </Window.DataContext>
-
     <Window.Resources>
         <Style TargetType="Button" x:Key="ButtonEX">
             <Setter Property="Width" Value="263"></Setter>
@@ -285,7 +280,7 @@
             </Grid>
         </Grid>
         <Grid Background="#FEF8E2" Grid.Column="1">
-            <ContentControl Content="{Binding CurrentView}">
+            <ContentControl Name="WorkView" Content="{Binding CurrentView}">
             </ContentControl>
         </Grid>
     </Grid>
