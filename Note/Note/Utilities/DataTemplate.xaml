@@ -26,6 +26,10 @@
     <DataTemplate DataType="{x:Type vm:BlankVM}">
         <view:Blank/>
     </DataTemplate>
-                  
+
+    <DataTemplate DataType="{x:Type vm:miniNoteVM}">
+        <view:miniNote/>
+    </DataTemplate>
+
 
 </ResourceDictionary>

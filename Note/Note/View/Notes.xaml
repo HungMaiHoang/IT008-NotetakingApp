@@ -7,15 +7,87 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:view="clr-namespace:Note.View"
-             xmlns:vm="clr-namespace:Note.ViewModel" d:DataContext="{d:DesignInstance Type=vm:NavigationVM}"
+             xmlns:vm="clr-namespace:Note.ViewModel" 
+             d:DataContext="{d:DesignInstance Type=vm:NavigationVM}"
              mc:Ignorable="d" 
-             d:DesignHeight="704" d:DesignWidth="1025">
+             d:DesignHeight="704" d:DesignWidth="1025"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+    <UserControl.Resources>
+        <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="{TemplateBinding ClipToBounds}" Margin="{TemplateBinding Margin}">
+                            <Grid>
+                                <Border x:Name="MouseOverBorder" Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" Opacity="0"/>
+                                <Border x:Name="SelectedBorder" Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" Opacity="0"/>
+                                <wpf:Ripple x:Name="Ripple" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Focusable="False" Feedback="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" RecognizesAccessKey="False" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value=".56"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource Mode=Self}}" Value="False">
+                                <Setter Property="Visibility" TargetName="MouseOverBorder" Value="Collapsed"/>
+                                <Setter Property="Feedback" TargetName="Ripple" Value="Transparent"/>
+                                <Setter Property="Visibility" TargetName="SelectedBorder" Value="Collapsed"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="wpf:ListBoxItemAssist.ShowSelection" Value="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
+        </Style>
+        <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource MaterialDesignListBoxItem}"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="False" SnapsToDevicePixels="true">
+                            <ScrollViewer ClipToBounds="False" Focusable="false" Padding="{TemplateBinding Padding}">
+                                <ItemsPresenter ClipToBounds="False" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
+        </Style>
+    </UserControl.Resources>
+    
     <UserControl.DataContext>
         <vm:NoteVM/>
     </UserControl.DataContext>
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
             <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -45,205 +117,60 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="1">
-                <ScrollViewer 
-                    Style="{StaticResource MaterialDesignScrollViewer}"
-                    VerticalScrollBarVisibility="Hidden">
-                    <WrapPanel 
-                        ItemWidth="300"
-                        Height="550" >
-                        <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
-                        <ListBox ItemsSource="{Binding ListNote}" SelectedItem="{Binding CurNote}">
+
+                <StackPanel
+                        Name="ListBoxNotes"
+                        Height="550">
+                    <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
+                    <ScrollViewer
+                        HorizontalScrollBarVisibility="Hidden"
+                        Style="{StaticResource MaterialDesignScrollViewer}"
+                        materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                        Height="550">
+                        <ListBox 
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            Style="{StaticResource ListBoxStyle1}" 
+                            ItemsSource="{Binding ListNote}" 
+                            SelectedItem="{Binding CurNote}"
+                            Width="{Binding ActualWidth, ElementName=ListBoxNotes}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="Margin" Value="10 10 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                        </Style>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
-                                        <materialDesign:Card Height="100" Width="280" UniformCornerRadius="10">
-                                            <RadioButton
-                                                Command="{Binding PageCommand}"
-                                                
-                                                Style="{DynamicResource MaterialDesignChoiceChipAccentRadioButton}" 
-                                                Background="#fff" 
-                                                Height="100" 
-                                                Width="280" 
-                                                Foreground="Black" 
-                                                GroupName="GroupNotes">
-                                                <Grid VerticalAlignment="Center" 
-                                                  HorizontalAlignment="Center" 
-                                                  Height="100" 
-                                                  Width="280">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition/>
-                                                        <RowDefinition/>
-                                                    </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Row="0"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        Margin="20,0,0,0"
-                                                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                                                        Text="{Binding Title}"
-                                                        FontSize="18"/>
-                                                    <TextBlock Grid.Row="1"
-                                                       HorizontalAlignment="Left"
-                                                       VerticalAlignment="Center"
-                                                       Margin="25,0,0,0"
-                                                       FontSize="12"
-                                                       Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                                                       Text="{Binding LastEdited}" />
-                                                    <TextBlock Grid.Row="1"
-                                                        Width="130"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        Margin="125,0,0,0"
-                                                        Text="{Binding HeadLine}"
-                                                        TextWrapping="NoWrap"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                                                        FontSize="14"/>
-                                                </Grid>
-                                            </RadioButton>
-                                        </materialDesign:Card>
-                                    </StackPanel>
+                                    <view:miniNote 
+                                        Padding="0 0 0 0"
+                                        Margin="-3 -1 -4 -1"
+                                        Title="{Binding Title}" 
+                                        Date="{Binding LastEdited}" 
+                                        HeadLine="{Binding HeadLine}" 
+                                        BtnCommand="{Binding DataContext.PageCommand}"/>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                    </WrapPanel>
-                </ScrollViewer>
+                    </ScrollViewer>
+                </StackPanel>
             </Grid>
         </Grid>
         <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch"></GridSplitter>
         <Grid Grid.Column="2" Background="#ffffff">
-            <!--<ContentControl>
-                <view:Page/>
-            </ContentControl>-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="353*"/>
-                <ColumnDefinition Width="8*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150"></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <TextBlock HorizontalAlignment="Center"
-                       VerticalAlignment="Bottom"
-                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="{Binding CurNote.Title}"
-                       FontSize="32"
-                       ></TextBlock>
-                </Grid>
-                <Grid Grid.Row="1">
-                    <ToolBarTray>
-                        <ToolBar
-                            ClipToBounds="False"
-                            Style="{StaticResource MaterialDesignToolBar}" 
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top" 
-                            Width="722" 
-                            Height="58" 
-                            Margin="0,10,0,0">
-                            <Button
-                                Content="{materialDesign:PackIcon Kind=ContentSave}"
-                                ToolTip="Save" 
-                                Click="SaveButton" />
-                            <Separator />
-                            <Button
-                                Command="Cut"
-                                Content="{materialDesign:PackIcon Kind=ContentCut}"
-                                ToolBar.OverflowMode="AsNeeded"
-                                ToolTip="Cut"/>
-                            <Button
-                                Command="Copy"
-                                Content="{materialDesign:PackIcon Kind=ContentCopy}"
-                                ToolBar.OverflowMode="AsNeeded"
-                                ToolTip="Copy that stuff" />
-                            <Separator />
-                            <Button
-                                Command="Paste"
-                                Content="{materialDesign:PackIcon Kind=ContentPaste}"
-                                ToolBar.OverflowMode="AsNeeded"
-                                ToolTip="Paste some stuff" />
-                            <!--
-      when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
-      manually apply the button style
-    -->
-                            <Separator />
-                            <ListBox
-                                SelectedIndex="0">
-                                <ListBox.ToolTip>
-                                    <StackPanel>
-                                        <TextBlock
-                                            Text="MaterialDesignToolToggleFlatListBox" />
-                                        <TextBlock
-                                            Text="Exclusive selection" />
-                                        <TextBlock
-                                            Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
-                                    </StackPanel>
-                                </ListBox.ToolTip>
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" />
-                            </ListBox>
-                            <Separator/>
-                            <ListBox
-                                SelectionMode="Extended">
-                                <ListBox.ToolTip>
-                                    <StackPanel>
-                                        <TextBlock
-                                            Text="MaterialDesignToolToggleListBox" />
-                                        <TextBlock
-                                            Text="Multiple selection" />
-                                        <TextBlock
-                                            Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
-                                    </StackPanel>
-                                </ListBox.ToolTip>
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatBold}" 
-                                    PreviewMouseLeftButtonDown="BoldButton" />
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatItalic}" 
-                                    PreviewMouseLeftButtonDown="ItalicButton" />
-                                <ListBoxItem
-                                    Content="{materialDesign:PackIcon Kind=FormatUnderline}" 
-                                    PreviewMouseLeftButtonDown="UnderLineButton" />
-                            </ListBox>
-                            <Separator />
-                            <Label
-                              VerticalAlignment="Center"
-                              Content="Font size:" />
-                            <ComboBox>
-                                <ComboBoxItem
-                                    Content="10" />
-                                <ComboBoxItem
-                                    Content="12"
-                                    IsSelected="True" />
-                                <ComboBoxItem
-                                    Content="14" />
-                                <ComboBoxItem
-                                    Content="16" />
-                            </ComboBox>
-                            <Separator />
-                            <Separator />
-                            <ToggleButton />
-                        </ToolBar>
-                    </ToolBarTray>
-                </Grid>
-            </Grid>
-            <RichTextBox x:Name="TextBox" Grid.Row="1" Grid.ColumnSpan="2">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="RichTextBox"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
+            <ContentControl>
+                <view:Page Title="Something"/>
+            </ContentControl>
         </Grid>
     </Grid>
 </UserControl>

@@ -2,8 +2,10 @@
 using Note.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,12 +23,27 @@ namespace Note.View
     /// <summary>
     /// Interaction logic for Page.xaml
     /// </summary>
-    public partial class Page : UserControl
+    public partial class Page : UserControl, INotifyPropertyChanged
     {
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Page));
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); OnPropertyChanged(nameof(Title)); }
+        }
+
         public Page()
         {
             InitializeComponent();
         }
+
+        #region OnpropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
 
         private void BoldButton(object sender, MouseButtonEventArgs e)
         {
@@ -104,7 +121,7 @@ namespace Note.View
             range = new TextRange(TextBox.Document.ContentStart, TextBox.Document.ContentEnd);
             //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
             //range.Save(stream, System.Windows.DataFormats.Rtf);
-            
+
             //da.CreateRTFNote(range);
         }
     }

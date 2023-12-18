@@ -54,7 +54,6 @@ namespace Note.ViewModel
             {
                 CurrentView = NotesView;
             });
-            
         }
 
         public MainWindowVM(MainWindow view)

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Note.Model;
 using Note.Utilities;
+using Note.View;
 namespace Note.ViewModel
 {
     class NoteVM : Utilities.ViewModelBase
@@ -29,6 +30,16 @@ namespace Note.ViewModel
             }
         }
 
+
+        private miniNoteVM _miniNote;
+        public miniNoteVM MiniNote { get => _miniNote; set => _miniNote = value; }
+
+        public ICommand PageCommand { get; set; }
+        private void Page(object obj)
+        {
+
+        }
+
         //public ICommand PageCommand { get; set; }
         //private void Page(object obj) => CurNote = new PageVM();
 
@@ -36,6 +47,8 @@ namespace Note.ViewModel
         {
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
+
+            PageCommand = new RelayCommand(Page);
         }
     }
 }

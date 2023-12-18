@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="704" d:DesignWidth="722">
     <UserControl.DataContext>
-        <vm:PageVM></vm:PageVM>
+        <vm:PageVM/>
     </UserControl.DataContext>
     <Grid Background="#fff" >
         <Grid.ColumnDefinitions>
@@ -26,99 +26,105 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Bottom"
-                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                           Text="Medium 20sp"
-                           FontSize="32"
-                           ></TextBlock>
+                <TextBlock 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="{Binding Title}"
+                    FontSize="32"
+                    ></TextBlock>
             </Grid>
             <Grid Grid.Row="1">
                 <ToolBarTray>
                     <ToolBar
-    ClipToBounds="False"
-    Style="{StaticResource MaterialDesignToolBar}" HorizontalAlignment="Left"
-                        VerticalAlignment="Top" Width="722" Height="58" Margin="0,10,0,0">
+                        ClipToBounds="False"
+                        Style="{StaticResource MaterialDesignToolBar}" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top" 
+                        Width="722" 
+                        Height="58" 
+                        Margin="0,10,0,0">
                         <Button
-      Content="{materialDesign:PackIcon Kind=ContentSave}"
-      ToolTip="Save" Click="SaveButton" />
+                            Content="{materialDesign:PackIcon Kind=ContentSave}"
+                            ToolTip="Save" 
+                            Click="SaveButton" />
                         <Separator />
                         <Button
-      Command="Cut"
-      Content="{materialDesign:PackIcon Kind=ContentCut}"
-      ToolBar.OverflowMode="AsNeeded"
-      ToolTip="Cut" />
+                            Command="Cut"
+                            Content="{materialDesign:PackIcon Kind=ContentCut}"
+                            ToolBar.OverflowMode="AsNeeded"
+                            ToolTip="Cut" />
                         <Button
-      Command="Copy"
-      Content="{materialDesign:PackIcon Kind=ContentCopy}"
-      ToolBar.OverflowMode="AsNeeded"
-      ToolTip="Copy that stuff" />
+                             Command="Copy"
+                             Content="{materialDesign:PackIcon Kind=ContentCopy}"
+                             ToolBar.OverflowMode="AsNeeded"
+                             ToolTip="Copy that stuff" />
                         <Separator />
                         <Button
-      Command="Paste"
-      Content="{materialDesign:PackIcon Kind=ContentPaste}"
-      ToolBar.OverflowMode="AsNeeded"
-      ToolTip="Paste some stuff" />
+                            Command="Paste"
+                            Content="{materialDesign:PackIcon Kind=ContentPaste}"
+                            ToolBar.OverflowMode="AsNeeded"
+                            ToolTip="Paste some stuff" />
                         <!--
-          when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
-          manually apply the button style
-        -->
+                            when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
+                            manually apply the button style
+                        -->
                         <Separator />
                         <ListBox
-      SelectedIndex="0">
+                            SelectedIndex="0">
                             <ListBox.ToolTip>
                                 <StackPanel>
                                     <TextBlock
-            Text="MaterialDesignToolToggleFlatListBox" />
+                                        Text="MaterialDesignToolToggleFlatListBox" />
                                     <TextBlock
-            Text="Exclusive selection" />
+                                        Text="Exclusive selection" />
                                     <TextBlock
-            Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                                        Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                 </StackPanel>
                             </ListBox.ToolTip>
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
+                                Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
+                                Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />
+                                Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" />
+                                Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" />
                         </ListBox>
                         <Separator />
                         <ListBox
-      SelectionMode="Extended">
+                            SelectionMode="Extended">
                             <ListBox.ToolTip>
                                 <StackPanel>
                                     <TextBlock
-            Text="MaterialDesignToolToggleListBox" />
+                                        Text="MaterialDesignToolToggleListBox" />
                                     <TextBlock
-            Text="Multiple selection" />
+                                        Text="Multiple selection" />
                                     <TextBlock
-            Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
+                                        Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                 </StackPanel>
                             </ListBox.ToolTip>
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatBold}" PreviewMouseLeftButtonDown="BoldButton" />
+                                Content="{materialDesign:PackIcon Kind=FormatBold}" PreviewMouseLeftButtonDown="BoldButton" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatItalic}" PreviewMouseLeftButtonDown="ItalicButton" />
+                                Content="{materialDesign:PackIcon Kind=FormatItalic}" PreviewMouseLeftButtonDown="ItalicButton" />
                             <ListBoxItem
-        Content="{materialDesign:PackIcon Kind=FormatUnderline}" PreviewMouseLeftButtonDown="UnderLineButton" />
+                                Content="{materialDesign:PackIcon Kind=FormatUnderline}" PreviewMouseLeftButtonDown="UnderLineButton" />
                         </ListBox>
                         <Separator />
                         <Label
-      VerticalAlignment="Center"
-      Content="Font size:" />
+                            VerticalAlignment="Center"
+                            Content="Font size:" />
                         <ComboBox>
                             <ComboBoxItem
-        Content="10" />
+                                Content="10" />
                             <ComboBoxItem
-        Content="12"
-        IsSelected="True" />
+                                Content="12"
+                                IsSelected="True" />
                             <ComboBoxItem
-        Content="14" />
+                                Content="14" />
                             <ComboBoxItem
-        Content="16" />
+                                Content="16" />
                         </ComboBox>
 
                         <Separator />

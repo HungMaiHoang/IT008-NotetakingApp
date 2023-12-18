@@ -35,8 +35,8 @@ namespace Note.Model
         public NoteModel()
         {
             Title = "Title";
-            LastEdited = DateTime.UtcNow.Date;
-            HeadLine = "";
+            LastEdited = DateTime.Now;
+            HeadLine = "Testing";
 
             RichTextBox rtb = new RichTextBox();
             TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
