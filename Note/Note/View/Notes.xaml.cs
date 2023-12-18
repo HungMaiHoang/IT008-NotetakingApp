@@ -26,8 +26,10 @@ namespace Note.View
     {
         public Notes()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            
         }
+
         //private void BoldButton(object sender, MouseButtonEventArgs e)
         //{
         //    TextPointer selectionStart = TextBox.Selection.Start;

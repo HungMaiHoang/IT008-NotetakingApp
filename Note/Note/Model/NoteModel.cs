@@ -36,7 +36,7 @@ namespace Note.Model
         {
             Title = "Title";
             LastEdited = DateTime.Now;
-            HeadLine = "Testing";
+            HeadLine = "Headline";
 
             RichTextBox rtb = new RichTextBox();
             TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);

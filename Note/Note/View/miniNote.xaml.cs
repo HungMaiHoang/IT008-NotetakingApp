@@ -1,7 +1,9 @@
 ﻿using Note.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,22 +21,22 @@ namespace Note.View
     /// <summary>
     /// Interaction logic for miniNote.xaml
     /// </summary>
-    public partial class miniNote : UserControl
+    public partial class miniNote : UserControl, INotifyPropertyChanged
     {
 
         #region Dependency Property
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(miniNote));
-        public string Title
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("miniNoteTitle", typeof(string), typeof(miniNote));
+        public string miniNoteTitle
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
 
-        public static readonly DependencyProperty DateProperty = DependencyProperty.Register("Date", typeof(DateTime), typeof(miniNote));
-        public DateTime Date
+        public static readonly DependencyProperty DateProperty = DependencyProperty.Register("miniNoteDate", typeof(DateTime), typeof(miniNote));
+        public DateTime miniNoteDate
         {
             get { return (DateTime)GetValue(DateProperty); }
-            set { SetValue(TitleProperty, value); }
+            set { SetValue(DateProperty, value); OnPropertyChanged(nameof(miniNoteDate)); }
         }
 
         //public string Date
@@ -51,24 +53,40 @@ namespace Note.View
         //    }
         //}
 
-        public static readonly DependencyProperty HeadLineProperty = DependencyProperty.Register("HeadLine", typeof(string), typeof(miniNote));
-        public string HeadLine
+        public static readonly DependencyProperty HeadLineProperty = DependencyProperty.Register("miniNoteHeadLine", typeof(string), typeof(miniNote));
+        public string miniNoteHeadLine
         {
             get { return (string)GetValue(HeadLineProperty); }
-            set { SetValue(HeadLineProperty, value); }
+            set { SetValue(HeadLineProperty, value); OnPropertyChanged(nameof(miniNoteHeadLine)); }
         }
 
-        public static readonly DependencyProperty BtnCommandProperty = DependencyProperty.Register("BtnCommand", typeof(ICommand), typeof(miniNote));
-        public ICommand BtnCommand
+        public static readonly DependencyProperty BtnCommandProperty = DependencyProperty.Register("miniNoteBtnCommand", typeof(ICommand), typeof(miniNote));
+        public ICommand miniNoteBtnCommand
         {
             get { return (ICommand)GetValue(BtnCommandProperty); }
-            set { SetValue(BtnCommandProperty, value); }
+            set { SetValue(BtnCommandProperty, value); OnPropertyChanged(nameof(miniNoteBtnCommand)); }
+        }
+
+        public static readonly DependencyProperty TestingProperty = DependencyProperty.Register("Testing", typeof(string), typeof(miniNote));
+        public string Testing
+        {
+            get { return (string)GetValue(TestingProperty); }
+            set { SetValue(TestingProperty, value); OnPropertyChanged(nameof(Testing)); }
         }
         #endregion
 
         public miniNote()
         {
             InitializeComponent();
+            DataContext = this;
         }
+
+        #region OnpropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        }
+        #endregion
     }
 }

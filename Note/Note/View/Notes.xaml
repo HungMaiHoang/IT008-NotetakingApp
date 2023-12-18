@@ -8,7 +8,7 @@
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:view="clr-namespace:Note.View"
              xmlns:vm="clr-namespace:Note.ViewModel" 
-             d:DataContext="{d:DesignInstance Type=vm:NavigationVM}"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="704" d:DesignWidth="1025"
     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
@@ -80,11 +80,9 @@
             <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
         </Style>
     </UserControl.Resources>
-    
     <UserControl.DataContext>
         <vm:NoteVM/>
     </UserControl.DataContext>
-    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
@@ -119,8 +117,8 @@
             <Grid Grid.Row="1">
 
                 <StackPanel
-                        Name="ListBoxNotes"
-                        Height="550">
+                    Name="ListBoxNotes"
+                    Height="550">
                     <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
                     <ScrollViewer
                         HorizontalScrollBarVisibility="Hidden"
@@ -133,7 +131,14 @@
                             Style="{StaticResource ListBoxStyle1}" 
                             ItemsSource="{Binding ListNote}" 
                             SelectedItem="{Binding CurNote}"
-                            Width="{Binding ActualWidth, ElementName=ListBoxNotes}">
+                            Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
+                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
+                            <!--<i:Interaction.Triggers>
+                            
+                                <i:EventTrigger EventName="Selected">
+                                    <i:InvokeCommandAction Command="{Binding PageCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>-->
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -152,13 +157,17 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <view:miniNote 
-                                        Padding="0 0 0 0"
-                                        Margin="-3 -1 -4 -1"
-                                        Title="{Binding Title}" 
-                                        Date="{Binding LastEdited}" 
-                                        HeadLine="{Binding HeadLine}" 
-                                        BtnCommand="{Binding DataContext.PageCommand}"/>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Title}"/>
+                                        <view:miniNote 
+                                            Padding="0 0 0 0"
+                                            Margin="-3 -1 -4 -1"    
+                                            Testing="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.Test}"
+                                            miniNoteTitle="{Binding Title}" 
+                                            miniNoteHeadLine="{Binding HeadLine}"
+                                            miniNoteDate="{Binding LastEdited}"
+                                            miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.PageCommand}"/>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

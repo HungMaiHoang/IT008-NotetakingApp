@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using Note.Model;
 using Note.Utilities;
@@ -12,6 +13,9 @@ namespace Note.ViewModel
 {
     class NoteVM : Utilities.ViewModelBase
     {
+        public string Test = "Thins";
+        public int intTest = -1;
+
         private NoteModel _curNote;
         public NoteModel CurNote
         {
@@ -37,7 +41,7 @@ namespace Note.ViewModel
         public ICommand PageCommand { get; set; }
         private void Page(object obj)
         {
-
+            MessageBox.Show("Selected Page With Command");
         }
 
         //public ICommand PageCommand { get; set; }
@@ -49,6 +53,12 @@ namespace Note.ViewModel
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             PageCommand = new RelayCommand(Page);
+
+            // Startup note if has
+            //if (ListNote.Count > 0 )
+            //{
+            //    CurNote = ListNote[0];
+            //}
         }
     }
 }
