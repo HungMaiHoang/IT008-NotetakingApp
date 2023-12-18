@@ -7,9 +7,13 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:vm="clr-namespace:Note.ViewModel"
+             xmlns:view="clr-namespace:Note.View"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="280"
+             d:DesignHeight="100" d:DesignWidth="250"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+    <!--<UserControl.DataContext>
+        <view:miniNote/>
+    </UserControl.DataContext>-->
     <UserControl.Resources>
         <Style x:Key="RadioButtonStyle1" TargetType="{x:Type RadioButton}">
             <Setter Property="Background" Value="{DynamicResource MaterialDesignBodyLight}"/>
@@ -56,7 +60,7 @@
         Width="250" 
         UniformCornerRadius="10">
         <RadioButton
-            Command="{Binding miniNoteBtnCommand}"
+            Command="{Binding miniNoteBtnCommand, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
             Style="{StaticResource RadioButtonStyle1}"
             Margin="0"
             Height="100" 
@@ -78,13 +82,13 @@
                     TextWrapping="NoWrap"
                     TextTrimming="CharacterEllipsis"
                     Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                    Text="{Binding miniNoteDate}" />
+                    Text="{Binding miniNoteDate, RelativeSource={RelativeSource AncestorType=view:miniNote}}" />
                 <TextBlock Grid.Row="1"
                        Width="130"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="125,0,0,0"
-                       Text="{Binding miniNoteHeadLine}"
+                       Text="{Binding miniNoteHeadLine, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
                        TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"
                        Style="{StaticResource MaterialDesignOverlineTextBlock}"
@@ -94,9 +98,8 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"
-                       Width="200"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="{Binding miniNoteTitle}"
+                       Text="{Binding miniNoteTitle, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
                        FontSize="18"/>
             </Grid>
 

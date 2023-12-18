@@ -158,11 +158,9 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <TextBlock Text="{Binding Title}"/>
                                         <view:miniNote 
                                             Padding="0 0 0 0"
-                                            Margin="-3 -1 -4 -1"    
-                                            Testing="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.Test}"
+                                            Margin="-3 -1 -4 -1"
                                             miniNoteTitle="{Binding Title}" 
                                             miniNoteHeadLine="{Binding HeadLine}"
                                             miniNoteDate="{Binding LastEdited}"

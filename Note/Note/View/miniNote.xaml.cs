@@ -25,60 +25,76 @@ namespace Note.View
     {
 
         #region Dependency Property
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("miniNoteTitle", typeof(string), typeof(miniNote));
+        public static readonly DependencyProperty TitleProperty = 
+            DependencyProperty.Register(
+                "miniNoteTitle", 
+                typeof(string), 
+                typeof(miniNote),
+                new PropertyMetadata("Unknow"));
         public string miniNoteTitle
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
 
-        public static readonly DependencyProperty DateProperty = DependencyProperty.Register("miniNoteDate", typeof(DateTime), typeof(miniNote));
-        public DateTime miniNoteDate
-        {
-            get { return (DateTime)GetValue(DateProperty); }
-            set { SetValue(DateProperty, value); OnPropertyChanged(nameof(miniNoteDate)); }
-        }
-
-        //public string Date
+        public static readonly DependencyProperty DateProperty = 
+            DependencyProperty.Register(
+                "miniNoteDate", 
+                typeof(DateTime), 
+                typeof(miniNote),
+                new PropertyMetadata(DateTime.Now));
+        //public DateTime miniNoteDate
         //{
-        //    get
-        //    {
-        //        DateTime dateTemp = (DateTime)GetValue(DateProperty);
-        //        string stringTemp = dateTemp.Date.ToString();
-        //        return stringTemp;
-        //    }
-        //    set 
-        //    { 
-        //        SetValue(DateProperty, value); 
-        //    }
+        //    get { return (DateTime)GetValue(DateProperty); }
+        //    set { SetValue(DateProperty, value); OnPropertyChanged(nameof(miniNoteDate)); }
         //}
 
-        public static readonly DependencyProperty HeadLineProperty = DependencyProperty.Register("miniNoteHeadLine", typeof(string), typeof(miniNote));
+        public DateTime miniNoteDate
+        {
+            get
+            {
+                // Validate time needed
+
+                return ((DateTime)GetValue(DateProperty)).Date;
+
+                //DateTime dateTemp = (DateTime)GetValue(DateProperty);
+                //string stringTemp = dateTemp.Date.ToString();
+                //return stringTemp;
+            }
+            set
+            {
+                SetValue(DateProperty, value);
+                OnPropertyChanged(nameof(miniNoteDate));
+            }
+        }
+
+        public static readonly DependencyProperty HeadLineProperty = 
+            DependencyProperty.Register(
+                "miniNoteHeadLine", 
+                typeof(string), 
+                typeof(miniNote),
+                new PropertyMetadata(""));
         public string miniNoteHeadLine
         {
             get { return (string)GetValue(HeadLineProperty); }
             set { SetValue(HeadLineProperty, value); OnPropertyChanged(nameof(miniNoteHeadLine)); }
         }
 
-        public static readonly DependencyProperty BtnCommandProperty = DependencyProperty.Register("miniNoteBtnCommand", typeof(ICommand), typeof(miniNote));
+        public static readonly DependencyProperty BtnCommandProperty = 
+            DependencyProperty.Register(
+                "miniNoteBtnCommand", 
+                typeof(ICommand), 
+                typeof(miniNote));
         public ICommand miniNoteBtnCommand
         {
             get { return (ICommand)GetValue(BtnCommandProperty); }
             set { SetValue(BtnCommandProperty, value); OnPropertyChanged(nameof(miniNoteBtnCommand)); }
-        }
-
-        public static readonly DependencyProperty TestingProperty = DependencyProperty.Register("Testing", typeof(string), typeof(miniNote));
-        public string Testing
-        {
-            get { return (string)GetValue(TestingProperty); }
-            set { SetValue(TestingProperty, value); OnPropertyChanged(nameof(Testing)); }
         }
         #endregion
 
         public miniNote()
         {
             InitializeComponent();
-            DataContext = this;
         }
 
         #region OnpropertyChanged
