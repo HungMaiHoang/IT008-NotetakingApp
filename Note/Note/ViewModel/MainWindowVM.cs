@@ -47,13 +47,16 @@ namespace Note.ViewModel
             DataAccess.Instance.InsertNote(note);
 
             NotesView.ListNote.Add(note);
+            OnPropertyChanged(nameof(NotesView.ListNote));
+
+            CurrentView = NotesView;
 
             // Reload view
-            CurrentView = BlankView;
-            System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
-            {
-                CurrentView = NotesView;
-            });
+            //CurrentView = BlankView;
+            //System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
+            //{
+            //    CurrentView = NotesView;
+            //});
         }
 
         public MainWindowVM(MainWindow view)

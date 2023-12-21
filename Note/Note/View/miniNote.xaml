@@ -61,6 +61,7 @@
         UniformCornerRadius="10">
         <RadioButton
             Command="{Binding miniNoteBtnCommand, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
+            CommandParameter="{Binding}"
             Style="{StaticResource RadioButtonStyle1}"
             Margin="0"
             Height="100" 
