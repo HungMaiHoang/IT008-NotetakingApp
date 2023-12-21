@@ -6,34 +6,89 @@
              xmlns:local="clr-namespace:Note"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:Menu ="clr-namespace:Note.Utilities"
-             xmlns:vm="clr-namespace:Note.ViewModel" d:DataContext="{d:DesignInstance Type=vm:NavigationVM}"
+             xmlns:vm="clr-namespace:Note.ViewModel"
+             xmlns:view="clr-namespace:Note.View"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="280">
-    <materialDesign:Card Height="100" Width="280" UniformCornerRadius="10">
-        <Menu:Btn
-            Command="{Binding PageCommand}"
-            IsChecked="True"
-            Style="{DynamicResource MaterialDesignFlatButton}" Background="#fff" Height="100" Width="280" Foreground="Black" >
+             d:DesignHeight="100" d:DesignWidth="250"
+             xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+    <!--<UserControl.DataContext>
+        <view:miniNote/>
+    </UserControl.DataContext>-->
+    <UserControl.Resources>
+        <Style x:Key="RadioButtonStyle1" TargetType="{x:Type RadioButton}">
+            <Setter Property="Background" Value="{DynamicResource MaterialDesignBodyLight}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="MinWidth" Value="46"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        
+                        <Grid ClipToBounds="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10" Grid.ColumnSpan="2"/>
+                            <Border x:Name="MouseOverBorder" Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="16" Grid.Column="0" Grid.ColumnSpan="2" Opacity="0"/>
+                            <Border x:Name="SelectedBackgroundBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10" Grid.Column="0" Grid.ColumnSpan="2" Opacity="0"/>
+                            <ContentControl x:Name="Content" ContentStringFormat="{TemplateBinding ContentTemplateSelector}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="1" Content="{TemplateBinding Content}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" HorizontalAlignment="Center" IsTabStop="False" Margin="0,0,0,0" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value=".56"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignDivider}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <materialDesign:Card 
+        Height="100" 
+        Width="250" 
+        UniformCornerRadius="10">
+        <RadioButton
+            Command="{Binding miniNoteBtnCommand, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
+            Style="{StaticResource RadioButtonStyle1}"
+            Margin="0"
+            Height="100" 
+            Width="250" 
+            GroupName="GroupminiNote">
 
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="280">
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="250">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition>
                     </RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="1"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="25,0,0,0"
-                       FontSize="12"
-              Style="{StaticResource MaterialDesignOverlineTextBlock}"
-              Text="26/11/2023" />
+                    Width="100"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="25,0,0,0"
+                    FontSize="12"
+                    TextWrapping="NoWrap"
+                    TextTrimming="CharacterEllipsis"
+                    Style="{StaticResource MaterialDesignOverlineTextBlock}"
+                    Text="{Binding miniNoteDate, RelativeSource={RelativeSource AncestorType=view:miniNote}}" />
                 <TextBlock Grid.Row="1"
                        Width="130"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="125,0,0,0"
-                       Text="Regular 12spasdasdasdasdasdasdasd"
+                       Text="{Binding miniNoteHeadLine, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
                        TextWrapping="NoWrap"
                        TextTrimming="CharacterEllipsis"
                        Style="{StaticResource MaterialDesignOverlineTextBlock}"
@@ -44,10 +99,10 @@
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="Medium 20sp"
+                       Text="{Binding miniNoteTitle, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
                        FontSize="18"/>
             </Grid>
 
-        </Menu:Btn>
+        </RadioButton>
     </materialDesign:Card>
 </UserControl>

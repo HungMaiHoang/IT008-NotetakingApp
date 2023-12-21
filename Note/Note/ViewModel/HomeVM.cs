@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Note.Model;
+using Note.Utilities;
 
 namespace Note.ViewModel
 {
-    internal class HomeVM 
+    internal class HomeVM : ViewModelBase
     {
         
     }

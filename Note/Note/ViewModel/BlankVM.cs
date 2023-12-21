@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Note.ViewModel
 {
-    internal class TaskVM : ViewModelBase
+    internal class BlankVM : ViewModelBase
     {
     }
 }

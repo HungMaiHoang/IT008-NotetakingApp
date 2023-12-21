@@ -11,11 +11,6 @@
         Title="MainWindow" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         Background="Transparent">
-
-    <Window.DataContext>
-        <vm:NavigationVM/>
-    </Window.DataContext>
-
     <Window.Resources>
         <Style TargetType="Button" x:Key="ButtonEX">
             <Setter Property="Width" Value="263"></Setter>
@@ -23,7 +18,7 @@
             <Setter Property="FontSize" Value="18"></Setter>
             <Setter Property="FontFamily" Value="Source Sans Pro"></Setter>
             <Setter Property="FontWeight" Value="SemiBold"></Setter>
-            <Setter Property="Foreground" Value="#FFFFFF"></Setter>
+            <Setter Property="Foreground" Value="#FFFFFF"></Setter> 
             <Setter Property="Background" Value="#008080"></Setter>
             <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>
@@ -111,17 +106,26 @@
                 </Grid>
 
             </Button>
-            <Button Width="200 " Height=" 35" VerticalAlignment="Top"
-        Margin="0,200,0,0" Background="#40A0A0" BorderBrush="#2e9797" 
-                    Style="{DynamicResource MaterialDesignFlatButton}">
+            <Button Width="200 " 
+                    Height=" 35" 
+                    VerticalAlignment="Top"
+                    Margin="0,200,0,0" 
+                    Background="#40A0A0" 
+                    BorderBrush="#2e9797" 
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{Binding NewNoteCommand}">
                 <Button.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="4">
                         </Setter>
                     </Style>
                 </Button.Resources>
-                <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image Style="{StaticResource Image_Style}" Source="Images/ic24-add.png"/>
+                <Grid Width="200" 
+                      Height="35" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center">
+                    <Image Style="{StaticResource Image_Style}" 
+                           Source="Images/ic24-add.png"/>
                     <TextBlock Style="{StaticResource Text_Style}"
                                Text="New Note"/>
                 </Grid>
@@ -254,27 +258,29 @@
                             VerticalAlignment="Bottom"
                             Width="255"
                             Height="100">
-                    <Menu:Btn
-    Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                    <Menu:Btn 
+                        Style="{StaticResource MaterialDesignFlatButton}" 
+                        Height="40" 
+                        Width="255">
                         <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Height="20" Width="20" Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
-                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
-                   Text="Trash"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}" Text="Trash"/>
                         </Grid>
                     </Menu:Btn>
                     <Menu:Btn
-Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        Style="{StaticResource MaterialDesignFlatButton}" 
+                        Height="40" 
+                        Width="255">
                         <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Height="20" Width="20" Source="Images/archived.png" Style="{StaticResource Image_Style}"/>
-                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}"
-               Text="Archived Notes"/>
+                            <TextBlock FontSize="16" Style="{StaticResource Text_Style}" Text="Archived Notes"/>
                         </Grid>
                     </Menu:Btn>
                 </StackPanel>
             </Grid>
         </Grid>
         <Grid Background="#FEF8E2" Grid.Column="1">
-            <ContentControl Content="{Binding CurrentView}">
+            <ContentControl Name="WorkView" Content="{Binding CurrentView}">
             </ContentControl>
         </Grid>
     </Grid>

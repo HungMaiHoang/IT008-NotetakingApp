@@ -8,15 +8,39 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+
+                <!--primary color-->
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />-->
+                <!--primary color-->
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="PrimaryHueLightBrush" Color="#52c7b8"/>
+                    <SolidColorBrush x:Key="PrimaryHueLightForegroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="#009688"/>
+                    <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="PrimaryHueDarkBrush" Color="#00675b"/>
+                    <SolidColorBrush x:Key="PrimaryHueDarkForegroundBrush" Color="#FFFFFF"/>
+                </ResourceDictionary>
+
+                <!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />-->
+                <!-- secondary color -->
+                <!--secondary color-->
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="SecondaryHueLightBrush" Color="#ffff8b"/>
+                    <SolidColorBrush x:Key="SecondaryHueLightForegroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="SecondaryHueMidBrush" Color="#ffee58"/>
+                    <SolidColorBrush x:Key="SecondaryHueMidForegroundBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="SecondaryHueDarkBrush" Color="#c9bc1f"/>
+                    <SolidColorBrush x:Key="SecondaryHueDarkForegroundBrush" Color="Black"/>
+                </ResourceDictionary>
+
+
                 <ResourceDictionary Source="ResourceDictionary/MaterialDesignWpfDemoStyles.xaml"></ResourceDictionary>
 
                 <ResourceDictionary Source="Styles/Page.xaml" />
                 <ResourceDictionary Source="Styles/Image.xaml" />
                 <ResourceDictionary Source="Styles/Text.xaml" />
                 <ResourceDictionary Source="Styles/Button.xaml" />
-                    <ResourceDictionary Source="Utilities/DataTemplate.xaml" /> 
+                <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
