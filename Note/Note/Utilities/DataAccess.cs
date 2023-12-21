@@ -39,10 +39,13 @@ namespace Note.Utilities
 
         private MongoClient client;
         private IMongoDatabase database;
+        private GridFSBucket gridFSBucket;
         public DataAccess()
         {
+            _instance = this;
             client = new MongoClient(ConnectionString);
             database = client.GetDatabase(DatabaseName);
+            gridFSBucket = new GridFSBucket(database);
         }
 
         private IMongoCollection<T> ConnectToMongo<T>(in string collection)
@@ -84,15 +87,12 @@ namespace Note.Utilities
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
         }
 
-        public ObjectId createdNoteId;
-
         /// <summary>
-        /// Create new rtf file in database
+        /// Please do not use this outside NoteModel/Create new rtf file in database
         /// </summary>
         /// <param name="rtfContent"></param>
         public ObjectId CreateRTFNote(TextRange rtfContent)
         {
-            
             var gridFSBucket = new GridFSBucket(database);
 
             using (var rtfMemoryStream = new MemoryStream())
@@ -113,8 +113,6 @@ namespace Note.Utilities
         /// <param name="rtfContent"></param>
         public async void SaveRTFNote(ObjectId fileId, TextRange rtfContent)
         {
-            var gridFSBucket = new GridFSBucket(database);
-
             using (var rtfMemoryStream = new MemoryStream())
             {
                 rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
@@ -135,8 +133,6 @@ namespace Note.Utilities
         /// <param name="rtfContent"></param>
         public async void LoadRTFNote(ObjectId fileId, TextRange rtfContent)
         {
-            var gridFSBucket = new GridFSBucket(database);
-
             // GridFS download operation
             var rtfMemoryStream = new MemoryStream();
             await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);

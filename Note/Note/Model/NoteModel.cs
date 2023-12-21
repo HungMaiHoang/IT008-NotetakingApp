@@ -34,10 +34,12 @@ namespace Note.Model
         public ObjectId FileId { get => fileId; set { fileId = value; OnPropertyChanged(nameof(FileId)); } }
         public NoteModel()
         {
+            // Create base property
             Title = "Title";
             LastEdited = DateTime.Now;
-            HeadLine = "Headline";
+            HeadLine = "";
 
+            // Create empty .rtf
             RichTextBox rtb = new RichTextBox();
             TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
 

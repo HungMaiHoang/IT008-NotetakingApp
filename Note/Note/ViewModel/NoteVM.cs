@@ -6,21 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using MongoDB.Driver;
 using Note.Model;
 using Note.Utilities;
 using Note.View;
 namespace Note.ViewModel
 {
-    class NoteVM : Utilities.ViewModelBase
+    class NoteVM : ViewModelBase
     {
-        public string Test = "Thins";
-        public int intTest = -1;
-
         private NoteModel _curNote;
         public NoteModel CurNote
         {
             get => _curNote;
-            set { CurNote = value; OnPropertyChanged(nameof(CurNote)); }
+            set 
+            { 
+                _curNote = value; 
+                OnPropertyChanged(nameof(CurNote)); 
+            }
         }
 
         private ObservableCollection<NoteModel> _listNote;
@@ -34,25 +36,52 @@ namespace Note.ViewModel
             }
         }
 
-
-        private miniNoteVM _miniNote;
-        public miniNoteVM MiniNote { get => _miniNote; set => _miniNote = value; }
-
-        public ICommand PageCommand { get; set; }
-        private void Page(object obj)
-        {
-            MessageBox.Show("Selected Page With Command");
+        private string _pageTitle;
+        public string PageTitle 
+        { 
+            get => _pageTitle;
+            set
+            {
+                _pageTitle = value;
+                OnPropertyChanged(nameof(PageTitle));
+            }
         }
 
-        //public ICommand PageCommand { get; set; }
-        //private void Page(object obj) => CurNote = new PageVM();
+        public ICommand LoadPageCommand { get; set; }
+        public ICommand CreatePageCommand { get; set; }
+        public ICommand SavePageCommand { get; set; }
 
+        private void LoadPage(object obj)
+        {
+            //CurNote = (obj as NoteModel);
+            PageTitle = (obj as NoteModel).Title;
+        }
+
+        private void CreatePage(object obj)
+        {
+            MessageBox.Show("Create Page");
+        }
+
+        private void SavePage(object obj)
+        {
+            try
+            {
+                MessageBox.Show(CurNote.Title);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+        }
         public NoteVM()
         {
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
-            PageCommand = new RelayCommand(Page);
+            CreatePageCommand = new RelayCommand(CreatePage);
+            SavePageCommand = new RelayCommand(SavePage);
+            LoadPageCommand = new RelayCommand(LoadPage);
 
             // Startup note if has
             //if (ListNote.Count > 0 )
