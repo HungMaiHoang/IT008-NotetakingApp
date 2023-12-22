@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using MongoDB.Driver;
 using Note.Model;
@@ -15,6 +16,20 @@ namespace Note.ViewModel
 {
     class NoteVM : ViewModelBase
     {
+        // Singleton
+        private static NoteVM _instance;
+        public static NoteVM Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new NoteVM();
+                }
+                return _instance;
+            }
+        }
+
         private NoteModel _curNote;
         public NoteModel CurNote
         {
@@ -51,9 +66,19 @@ namespace Note.ViewModel
             }
         }
 
+        private FlowDocument _pageContent;
+        public FlowDocument PageContent
+        {
+            get => _pageContent;
+            set
+            {
+                _pageContent = value;
+                OnPropertyChanged(nameof(PageContent));
+            }
+        }
+
         public ICommand LoadPageCommand { get; set; }
-        public ICommand SavePageCommand { get; set; }
-        public ICommand SaveTitleCommand { get; set; }
+        public ICommand TestCommand { get; set; }
 
         private void LoadPage(object obj)
         {
@@ -61,23 +86,29 @@ namespace Note.ViewModel
             {
                 CurNote = (obj as NoteModel);
                 PageTitle = CurNote.Title;
+
+                //TextRange temp = new TextRange(PageContent.ContentStart, PageContent.ContentEnd);
+                //DataAccess.Instance.LoadRTFNote(CurNote.Id, temp);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+        private void Test(object obj)
+        {
+            MessageBox.Show(PageContent);
+        }
 
-        public NoteVM()
+        private NoteVM()
         {
 
-            // Get Notes from databse
+            // Load Notes from databse
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             LoadPageCommand = new RelayCommand(LoadPage);
-
-
+            TestCommand = new RelayCommand(Test);
         }
         /// <summary>
         /// Select first note if has

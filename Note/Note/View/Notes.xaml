@@ -117,6 +117,7 @@
                     Name="ListBoxNotes"
                     Height="550">
                     <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
+                    <Button Command="{Binding TestCommand}"/>
                     <ScrollViewer
                         HorizontalScrollBarVisibility="Hidden"
                         Style="{StaticResource MaterialDesignScrollViewer}"
@@ -270,14 +271,13 @@
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox x:Name="richTextBox" 
-                        Grid.Row="1" 
-                        Grid.ColumnSpan="2">
-                    <FlowDocument>
-                        <Paragraph>
-                        </Paragraph>
-                    </FlowDocument>
+                <RichTextBox 
+                    x:Name="richTextBox" 
+                    Grid.Row="1" 
+                    Grid.ColumnSpan="2"
+                    Menu:myRichTextBox.DocumentXaml="{Binding PageContent}">
                 </RichTextBox>
+                
             </Grid>
         </Grid>
     </Grid>

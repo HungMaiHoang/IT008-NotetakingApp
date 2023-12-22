@@ -24,10 +24,11 @@ namespace Note.View
     /// </summary>
     public partial class Notes : UserControl
     {
+
         public Notes()
         {
             InitializeComponent();
-            DataContext = new NoteVM();
+            DataContext = NoteVM.Instance;
         }
 
         private void BoldButton(object sender, MouseButtonEventArgs e)

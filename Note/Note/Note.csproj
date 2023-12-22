@@ -137,6 +137,7 @@
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\RichTextBoxHelper.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
