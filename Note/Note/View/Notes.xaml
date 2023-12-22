@@ -80,9 +80,6 @@
             <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <vm:NoteVM/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
@@ -133,12 +130,6 @@
                             SelectedItem="{Binding CurNote}"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
                             Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
-                            <!--<i:Interaction.Triggers>
-                            
-                                <i:EventTrigger EventName="Selected">
-                                    <i:InvokeCommandAction Command="{Binding PageCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -190,13 +181,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBlock 
+                        <TextBox 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                            Text="{Binding PageTitle}"
-                            FontSize="32">
-                        </TextBlock>
+                            Text="{Binding PageTitle, Mode=TwoWay}"
+                            FontSize="32"
+                            KeyUp="TextBox_KeyEnterUpdate">
+                        </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
                         <ToolBarTray>
@@ -230,9 +221,9 @@
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Paste some stuff" />
                                 <!--
-                        when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
-                        manually apply the button style
-                    -->
+                                    when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
+                                    manually apply the button style
+                                -->
                                 <Separator />
                                 <ListBox SelectedIndex="0">
                                     <ListBox.ToolTip>
@@ -279,12 +270,11 @@
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox x:Name="TextBox" 
+                <RichTextBox x:Name="richTextBox" 
                         Grid.Row="1" 
                         Grid.ColumnSpan="2">
                     <FlowDocument>
                         <Paragraph>
-                            <Run Text="RichTextBox"/>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>

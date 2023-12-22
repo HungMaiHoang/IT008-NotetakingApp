@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using MongoDB.Driver;
 using Note.Model;
@@ -20,7 +21,9 @@ namespace Note.ViewModel
             get => _curNote;
             set 
             { 
-                _curNote = value; 
+                _curNote = value;
+                // Update note to database
+                DataAccess.Instance.UpdateNote(CurNote);
                 OnPropertyChanged(nameof(CurNote)); 
             }
         }
@@ -43,51 +46,48 @@ namespace Note.ViewModel
             set
             {
                 _pageTitle = value;
+                CurNote.Title = value;
                 OnPropertyChanged(nameof(PageTitle));
             }
         }
 
         public ICommand LoadPageCommand { get; set; }
-        public ICommand CreatePageCommand { get; set; }
         public ICommand SavePageCommand { get; set; }
+        public ICommand SaveTitleCommand { get; set; }
 
         private void LoadPage(object obj)
         {
-            //CurNote = (obj as NoteModel);
-            PageTitle = (obj as NoteModel).Title;
-        }
-
-        private void CreatePage(object obj)
-        {
-            MessageBox.Show("Create Page");
-        }
-
-        private void SavePage(object obj)
-        {
             try
             {
-                MessageBox.Show(CurNote.Title);
+                CurNote = (obj as NoteModel);
+                PageTitle = CurNote.Title;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(ex.Message);
             }
-
         }
+
         public NoteVM()
         {
+
+            // Get Notes from databse
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
-            CreatePageCommand = new RelayCommand(CreatePage);
-            SavePageCommand = new RelayCommand(SavePage);
             LoadPageCommand = new RelayCommand(LoadPage);
 
-            // Startup note if has
-            //if (ListNote.Count > 0 )
-            //{
-            //    CurNote = ListNote[0];
-            //}
+
+        }
+        /// <summary>
+        /// Select first note if has
+        /// </summary>
+        public void SelectFirstNoteIfHas()
+        {
+            if (ListNote.Count > 0)
+            {
+                CurNote = ListNote.First();
+            }
         }
     }
 }

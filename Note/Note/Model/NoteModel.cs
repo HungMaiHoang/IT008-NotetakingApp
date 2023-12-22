@@ -22,16 +22,64 @@ namespace Note.Model
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get => id; set { id = value; OnPropertyChanged(nameof(Id)); } }
+        public ObjectId Id 
+        { 
+            get => id; 
+            set 
+            { 
+                id = value; 
+                OnPropertyChanged(nameof(Id)); 
+            } 
+        }
 
         [BsonElement("Title")]
-        public string Title { get => title; set { title = value; OnPropertyChanged(nameof(Title)); } }
+        public string Title 
+        { 
+            get => title; 
+            set 
+            { 
+                title = value; 
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(Title)); 
+            }
+        }
         [BsonElement("Last Edited")]
-        public DateTime LastEdited { get => lastEdited; set { lastEdited = value; OnPropertyChanged(nameof(LastEdited)); } }
+        public DateTime LastEdited 
+        { 
+            get => lastEdited; 
+            set 
+            { 
+                lastEdited = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(LastEdited)); 
+            } 
+        }
         [BsonElement("Head Line")]
-        public string HeadLine { get => headLine; set { headLine = value; OnPropertyChanged(nameof(HeadLine)); } }
+        public string HeadLine 
+        { 
+            get => headLine; 
+            set 
+            { 
+                headLine = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(HeadLine)); 
+            } 
+        }
         [BsonElement("File Id")]
-        public ObjectId FileId { get => fileId; set { fileId = value; OnPropertyChanged(nameof(FileId)); } }
+        public ObjectId FileId 
+        { 
+            get => fileId; 
+            set 
+            { 
+                fileId = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(FileId)); 
+            } 
+        }
         public NoteModel()
         {
             // Create base property

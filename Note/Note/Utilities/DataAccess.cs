@@ -40,9 +40,8 @@ namespace Note.Utilities
         private MongoClient client;
         private IMongoDatabase database;
         private GridFSBucket gridFSBucket;
-        public DataAccess()
+        private DataAccess()
         {
-            _instance = this;
             client = new MongoClient(ConnectionString);
             database = client.GetDatabase(DatabaseName);
             gridFSBucket = new GridFSBucket(database);
@@ -87,6 +86,7 @@ namespace Note.Utilities
             return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
         }
 
+        #region GridFS
         /// <summary>
         /// Please do not use this outside NoteModel/Create new rtf file in database
         /// </summary>
@@ -141,5 +141,6 @@ namespace Note.Utilities
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);
             rtfContent.Load(rtfMemoryStream, DataFormats.Rtf);
         }
+        #endregion
     }
 }

@@ -110,8 +110,6 @@ namespace Note.View
         //    }
         //}
 
-        DataAccess da = new DataAccess();
-
         private void SaveButton(object sender, RoutedEventArgs e)
         {
             string relativePath = "Note/Test.rtf";

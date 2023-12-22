@@ -1,5 +1,6 @@
 ﻿using Note.Model;
 using Note.Utilities;
+using Note.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,11 @@ namespace Note.ViewModel
 
 
         private void Home(object obj) => CurrentView = HomeView;
-        private void Note(object obj) => CurrentView = NotesView;
+        private void Note(object obj)
+        {
+            CurrentView = NotesView;
+            NotesView.SelectFirstNoteIfHas();
+        }
         private void Reminder(object obj) => CurrentView = RemindersView;
         private void Task(object obj) => CurrentView = TasksView;
         private void NewNote(object obj)
@@ -47,16 +52,15 @@ namespace Note.ViewModel
             DataAccess.Instance.InsertNote(note);
 
             NotesView.ListNote.Add(note);
-            OnPropertyChanged(nameof(NotesView.ListNote));
 
-            CurrentView = NotesView;
+            //CurrentView = NotesView;
 
             // Reload view
-            //CurrentView = BlankView;
-            //System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
-            //{
-            //    CurrentView = NotesView;
-            //});
+            CurrentView = BlankView;
+            System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
+            {
+                CurrentView = NotesView;
+            });
         }
 
         public MainWindowVM(MainWindow view)
