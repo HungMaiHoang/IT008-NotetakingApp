@@ -294,6 +294,11 @@
                                     Content="{materialDesign:PackIcon Kind=Table}"
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Add table" />
+                                <Button
+                                    Content="{materialDesign:PackIcon Kind=FormatColorText}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Text Color" />
+                                
                             </ToolBar>
                         </ToolBarTray>
                     </Grid>
