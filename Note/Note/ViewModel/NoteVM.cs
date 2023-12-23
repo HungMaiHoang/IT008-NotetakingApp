@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using MongoDB.Driver;
 using Note.Model;
@@ -12,8 +13,13 @@ using Note.Utilities;
 using Note.View;
 namespace Note.ViewModel
 {
-    class NoteVM : ViewModelBase
+    public class NoteVM : ViewModelBase
     {
+        private static NoteVM instance;
+        public static NoteVM Instance
+        {
+            get { return instance; }
+        }
         private NoteModel _curNote;
         public NoteModel CurNote
         {
@@ -53,7 +59,7 @@ namespace Note.ViewModel
 
         private void LoadPage(object obj)
         {
-            //CurNote = (obj as NoteModel);
+            CurNote = obj as NoteModel;
             PageTitle = (obj as NoteModel).Title;
         }
 
@@ -74,11 +80,44 @@ namespace Note.ViewModel
             }
 
         }
+        // count word
+        private WordCounterModel model;
+        private string text;
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                if (text != value)
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                    
+                }
+            }
+        }
+        private int wordCount;
+        public int WordCount
+        {
+            get { return wordCount; }
+            set
+            {
+                if (wordCount != value)
+                {
+                    wordCount = value;
+                    OnPropertyChanged(nameof(WordCount));
+                }
+            }
+        }
+        public ICommand WordCountCommand { get;}
         public NoteVM()
         {
+            instance = this;
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
+            model = new WordCounterModel();
+            WordCountCommand = new RelayCommand(UpdateWordCount);
             CreatePageCommand = new RelayCommand(CreatePage);
             SavePageCommand = new RelayCommand(SavePage);
             LoadPageCommand = new RelayCommand(LoadPage);
@@ -89,5 +128,11 @@ namespace Note.ViewModel
             //    CurNote = ListNote[0];
             //}
         }
+        private void UpdateWordCount(object obj)
+        {
+            WordCount = model.CountWords(Text);
+            CurNote.LastEdited = DateTime.Now;
+        }
+        
     }
 }
