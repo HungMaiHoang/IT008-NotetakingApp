@@ -46,8 +46,9 @@ namespace Note.ViewModel
 
             DataAccess.Instance.InsertNote(note);
 
-            NotesView.ListNote.Add(note);
-            OnPropertyChanged(nameof(NotesView.ListNote));
+            //NotesView.ListNote.Add(note);
+            NoteVM.Instance.ListNote.Add(note);
+ 
 
             CurrentView = NotesView;
 

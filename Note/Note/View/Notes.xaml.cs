@@ -108,5 +108,10 @@ namespace Note.View
 
             //da.CreateRTFNote(range);
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //NoteVM.Instance.Text = TextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
+        }
     }
 }

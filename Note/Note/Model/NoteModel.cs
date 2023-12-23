@@ -11,7 +11,7 @@ using System.Windows.Documents;
 
 namespace Note.Model
 {
-    internal class NoteModel : ViewModelBase
+    public  class NoteModel : ViewModelBase
     {
         
         private ObjectId id;
