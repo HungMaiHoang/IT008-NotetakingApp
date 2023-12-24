@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Note.Model;
 using Note.Utilities;
@@ -16,6 +17,7 @@ namespace Note.ViewModel
 {
     class NoteVM : ViewModelBase
     {
+        private Notes view;
         // Singleton
         private static NoteVM _instance;
         public static NoteVM Instance
@@ -37,8 +39,11 @@ namespace Note.ViewModel
             set 
             { 
                 _curNote = value;
-                // Update note to database
-                DataAccess.Instance.UpdateNote(CurNote);
+                //Update note to database
+                //if (CurNote is NoteModel)
+                //{
+                //    DataAccess.Instance.UpdateNote(CurNote);
+                //}
                 OnPropertyChanged(nameof(CurNote)); 
             }
         }
@@ -66,8 +71,8 @@ namespace Note.ViewModel
             }
         }
 
-        private FlowDocument _pageContent;
-        public FlowDocument PageContent
+        private TextRange _pageContent;
+        public TextRange PageContent
         {
             get => _pageContent;
             set
@@ -78,6 +83,8 @@ namespace Note.ViewModel
         }
 
         public ICommand LoadPageCommand { get; set; }
+        public ICommand SavePageCommand { get; set; }
+        public ICommand DeleteNoteCommand {  get; set; }
         public ICommand TestCommand { get; set; }
 
         private void LoadPage(object obj)
@@ -87,6 +94,12 @@ namespace Note.ViewModel
                 CurNote = (obj as NoteModel);
                 PageTitle = CurNote.Title;
 
+                //MessageBox.Show(PageContent.ToString());
+
+                PageContent.ClearAllProperties();
+                DataAccess.Instance.LoadRTFNote(CurNote.FileId, PageContent);
+                
+
                 //TextRange temp = new TextRange(PageContent.ContentStart, PageContent.ContentEnd);
                 //DataAccess.Instance.LoadRTFNote(CurNote.Id, temp);
             }
@@ -95,19 +108,33 @@ namespace Note.ViewModel
                 MessageBox.Show(ex.Message);
             }
         }
+        private void SavePage(object obj)
+        {
+            DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent);
+        }
+        private void DeleteNote(object obj)
+        {
+            //if (CurNote is NoteModel && CurNote != null)
+            //{
+            //    ListNote.Remove(CurNote);
+            //    DataAccess.Instance.DeleteNote(CurNote);
+            //}
+        }
         private void Test(object obj)
         {
-            MessageBox.Show(PageContent);
+            //PageContent.Text = "Testing";
+            DataAccess.Instance.GetAllNotes();
         }
 
         private NoteVM()
         {
-
             // Load Notes from databse
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             LoadPageCommand = new RelayCommand(LoadPage);
+            SavePageCommand = new RelayCommand(SavePage);
+            DeleteNoteCommand = new RelayCommand(DeleteNote);
             TestCommand = new RelayCommand(Test);
         }
         /// <summary>

@@ -24,7 +24,6 @@ namespace Note.View
     /// </summary>
     public partial class Notes : UserControl
     {
-
         public Notes()
         {
             InitializeComponent();
@@ -96,18 +95,18 @@ namespace Note.View
         //    }
         //}
 
-        private void SaveButton(object sender, RoutedEventArgs e)
-        {
-            string relativePath = "Note/Test.rtf";
-            string fullPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), relativePath);
-            TextRange range;
-            FileStream stream;
-            range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
-            //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
-            //range.Save(stream, System.Windows.DataFormats.Rtf);
+        //private void SaveButton(object sender, RoutedEventArgs e)
+        //{
+        //    string relativePath = "Note/Test.rtf";
+        //    string fullPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), relativePath);
+        //    TextRange range;
+        //    FileStream stream;
+        //    range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+        //    //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
+        //    //range.Save(stream, System.Windows.DataFormats.Rtf);
 
-            //da.CreateRTFNote(range);
-        }
+        //    //da.CreateRTFNote(range);
+        //}
 
         private void TextBox_KeyEnterUpdate(object sender, KeyEventArgs e)
         {
@@ -119,6 +118,12 @@ namespace Note.View
                 BindingExpression binding = BindingOperations.GetBindingExpression(tBox, prop);
                 if (binding != null) { binding.UpdateSource(); }
             }
+        }
+
+        private void richTextBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            RichTextBox myRtb = sender as RichTextBox;
+            NoteVM.Instance.PageContent = new TextRange(myRtb.Document.ContentStart, myRtb.Document.ContentEnd);
         }
     }
 }

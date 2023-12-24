@@ -80,18 +80,36 @@ namespace Note.Model
                 OnPropertyChanged(nameof(FileId)); 
             } 
         }
+
         public NoteModel()
         {
             // Create base property
-            Title = "Title";
-            LastEdited = DateTime.Now;
-            HeadLine = "";
+            //Id = ObjectId.GenerateNewId();
+            //Title = "Title";
+            //LastEdited = DateTime.Now;
+            //HeadLine = "";
+            //FlowDocument doc = new FlowDocument();
+            //TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
 
-            // Create empty .rtf
-            RichTextBox rtb = new RichTextBox();
-            TextRange rtfContent = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            //FileId = DataAccess.Instance.CreateRTFNote(rtfContent);
+        }
 
-            FileId = DataAccess.Instance.CreateRTFNote(rtfContent);
+        public static NoteModel CreateNewNote()
+        {
+            return new NoteModel {
+                Id = ObjectId.GenerateNewId(),
+                Title = "Title",
+                LastEdited = DateTime.Now,
+                HeadLine = "",
+                FileId = createFileID()
+            };
+        }
+        public static ObjectId createFileID()
+        {
+            FlowDocument doc = new FlowDocument();
+            TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
+            rtfContent.Text = "Start Texting....";
+            return DataAccess.Instance.CreateRTFNote(rtfContent);
         }
     }
 }
