@@ -1,6 +1,7 @@
 ﻿//using MaterialDesignThemes.Wpf;
 using Note.Utilities;
 using Note.ViewModel;
+using Note.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace Note.View
 {
     /// <summary>
@@ -29,54 +31,34 @@ namespace Note.View
             InitializeComponent();
             DataContext = NoteVM.Instance;
         }
-
-        private void BoldButton(object sender, MouseButtonEventArgs e)
+        private void Bold(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Bold);
+        }
+        private void UnBold(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Normal);
+        }
+        private void Italic(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Italic);
+        }
+        private void UnItalic(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Normal);
+        }
+        private void UnderLine(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(Inline.TextDecorationsProperty, TextDecorations.Underline);
+        }
+        private void UnUnderLine(object sender, RoutedEventArgs e)
+        {
+            ApplyFormattingText(Inline.TextDecorationsProperty, null);
+        }
+        private void ApplyFormattingText(DependencyProperty property, object value)
         {
             TextPointer selectionStart = richTextBox.Selection.Start;
             TextPointer selectionEnd = richTextBox.Selection.End;
-            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
-            object IsBold = selectedTextRange.GetPropertyValue(TextElement.FontWeightProperty);
-            if (!IsBold.Equals(FontWeights.Bold))
-            {
-                ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Bold, selectionStart, selectionEnd);
-            }
-            else
-            {
-                ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Normal, selectionStart, selectionEnd);
-            }
-        }
-        private void ItalicButton(object sender, MouseButtonEventArgs e)
-        {
-            TextPointer selectionStart = richTextBox.Selection.Start;
-            TextPointer selectionEnd = richTextBox.Selection.End;
-            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
-            object IsBold = selectedTextRange.GetPropertyValue(TextElement.FontStyleProperty);
-            if (!IsBold.Equals(FontStyles.Italic))
-            {
-                ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Italic, selectionStart, selectionEnd);
-            }
-            else
-            {
-                ApplyFormattingText(TextElement.FontStyleProperty, FontStyles.Normal, selectionStart, selectionEnd);
-            }
-        }
-        private void UnderLineButton(object sender, MouseButtonEventArgs e)
-        {
-            TextPointer selectionStart = richTextBox.Selection.Start;
-            TextPointer selectionEnd = richTextBox.Selection.End;
-            TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
-            object IsUnderline = selectedTextRange.GetPropertyValue(Inline.TextDecorationsProperty);
-            if (!IsUnderline.Equals(TextDecorations.Underline))
-            {
-                ApplyFormattingText(Inline.TextDecorationsProperty, TextDecorations.Underline, selectionStart, selectionEnd);
-            }
-            else
-            {
-                ApplyFormattingText(Inline.TextDecorationsProperty, null, selectionStart, selectionEnd);
-            }
-        }
-        private void ApplyFormattingText(DependencyProperty property, object value, TextPointer selectionStart, TextPointer selectionEnd)
-        {
             TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
             if (!selectedTextRange.IsEmpty)
             {
@@ -85,28 +67,72 @@ namespace Note.View
                 selectedTextRange.Select(selectionStart, selectionEnd);
             }
         }
-        //private void SetParagraphAlignment(TextAlignment alignment)
-        //{
-        //    Paragraph paragraph = TextBox.Document.Blocks.FirstBlock as Paragraph;
-        //    if (paragraph != null)
-        //    {
-        //        TextBox.Focus();
-        //        paragraph.TextAlignment = alignment;
-        //    }
-        //}
+        private void SetSelectionAlignment(TextAlignment alignment)
+        {
+            if (richTextBox != null)
+            {
 
-        //private void SaveButton(object sender, RoutedEventArgs e)
-        //{
-        //    string relativePath = "Note/Test.rtf";
-        //    string fullPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), relativePath);
-        //    TextRange range;
-        //    FileStream stream;
-        //    range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
-        //    //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
-        //    //range.Save(stream, System.Windows.DataFormats.Rtf);
+                TextPointer start = richTextBox.Selection.Start;
+                TextPointer end = richTextBox.Selection.End;
 
-        //    //da.CreateRTFNote(range);
-        //}
+                if (start != null && end != null)
+                {
+                    richTextBox.Focus();
+                    TextRange selectedText = new TextRange(start, end);
+
+                    // Create a paragraph to get the existing text formatting.
+                    Paragraph paragraph = new Paragraph();
+                    paragraph.TextAlignment = alignment;
+
+                    // Apply the new formatting to the selected text.
+                    selectedText.ApplyPropertyValue(Paragraph.TextAlignmentProperty, alignment);
+                }
+            }
+        }
+
+        private void AlignLeft(object sender, RoutedEventArgs e)
+        {
+            SetSelectionAlignment(TextAlignment.Left);
+        }
+
+        private void AlignCenter(object sender, RoutedEventArgs e)
+        {
+            SetSelectionAlignment(TextAlignment.Center);
+        }
+
+        private void AlignRight(object sender, RoutedEventArgs e)
+        {
+            SetSelectionAlignment(TextAlignment.Right);
+        }
+        private void AlignJustify(object sender, RoutedEventArgs e)
+        {
+            SetSelectionAlignment(TextAlignment.Justify);
+        }
+        private void UnselectedAlign(object sender, RoutedEventArgs e)
+        {
+            //if (LeftAlign.IsSelected == false && CenterAlign.IsSelected == false && RightAlign.IsSelected == false && JustifyAlign.IsSelected == false)
+            //{
+            //    SetSelectionAlignment(TextAlignment.Left);
+            //    LeftAlign.IsSelected = true;
+            //}
+        }
+        private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            UpdateListBoxSelection();
+        }
+
+        private void UpdateListBoxSelection()
+        {
+            var selectedText = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
+            Boldbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontWeightProperty).Equals(FontWeights.Bold);
+            Italicbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontStyleProperty).Equals(FontStyles.Italic);
+            Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+            LeftAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Left);
+            CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
+            RightAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Right);
+            JustifyAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Justify);
+
+        }
 
         private void TextBox_KeyEnterUpdate(object sender, KeyEventArgs e)
         {
@@ -125,5 +151,108 @@ namespace Note.View
             RichTextBox myRtb = sender as RichTextBox;
             NoteVM.Instance.PageContent = new TextRange(myRtb.Document.ContentStart, myRtb.Document.ContentEnd);
         }
+
+
+
+        private void btnAddBulletList_Click(object sender, RoutedEventArgs e)
+        {
+            AddBulletList();
+        }
+        private void AddBulletList()
+        {
+            // Tạo danh sách đánh dấu mới
+            List bulletList = new List();
+            bulletList.ListItems.Add(new ListItem(new Paragraph(new Run(" "))));
+
+            // Thêm danh sách vào FlowDocument hiện tại
+            FlowDocument flowDocument = richTextBox.Document;
+            if (flowDocument != null)
+            {
+                Paragraph existingParagraph = flowDocument.Blocks.FirstBlock as Paragraph;
+
+                // Nếu có nội dung, thêm danh sách vào cuối
+                flowDocument.Blocks.Add(bulletList);
+            }
+        }
+
+        private void TextColor_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.ColorDialog colorDialog = new System.Windows.Forms.ColorDialog();
+            colorDialog.ShowDialog();
+            System.Drawing.Color selectedColor = colorDialog.Color;
+            Color TextColor = Color.FromArgb(selectedColor.A, selectedColor.R, selectedColor.G, selectedColor.B);
+            ApplyFormattingText(TextElement.ForegroundProperty, new SolidColorBrush(TextColor));
+        }
+
+        private void InsertImageButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            // Mở hộp thoại chọn tệp tin ảnh
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpg;*.jpeg;*.gif;*.bmp)|*.png;*.jpg;*.jpeg;*.gif;*.bmp|All files (*.*)|*.*";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Lấy đường dẫn tệp tin ảnh
+                string imagePath = openFileDialog.FileName;
+
+                // Tạo đối tượng Image từ đường dẫn ảnh
+                Image image = new Image();
+                BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
+                image.Source = bitmap;
+
+                // Tạo đối tượng InlineUIContainer để chứa ảnh
+                InlineUIContainer container = new InlineUIContainer(image);
+
+                // Tạo đối tượng Paragraph và chèn InlineUIContainer vào đó
+                Paragraph paragraph = new Paragraph(container);
+
+                // Chèn Paragraph vào FlowDocument của RichTextBox
+                richTextBox.Document.Blocks.Add(paragraph);
+            }
+        }
+
+        private void InsertTable(object sender, RoutedEventArgs e)
+        {
+            InsertTableWindow insertTableWindow = new InsertTableWindow();
+            insertTableWindow.ShowDialog();
+            int Columns = insertTableWindow.GetColumns();
+            int Rows = insertTableWindow.GetRows();
+            Table table = new Table();
+            richTextBox.BeginChange();
+            var gridLenghtConvertor = new GridLengthConverter();
+            table.Columns.Add(new TableColumn());
+            table.RowGroups.Add(new TableRowGroup());
+            for (int i = 0; i < Rows; i++)
+            {
+                TableRow row = new TableRow();
+                for (int j = 0; j < Columns; j++)
+                {
+                    row.Cells.Add(new TableCell(new Paragraph(new Run($"Cell {i + 1}")))
+                    {
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(1)
+                    });
+                }
+                table.RowGroups[0].Rows.Add(row);
+            }
+
+            // Set table border properties
+            table.BorderThickness = new Thickness(1);
+            table.BorderBrush = Brushes.Black;
+
+            // Add the table to the RichTextBox
+            richTextBox.Document.Blocks.Add(table);
+
+            richTextBox.EndChange();
+        }
+
+        private void RemoveTable(object sender, RoutedEventArgs e)
+        {
+            //TextRange selectedTextRange = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
+            //Table table = new Table();
+
+        }
     }
 }
+

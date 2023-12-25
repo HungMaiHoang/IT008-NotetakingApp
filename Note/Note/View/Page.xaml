@@ -47,7 +47,7 @@
                         <Button
                             Content="{materialDesign:PackIcon Kind=ContentSave}"
                             ToolTip="Save" 
-                            Click="SaveButton" />
+                             />
                         <Separator />
                         <Button
                             Command="Cut"

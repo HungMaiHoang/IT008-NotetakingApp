@@ -90,14 +90,14 @@ namespace Note.Utilities
             return notesCollection.ReplaceOneAsync(filter, note, new ReplaceOptions { IsUpsert = true });
         }
 
-        public Task DeleteNote(NoteModel note)
-        {
-            //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+        //public Task DeleteNote(NoteModel note)
+        //{
+        //    //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
 
-            //gridFSBucket.DeleteAsync(note.FileId);
+        //    //gridFSBucket.DeleteAsync(note.FileId);
 
-            //return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
-        }
+        //    //return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
+        //}
         public Task DeleteNote(ObjectId id)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
@@ -163,7 +163,7 @@ namespace Note.Utilities
         {
             // GridFS download operation
             var rtfMemoryStream = new MemoryStream();
-            await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
+                await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
 
             // Set RTF Content
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);

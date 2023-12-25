@@ -8,6 +8,7 @@
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:view="clr-namespace:Note.View"
              xmlns:vm="clr-namespace:Note.ViewModel" 
+             xmlns:window="clr-namespace:Note.Windows"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="704" d:DesignWidth="1025"
@@ -236,10 +237,10 @@
                                             <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" />
+                                    <ListBoxItem Name="LeftAlign" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" Selected="AlignLeft" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="CenterAlign" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"  Selected="AlignCenter" Unselected="UnselectedAlign"/>
+                                    <ListBoxItem Name="RightAlign" Content="{materialDesign:PackIcon Kind=FormatAlignRight}" Selected="AlignRight" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="JustifyAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
                                 </ListBox>
                                 <Separator />
                                 <ListBox SelectionMode="Extended">
@@ -250,9 +251,9 @@
                                             <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" PreviewMouseLeftButtonDown="BoldButton" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" PreviewMouseLeftButtonDown="ItalicButton" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" PreviewMouseLeftButtonDown="UnderLineButton" />
+                                    <ListBoxItem Name="Boldbutton" Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
+                                    <ListBoxItem Name="Italicbutton" Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
+                                    <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
                                 <Separator />
                                 <Label
@@ -267,14 +268,43 @@
                                     <ComboBoxItem Content="16" />
                                 </ComboBox>
                                 <Separator/>
-                                <Separator/>
-                                <ToggleButton/>
+                                <Button
+                                    Click="InsertImageButton_Click"
+                                    Command=""
+                                    Content="{materialDesign:PackIcon Kind=Image}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Add Image"
+                                    
+                                    />
+                                <Button
+                                    Click="btnAddBulletList_Click"
+                                    Content="{materialDesign:PackIcon Kind=FormatListBulleted}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Bulletlist" />
+                                <Button 
+                                    Content="{materialDesign:PackIcon Kind=Table}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Add table"
+                                    Click="InsertTable"
+                                    />
+                                <Button 
+                                     Content="{materialDesign:PackIcon Kind=TableRemove}"
+                                     ToolBar.OverflowMode="AsNeeded"
+                                     ToolTip="Remove table"
+                                     Click="RemoveTable"
+    />
+                                <Button  Click="TextColor_Click"
+                                    Content="{materialDesign:PackIcon Kind=FormatColorText}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Text Color" />
+
                             </ToolBar>
                         </ToolBarTray>
                     </Grid>
                 </Grid>
                 <RichTextBox 
                     x:Name="richTextBox" 
+                    SelectionChanged="TextBox_SelectionChanged"
                     Grid.Row="1" 
                     Grid.ColumnSpan="2"
                     Loaded="richTextBox_Loaded">

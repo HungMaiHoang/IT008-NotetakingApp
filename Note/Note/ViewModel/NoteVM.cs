@@ -8,11 +8,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Note.Model;
 using Note.Utilities;
 using Note.View;
+using Note.Windows;
 namespace Note.ViewModel
 {
     class NoteVM : ViewModelBase
@@ -36,21 +38,21 @@ namespace Note.ViewModel
         public NoteModel CurNote
         {
             get => _curNote;
-            set 
-            { 
+            set
+            {
                 _curNote = value;
                 //Update note to database
                 //if (CurNote is NoteModel)
                 //{
                 //    DataAccess.Instance.UpdateNote(CurNote);
                 //}
-                OnPropertyChanged(nameof(CurNote)); 
+                OnPropertyChanged(nameof(CurNote));
             }
         }
 
         private ObservableCollection<NoteModel> _listNote;
-        public ObservableCollection<NoteModel> ListNote 
-        { 
+        public ObservableCollection<NoteModel> ListNote
+        {
             get => _listNote;
             set
             {
@@ -60,8 +62,8 @@ namespace Note.ViewModel
         }
 
         private string _pageTitle;
-        public string PageTitle 
-        { 
+        public string PageTitle
+        {
             get => _pageTitle;
             set
             {
@@ -84,9 +86,9 @@ namespace Note.ViewModel
 
         public ICommand LoadPageCommand { get; set; }
         public ICommand SavePageCommand { get; set; }
-        public ICommand DeleteNoteCommand {  get; set; }
+        public ICommand DeleteNoteCommand { get; set; }
         public ICommand TestCommand { get; set; }
-
+        public ICommand ShowInsertTableWindowCommand { get; set; }
         private void LoadPage(object obj)
         {
             try
@@ -98,7 +100,7 @@ namespace Note.ViewModel
 
                 PageContent.ClearAllProperties();
                 DataAccess.Instance.LoadRTFNote(CurNote.FileId, PageContent);
-                
+
 
                 //TextRange temp = new TextRange(PageContent.ContentStart, PageContent.ContentEnd);
                 //DataAccess.Instance.LoadRTFNote(CurNote.Id, temp);
@@ -136,6 +138,8 @@ namespace Note.ViewModel
             SavePageCommand = new RelayCommand(SavePage);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
             TestCommand = new RelayCommand(Test);
+            ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
+
         }
         /// <summary>
         /// Select first note if has
@@ -147,5 +151,23 @@ namespace Note.ViewModel
                 CurNote = ListNote.First();
             }
         }
+        private void ShowInsertTAbleWindow(object obj)
+        {
+            InsertTableWindow insertTableWindow = new InsertTableWindow();
+            insertTableWindow.ShowDialog();
+            
+        }
+
+        // Phương thức tìm kiếm đối tượng con trong cấu trúc Visual Tree
+        
+
+
+        private bool CanShowWindow(object obj)
+        {
+            return true;
+        }
     }
 }
+        
+
+
