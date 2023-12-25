@@ -26,5 +26,17 @@ namespace Note
             InitializeComponent();
             DataContext = new MainWindowVM(this);
         }
+
+        private void btn_menutab_expanded_Menu_Click(object sender, RoutedEventArgs e)
+        {
+            expandedMenu.Visibility = Visibility.Collapsed;
+            collapseMenu.Visibility = Visibility.Visible;
+        }
+
+        private void btn_menutab_collapsed_Menu_Click(object sender, RoutedEventArgs e)
+        {
+            collapseMenu.Visibility = Visibility.Collapsed;
+            expandedMenu.Visibility = Visibility.Visible;
+        }
     }
 }

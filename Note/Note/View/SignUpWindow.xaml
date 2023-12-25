@@ -321,7 +321,8 @@
                                        FontWeight="Medium"
                                        FontFamily="monserrat"
                                        Cursor="Hand"
-                                       Margin=" 8 0 0 0"/>
+                                       Margin=" 8 0 0 0"
+                                       />
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>

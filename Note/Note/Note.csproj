@@ -143,6 +143,7 @@
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\TimeAgoConvert.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="Utilities\WordCounterModel.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />

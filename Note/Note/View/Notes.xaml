@@ -9,11 +9,13 @@
              xmlns:view="clr-namespace:Note.View"
              xmlns:vm="clr-namespace:Note.ViewModel" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:ul="clr-namespace:Note.Utilities"
              xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="704" d:DesignWidth="1025"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
     <UserControl.Resources>
+        <ul:TimeAgoConvert x:Key="TimeAgoConvert"></ul:TimeAgoConvert>
         <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -349,7 +351,7 @@
                 <StatusBarItem Grid.Column="2" Margin="0 0 0 0">
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <!--<TextBlock Text="Last Modified: "></TextBlock>-->
-                        <TextBlock Text="{Binding CurNote.LastEdited, StringFormat='Last Modified: {0:G}'}"></TextBlock>
+                        <TextBlock Text="{Binding CurNote.LastEdited, Converter={StaticResource TimeAgoConvert}, StringFormat='Last Modified: {0:G}'}"></TextBlock>
                     
                 </StackPanel>
                 </StatusBarItem>
