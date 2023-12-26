@@ -8,6 +8,7 @@
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:view="clr-namespace:Note.View"
              xmlns:vm="clr-namespace:Note.ViewModel" 
+             xmlns:window="clr-namespace:Note.Windows"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
@@ -81,9 +82,6 @@
             <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <vm:NoteVM/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
@@ -104,6 +102,9 @@
                     <TextBlock Style="{StaticResource Text_Style}"
                                Text="Personal"
                                Foreground="Black" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
+                    <Button 
+                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding DeleteNoteCommand}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0.5" >
@@ -134,12 +135,6 @@
                             SelectedItem="{Binding CurNote}"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
                             Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
-                            <!--<i:Interaction.Triggers>
-                            
-                                <i:EventTrigger EventName="Selected">
-                                    <i:InvokeCommandAction Command="{Binding PageCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -194,13 +189,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBlock 
+                        <TextBox 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                            Text="{Binding PageTitle}"
-                            FontSize="32">
-                        </TextBlock>
+                            Text="{Binding PageTitle, Mode=TwoWay}"
+                            FontSize="32"
+                            KeyUp="TextBox_KeyEnterUpdate">
+                        </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
                         <ToolBarTray>
@@ -212,7 +207,7 @@
                                 <Button
                                     Content="{materialDesign:PackIcon Kind=ContentSave}"
                                     ToolTip="Save" 
-                                    Click="SaveButton" />
+                                    Command="{Binding SavePageCommand}"/>
                                 <Separator />
                                 <Button
                                     Command="Cut"
@@ -231,9 +226,9 @@
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Paste some stuff" />
                                 <!--
-                        when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
-                        manually apply the button style
-                    -->
+                                    when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
+                                    manually apply the button style
+                                -->
                                 <Separator />
                                 <ListBox
                                     SelectedIndex="0">
@@ -247,14 +242,10 @@
                                                 Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem
-                                        Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" />
-                                    <ListBoxItem
-                                        Content="{materialDesign:PackIcon Kind=FormatAlignCenter}" />
-                                    <ListBoxItem
-                                        Content="{materialDesign:PackIcon Kind=FormatAlignRight}" />
-                                    <ListBoxItem
-                                        Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" />
+                                    <ListBoxItem Name="LeftAlign" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" Selected="AlignLeft" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="CenterAlign" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"  Selected="AlignCenter" Unselected="UnselectedAlign"/>
+                                    <ListBoxItem Name="RightAlign" Content="{materialDesign:PackIcon Kind=FormatAlignRight}" Selected="AlignRight" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="JustifyAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
                                 </ListBox>
                                 <Separator />
                                 <ListBox SelectionMode="Extended">
@@ -265,9 +256,9 @@
                                             <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatBold}" PreviewMouseLeftButtonDown="BoldButton" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatItalic}" PreviewMouseLeftButtonDown="ItalicButton" />
-                                    <ListBoxItem Content="{materialDesign:PackIcon Kind=FormatUnderline}" PreviewMouseLeftButtonDown="UnderLineButton" />
+                                    <ListBoxItem Name="Boldbutton" Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
+                                    <ListBoxItem Name="Italicbutton" Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
+                                    <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
                                 <Separator />
                                 <Label
@@ -283,35 +274,45 @@
                                 </ComboBox>
                                 <Separator/>
                                 <Button
+                                    Click="InsertImageButton_Click"
+                                    Command=""
                                     Content="{materialDesign:PackIcon Kind=Image}"
                                     ToolBar.OverflowMode="AsNeeded"
-                                    ToolTip="Add Image" />
+                                    ToolTip="Add Image"
+                                    
+                                    />
                                 <Button
+                                    Click="btnAddBulletList_Click"
                                     Content="{materialDesign:PackIcon Kind=FormatListBulleted}"
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Bulletlist" />
-                                <Button
+                                <Button 
                                     Content="{materialDesign:PackIcon Kind=Table}"
                                     ToolBar.OverflowMode="AsNeeded"
-                                    ToolTip="Add table" />
-                                <Button
+                                    ToolTip="Add table"
+                                    Click="InsertTable"
+                                    />
+                                <Button 
+                                     Content="{materialDesign:PackIcon Kind=TableRemove}"
+                                     ToolBar.OverflowMode="AsNeeded"
+                                     ToolTip="Remove table"
+                                     Click="RemoveTable"
+    />
+                                <Button  Click="TextColor_Click"
                                     Content="{materialDesign:PackIcon Kind=FormatColorText}"
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Text Color" />
-                                
                             </ToolBar>
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox x:Name="TextBox" 
-                        Grid.Row="2" Grid.RowSpan="2"
-                             TextChanged="TextBox_TextChanged"
-                            >
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="{Binding Text}"/>
-                            
-                        </Paragraph>
+                <RichTextBox 
+                    x:Name="richTextBox" 
+                    SelectionChanged="TextBox_SelectionChanged"
+                    Grid.Row="1" 
+                    Grid.ColumnSpan="2"
+                    Loaded="richTextBox_Loaded">
+                    <FlowDocument Name="myFlowDocument">
                     </FlowDocument>
                     <in:Interaction.Triggers>
                         <in:EventTrigger EventName="TextChanged">
@@ -319,6 +320,7 @@
                         </in:EventTrigger>
                     </in:Interaction.Triggers>
                 </RichTextBox>
+                
             </Grid>
             <StatusBar VerticalAlignment="Bottom">
                 <StatusBar.ItemsPanel>

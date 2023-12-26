@@ -1,11 +1,17 @@
-﻿using Note.Model;
+﻿using MongoDB.Bson;
+using MongoDB.Driver.Core.WireProtocol.Messages.Encoders.BinaryEncoders;
+using Note.Model;
 using Note.Utilities;
+using Note.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+
 
 namespace Note.ViewModel
 {
@@ -17,7 +23,7 @@ namespace Note.ViewModel
         public ViewModelBase CurrentView
         {
             get { return _currentView; }
-            set { _currentView = value; OnPropertyChanged(); }
+            set { _currentView = value; OnPropertyChanged(nameof(CurrentView)); }
         }
 
         private BlankVM BlankView;
@@ -37,27 +43,38 @@ namespace Note.ViewModel
 
 
         private void Home(object obj) => CurrentView = HomeView;
-        private void Note(object obj) => CurrentView = NotesView;
+        private void Note(object obj)
+        {
+
+
+            // Delete bug Note
+            //NoteModel temp = DataAccess.Instance.GetNoteWithId(new ObjectId("000000000000000000000000"));
+            //if (temp != null)
+            //{
+            //    DataAccess.Instance.DeleteNote(temp);
+            //}
+
+            // Load Notes from database
+            List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
+            NotesView.ListNote.Clear();
+            NotesView.ListNote = new ObservableCollection<NoteModel>(listTemp);
+
+            CurrentView = NotesView;
+            //NotesView.SelectFirstNoteIfHas();
+        }
         private void Reminder(object obj) => CurrentView = RemindersView;
         private void Task(object obj) => CurrentView = TasksView;
         private void NewNote(object obj)
         {
-            NoteModel note = new NoteModel();
-
-            DataAccess.Instance.InsertNote(note);
+            NoteModel note = NoteModel.CreateNewNote();
+            
+            DataAccess.Instance.UpdateNote(note);
 
             //NotesView.ListNote.Add(note);
             NoteVM.Instance.ListNote.Add(note);
- 
+
 
             CurrentView = NotesView;
-
-            // Reload view
-            //CurrentView = BlankView;
-            //System.Threading.Tasks.Task.Delay(1).ContinueWith(_ =>
-            //{
-            //    CurrentView = NotesView;
-            //});
         }
 
         public MainWindowVM(MainWindow view)
@@ -66,7 +83,7 @@ namespace Note.ViewModel
 
             BlankView = new BlankVM();
             HomeView = new HomeVM();
-            NotesView = new NoteVM();
+            NotesView = NoteVM.Instance;
             RemindersView = new ReminderVM();
             TasksView = new TaskVM();
 

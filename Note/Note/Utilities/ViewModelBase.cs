@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using Note.ViewModel;
 namespace Note.Utilities
 {
+
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
