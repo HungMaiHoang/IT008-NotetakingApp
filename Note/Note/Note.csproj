@@ -188,6 +188,9 @@
     <Compile Include="View\Tasks.xaml.cs">
       <DependentUpon>Tasks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Trash.xaml.cs">
+      <DependentUpon>Trash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\InsertTableWindow.xaml.cs">
       <DependentUpon>InsertTableWindow.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Tasks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Trash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
