@@ -209,7 +209,7 @@
                                 <Button
                                     Content="{materialDesign:PackIcon Kind=ContentSave}"
                                     ToolTip="Save" 
-                                    Command="{Binding SavePageCommand}" Click="Button_Click"/>
+                                    Command="{Binding SavePageCommand}"/>
                                 <Separator />
                                 <Button
                                     Command="Cut"
@@ -322,8 +322,6 @@
                         </in:EventTrigger>
                     </in:Interaction.Triggers>-->
                 </RichTextBox>
-                <Button Content="Button" HorizontalAlignment="Left" Margin="10,15,0,103" Grid.RowSpan="2"/>
-
             </Grid>
             <StatusBar VerticalAlignment="Bottom">
                 <StatusBar.ItemsPanel>

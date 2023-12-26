@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\NoteModel.cs" />
+    <Compile Include="Model\TableModel.cs" />
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\FrameworkElementExtensions.cs" />
