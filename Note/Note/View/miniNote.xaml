@@ -8,6 +8,7 @@
              xmlns:Menu ="clr-namespace:Note.Utilities"
              xmlns:vm="clr-namespace:Note.ViewModel"
              xmlns:view="clr-namespace:Note.View"
+             xmlns:ul="clr-namespace:Note.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="250"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
@@ -15,6 +16,7 @@
         <view:miniNote/>
     </UserControl.DataContext>-->
     <UserControl.Resources>
+        <ul:TimeAgoConvert x:Key="TimeAgoConvert"></ul:TimeAgoConvert>
         <Style x:Key="RadioButtonStyle1" TargetType="{x:Type RadioButton}">
             <Setter Property="Background" Value="{DynamicResource MaterialDesignBodyLight}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignBody}"/>
@@ -83,7 +85,7 @@
                     TextWrapping="NoWrap"
                     TextTrimming="CharacterEllipsis"
                     Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                    Text="{Binding miniNoteDate, RelativeSource={RelativeSource AncestorType=view:miniNote}}" />
+                    Text="{Binding miniNoteDate,Converter={StaticResource TimeAgoConvert},RelativeSource={RelativeSource AncestorType=view:miniNote}}" />
                 <TextBlock Grid.Row="1"
                        Width="130"
                        HorizontalAlignment="Left"

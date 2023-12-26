@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Note"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:Note.ViewModel"
         xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
@@ -34,30 +35,55 @@
             <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=" 255"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-
-
-        </Grid.ColumnDefinitions>
-        <Grid Background="#008080" Grid.Column="0">
+    <DockPanel LastChildFill="True">
+        
+        <Grid Background="#008080"  x:Name="expandedMenu" Visibility="Visible" Width="255">
+            <StackPanel>
+                
             <Grid Height="30" Width="255" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
-                <Menu:Btn  Command="{Binding HomeCommand}"
-             IsChecked="True"
-          
-    Style="{StaticResource MaterialDesignFlatButton}" Height="33" Width="140">
+                
                     <Grid Height="30" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+
                         <TextBlock  Text="Leaves"
                                     FontSize="26"
                                     FontFamily="Lucida HandWriting"
-                                    Style="{StaticResource Text_Style}"/>
-                    </Grid>
-                </Menu:Btn>
+                                    Style="{StaticResource Text_Style}"
+                                    Margin=" 0 0 0 0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Cursor="Hand"
+                                    >
+                            <i:Interaction.Triggers>
+                                 <i:EventTrigger EventName="MouseLeftButtonDown"> 
+                                       <i:InvokeCommandAction Command="{Binding HomeCommand}"/>
+                                  </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBlock>
+                    <Button Name="btn_menutab_expanded_Menu"  
+                             Style="{StaticResource MaterialDesignFlatButton}"
+                             ToolTip="Collapse"                                    
+                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                             
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Left"
+                             Width="55"
+                             Margin="0 0 0 0"
+                             Click="btn_menutab_expanded_Menu_Click"
+                             Visibility="Visible">
+                        <materialDesign:PackIcon 
+                             Foreground="White"
+                             Kind="CollapseAll" 
+                             Width="35"
+                                Height="25"
+                             HorizontalAlignment="Center" 
+                             VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+                
             </Grid>
 
 
-            <Grid Height="32" Width="255" VerticalAlignment="Top" Margin="0,90,0,0">
+            <Grid Height="32" Width="255" VerticalAlignment="Top" Margin="0,30,0,0">
                 <Canvas Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
                     <Ellipse Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Ellipse.Fill>
@@ -87,12 +113,12 @@
                         >
 
 
-                    <materialDesign:PackIcon Kind="CogOutline"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="CogOutline"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Medium"/>
 
                 </Button>
             </Grid>
             <Button Width="200 " Height=" 35" VerticalAlignment="Top"
-                    Margin="0,150,0,0" Background="#40A0A0" BorderBrush="#2e9797"
+                    Margin="0,30,0,0" Background="#40A0A0" BorderBrush="#2e9797"
                     Style="{DynamicResource MaterialDesignFlatButton}">
                 <Button.Resources>
                     <Style TargetType="Border">
@@ -109,7 +135,7 @@
             <Button Width="200 " 
                     Height=" 35" 
                     VerticalAlignment="Top"
-                    Margin="0,200,0,0" 
+                    Margin="0,20,0,0" 
                     Background="#40A0A0" 
                     BorderBrush="#2e9797" 
                     Style="{DynamicResource MaterialDesignFlatButton}"
@@ -133,7 +159,7 @@
             <StackPanel 
                 Height="120" Width="255" HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Margin="0,250,0,0">
+                        Margin="0,30,0,0">
                 <Menu:Btn  Command="{Binding NotesCommand}"
                     Style="{StaticResource MaterialDesignFlatButton}"  Height="40" Width="255">
                     <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -167,7 +193,7 @@
             </StackPanel>
 
 
-            <Grid Height="200" Width="255" Margin="0,380,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+            <Grid Height="200" Width="255" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                       Background="#008080"
                     >
                 <ScrollViewer Style="{StaticResource MaterialDesignScrollViewer}"
@@ -246,19 +272,19 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
-            <Grid HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="125" Width="255">
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
                 <TextBlock VerticalAlignment="Top"
                            HorizontalAlignment="Left"
                            Text=" More"
-                           Margin="10,5,0,0"
+                           Margin="10,0,0,0"
                            FontSize="14"
                            FontWeight="Thin"
                            Style="{StaticResource Text_Style}"></TextBlock>
                 <StackPanel HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Width="255"
-                            Height="100">
-                    <Menu:Btn 
+                            Height="90">
+                    <Menu:Btn
                         Style="{StaticResource MaterialDesignFlatButton}" 
                         Height="40" 
                         Width="255">
@@ -277,11 +303,145 @@
                         </Grid>
                     </Menu:Btn>
                 </StackPanel>
-            </Grid>
+            </StackPanel>
         </Grid>
-        <Grid Background="#FEF8E2" Grid.Column="1">
+        <Grid Background="#008080" Grid.Column="0" x:Name="collapseMenu" Visibility="Collapsed" Width="65">
+            <StackPanel>
+                <Grid Height="30" Width="65" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
+                    <Button Name="btn_menutab_collapsed_Menu"  
+                          Style="{StaticResource MaterialDesignFlatButton}"
+                          ToolTip="Expand"                                    
+                          IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Width="55"
+                          Margin="0 0 0 0"
+                          Visibility="Visible"
+                            Click="btn_menutab_collapsed_Menu_Click">
+                        <materialDesign:PackIcon 
+                              Foreground="White"
+                              Kind="ExpandAll" 
+                              Width="35"
+                                 Height="25"
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+                <Grid Height="30" Width="65" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
+                    <Button
+                        BorderBrush="#008080"
+                        Background="#008080" 
+                        Width=" 25" Height="25"
+                        HorizontalAlignment="Center" 
+                        Margin="0,0,0,0"
+                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                        ToolTip="MaterialDesignFloatingActionMiniButton" Cursor="Hand"
+                            >
+                        <materialDesign:PackIcon Kind="CogOutline"  Width="25" Height="25" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Medium"/>
+
+                    </Button>
+                </Grid>
+                <Button Width="200 " Height=" 35" VerticalAlignment="Top"
+                        Margin="0,30,0,0" 
+                        Style="{DynamicResource MaterialDesignFlatButton}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4">
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Grid Width="200" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Style="{StaticResource Image_Style}" Source="Images/ic24-search.png"/>
+                        <TextBlock Style="{StaticResource Text_Style}" Text="Search"/>
+                    </Grid>
+
+                </Button>
+                <Button Width="200 " 
+                    Height=" 35" 
+                    VerticalAlignment="Top"
+                    Margin="0,20,0,0" 
+                    
+                    Style="{DynamicResource MaterialDesignFlatButton}"
+                    Command="{Binding NewNoteCommand}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="4">
+                            </Setter>
+                        </Style>
+                    </Button.Resources>
+                    <Grid Width="200" 
+                          Height="35" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Center">
+                        <Image Style="{StaticResource Image_Style}" 
+                               Source="Images/ic24-add.png"/>
+                        <TextBlock Style="{StaticResource Text_Style}"
+                            Text="New Note"/>
+                    </Grid>
+                </Button>
+                <StackPanel 
+                    Height="120" Width="65" HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Margin="0,30,0,0">
+                    <Menu:Btn  Command="{Binding NotesCommand}"
+                          Style="{StaticResource MaterialDesignFlatButton}"  Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image  Style="{StaticResource Image_Style}" Source="Images/ic24-notes.png"/>
+                            <TextBlock  
+                               Text="Notes"  
+                               Style="{StaticResource Text_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+                    <Menu:Btn
+                           Command="{Binding RemindersCommand}"
+                            Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255">
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Source="Images/bell.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock Style="{StaticResource Text_Style}"
+                                 Text="Reminders"/>
+                        </Grid>
+                    </Menu:Btn>
+                    <Menu:Btn 
+                          Command="{Binding TasksCommand}"
+    
+                         Style="{StaticResource MaterialDesignFlatButton}" Height="40" Width="255" >
+                        <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Source="Images/checkmark-round.png" Style="{StaticResource Image_Style}"/>
+                            <TextBlock Style="{StaticResource Text_Style}"
+                                 Text="Tasks"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                </StackPanel>
+                
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Height="90">
+                <Menu:Btn
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Height="40" 
+                    Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Height="20" Width="20" Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock FontSize="16" Style="{StaticResource Text_Style}" Text="Trash"/>
+                    </Grid>
+                </Menu:Btn>
+                <Menu:Btn
+                    Style="{StaticResource MaterialDesignFlatButton}" 
+                    Height="40" 
+                    Width="255">
+                    <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image Height="20" Width="20" Source="Images/archived.png" Style="{StaticResource Image_Style}"/>
+                        <TextBlock FontSize="16" Style="{StaticResource Text_Style}" Text="Archived Notes"/>
+                    </Grid>
+                </Menu:Btn>
+            </StackPanel>
+        </Grid>
+        <Grid Background="#FEF8E2"  >
             <ContentControl Name="WorkView" Content="{Binding CurrentView}">
             </ContentControl>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Window>
