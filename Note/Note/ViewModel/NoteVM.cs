@@ -100,11 +100,7 @@ namespace Note.ViewModel
                 PageTitle = CurNote.Title;
 
                 // Load Content
-                TextRange myTR = new TextRange(PageContent.Document.ContentStart, PageContent.Document.ContentEnd);
-                myTR.ClearAllProperties();
-                DataAccess.Instance.LoadRTFNote(CurNote.FileId, myTR);
-
-                
+                PageContent.Document = DataAccess.Instance.LoadRTFNote(CurNote.FileId);
             }
             catch (Exception ex)
             {
@@ -113,8 +109,7 @@ namespace Note.ViewModel
         }
         private void SavePage(object obj)
         {
-            TextRange myTR = new TextRange(PageContent.Document.ContentStart, PageContent.Document.ContentEnd);
-            DataAccess.Instance.UpdateRTFNote(CurNote.FileId, myTR);
+            DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
         }
         private void DeleteNote(object obj)
         {

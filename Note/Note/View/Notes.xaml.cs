@@ -153,9 +153,6 @@ namespace Note.View
         private void richTextBox_Loaded(object sender, RoutedEventArgs e)
         {
             NoteVM.Instance.PageContent = sender as RichTextBox;
-
-            //RichTextBox myRtb = sender as RichTextBox;
-            //NoteVM.Instance.PageContent = new TextRange(myRtb.Document.ContentStart, myRtb.Document.ContentEnd);
         }
 
 

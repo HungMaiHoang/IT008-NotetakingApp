@@ -121,8 +121,8 @@ namespace Note.Model
         public static ObjectId createFileID()
         {
             FlowDocument doc = new FlowDocument();
-            TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
-            return DataAccess.Instance.CreateRTFNote(rtfContent);
+            //TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
+            return DataAccess.Instance.CreateRTFNote(doc);
         }
     }
 }

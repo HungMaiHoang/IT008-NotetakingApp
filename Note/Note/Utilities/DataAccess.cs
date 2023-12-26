@@ -60,7 +60,6 @@ namespace Note.Utilities
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
                 var results = notesCollection.Find(_ => true);
-                //MessageBox.Show(results.Count().ToString());
                 return results.ToList();
 
             }
@@ -132,18 +131,6 @@ namespace Note.Utilities
             // GridFs update operation
             ObjectId fileId = gridFSBucket.UploadFromBytes(rtfDocumentName, xamlBytes);
             return fileId;
-
-            //using (var rtfMemoryStream = new MemoryStream())
-            //{
-            //    rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
-            //    rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-
-            //    // GridFs update operation
-                
-
-            //    var fileId = gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
-            //    return fileId;
-            //}
         }
 
         /// <summary>
@@ -163,18 +150,6 @@ namespace Note.Utilities
             {
                 gridFSBucket.UploadFromBytesAsync(fileId, rtfDocumentName, xamlBytes);
             });
-
-            //using (var rtfMemoryStream = new MemoryStream())
-            //{
-            //    rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
-            //    rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-                
-            //    // GridFS update operation
-            //    await Task.Run(() =>
-            //    {
-            //        gridFSBucket.UploadFromStream(fileId, rtfDocumentName, rtfMemoryStream);
-            //    });
-            //}
         }
 
         /// <summary>
@@ -182,18 +157,14 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="rtfContent"></param>
-        public async FlowDocument LoadRTFNote(ObjectId fileId)
+        public FlowDocument LoadRTFNote(ObjectId fileId)
         {
-            byte[] xamlBytes;
             // GridFS download operation
-            xamlBytes = gridFSBucket.DownloadAsBytesAsync(fileId);
+            byte[] xamlBytes = gridFSBucket.DownloadAsBytes(fileId);
 
-            //var rtfMemoryStream = new MemoryStream();
-            //await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
-
-            // Set RTF Content
-            rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-            rtfContent.Load(rtfMemoryStream, DataFormats.Rtf);
+            string xamlString = System.Text.Encoding.UTF8.GetString(xamlBytes);
+            FlowDocument flowDocument = (FlowDocument)XamlReader.Parse(xamlString);
+            return flowDocument;
         }
         #endregion
     }
