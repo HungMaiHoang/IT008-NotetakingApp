@@ -196,13 +196,13 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBlock 
+                        <TextBox 
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
-                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                            Style="{StaticResource MaterialDesignTextBoxBase}"
                             Text="{Binding PageTitle}"
                             FontSize="32">
-                        </TextBlock>
+                        </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
                         <ToolBarTray>
