@@ -75,10 +75,10 @@ namespace Note.Model
             get => status;
             set
             {
-                title = value;
+                status = value;
                 // Update to database
                 DataAccess.Instance.UpdateNote(this);
-                OnPropertyChanged(nameof(status));
+                OnPropertyChanged(nameof(Status));
             }
         }
         [BsonElement("File Id")]
