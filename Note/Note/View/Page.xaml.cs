@@ -110,19 +110,6 @@ namespace Note.View
         //    }
         //}
 
-        DataAccess da = new DataAccess();
-
-        private void SaveButton(object sender, RoutedEventArgs e)
-        {
-            string relativePath = "Note/Test.rtf";
-            string fullPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), relativePath);
-            TextRange range;
-            FileStream stream;
-            range = new TextRange(TextBox.Document.ContentStart, TextBox.Document.ContentEnd);
-            //stream = new FileStream(fullPath, FileMode.OpenOrCreate);
-            //range.Save(stream, System.Windows.DataFormats.Rtf);
-
-            //da.CreateRTFNote(range);
-        }
+   
     }
 }

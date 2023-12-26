@@ -16,7 +16,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type vm:TaskVM}">
-        <view:Tasks />
+        <view:Tasks/>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type vm:PageVM}">

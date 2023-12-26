@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows;
 using System.Security.Permissions;
 using Note.ViewModel;
+using Note.View;
 
 namespace Note.Utilities
 {
@@ -40,9 +41,8 @@ namespace Note.Utilities
         private MongoClient client;
         private IMongoDatabase database;
         private GridFSBucket gridFSBucket;
-        public DataAccess()
+        private DataAccess()
         {
-            _instance = this;
             client = new MongoClient(ConnectionString);
             database = client.GetDatabase(DatabaseName);
             gridFSBucket = new GridFSBucket(database);
@@ -59,13 +59,22 @@ namespace Note.Utilities
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
                 var results = notesCollection.Find(_ => true);
+
+                //MessageBox.Show(results.Count().ToString());
                 return results.ToList();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
             }
+        }
+
+        public NoteModel GetNoteWithId(ObjectId id)
+        {
+            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            return notesCollection.Find(p => p.Id == id).FirstOrDefault();
         }
 
         public Task InsertNote(NoteModel note)
@@ -81,19 +90,35 @@ namespace Note.Utilities
             return notesCollection.ReplaceOneAsync(filter, note, new ReplaceOptions { IsUpsert = true });
         }
 
-        public Task DeleteNote(NoteModel note)
+        //public Task DeleteNote(NoteModel note)
+        //{
+        //    //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+
+        //    //gridFSBucket.DeleteAsync(note.FileId);
+
+        //    //return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
+        //}
+        public Task DeleteNote(ObjectId id)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-            return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
+
+            NoteModel temp = GetNoteWithId(id);
+            if (temp != null)
+            {
+                MessageBox.Show("deleting");
+                gridFSBucket.DeleteAsync(temp.FileId);
+            }
+
+            return notesCollection.DeleteOneAsync(c => c.Id == id);
         }
 
+        #region GridFS
         /// <summary>
         /// Please do not use this outside NoteModel/Create new rtf file in database
         /// </summary>
         /// <param name="rtfContent"></param>
         public ObjectId CreateRTFNote(TextRange rtfContent)
         {
-            var gridFSBucket = new GridFSBucket(database);
 
             using (var rtfMemoryStream = new MemoryStream())
             {
@@ -107,17 +132,20 @@ namespace Note.Utilities
         }
 
         /// <summary>
-        /// Save rtf file with Id in database
+        /// Update rtf file with Id in database
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="rtfContent"></param>
-        public async void SaveRTFNote(ObjectId fileId, TextRange rtfContent)
+        public async void UpdateRTFNote(ObjectId fileId, TextRange rtfContent)
         {
+            // Delete Old file
+            gridFSBucket.Delete(fileId);
+
             using (var rtfMemoryStream = new MemoryStream())
             {
                 rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
                 rtfMemoryStream.Seek(0, SeekOrigin.Begin);
-
+                
                 // GridFS update operation
                 await Task.Run(() =>
                 {
@@ -135,11 +163,12 @@ namespace Note.Utilities
         {
             // GridFS download operation
             var rtfMemoryStream = new MemoryStream();
-            await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
+                await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
 
             // Set RTF Content
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);
             rtfContent.Load(rtfMemoryStream, DataFormats.Rtf);
         }
+        #endregion
     }
 }
