@@ -89,6 +89,13 @@ namespace Note.Utilities
             var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
             return notesCollection.ReplaceOneAsync(filter, note, new ReplaceOptions { IsUpsert = true });
         }
+        public Task NoteToTrash(NoteModel note)
+        {
+            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
+            var update = Builders<NoteModel>.Update.Set("Status","disable");
+            return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+        }
 
         //public Task DeleteNote(NoteModel note)
         //{

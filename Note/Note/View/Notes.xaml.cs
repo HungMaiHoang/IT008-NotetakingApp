@@ -264,6 +264,8 @@ namespace Note.View
         {
             NoteVM.Instance.Text = richTextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
         }
+
+      
     }
 }
 

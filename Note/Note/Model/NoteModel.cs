@@ -18,6 +18,7 @@ namespace Note.Model
         private string title;
         private DateTime lastEdited;        
         private string headLine;
+        private string status;
         private ObjectId fileId;
 
         [BsonId]
@@ -68,6 +69,18 @@ namespace Note.Model
                 OnPropertyChanged(nameof(HeadLine)); 
             } 
         }
+        [BsonElement("Status")]
+        public string Status
+        {
+            get => status;
+            set
+            {
+                title = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(status));
+            }
+        }
         [BsonElement("File Id")]
         public ObjectId FileId 
         { 
@@ -101,6 +114,7 @@ namespace Note.Model
                 Title = "Title",
                 LastEdited = DateTime.Now,
                 HeadLine = "",
+                Status="enable",
                 FileId = createFileID()
             };
         }
