@@ -253,6 +253,11 @@ namespace Note.View
             //Table table = new Table();
 
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //NoteVM.Instance.Text = TextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
+        }
     }
 }
 

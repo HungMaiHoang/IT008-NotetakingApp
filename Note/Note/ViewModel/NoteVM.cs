@@ -17,7 +17,7 @@ using Note.View;
 using Note.Windows;
 namespace Note.ViewModel
 {
-    class NoteVM : ViewModelBase
+    public class NoteVM : ViewModelBase
     {
         private Notes view;
         // Singleton
@@ -33,7 +33,6 @@ namespace Note.ViewModel
                 return _instance;
             }
         }
-
         private NoteModel _curNote;
         public NoteModel CurNote
         {
@@ -89,6 +88,7 @@ namespace Note.ViewModel
         public ICommand DeleteNoteCommand { get; set; }
         public ICommand TestCommand { get; set; }
         public ICommand ShowInsertTableWindowCommand { get; set; }
+        
         private void LoadPage(object obj)
         {
             try
@@ -127,13 +127,44 @@ namespace Note.ViewModel
             //PageContent.Text = "Testing";
             DataAccess.Instance.GetAllNotes();
         }
-
-        private NoteVM()
+        // count word
+        private WordCounterModel model;
+        private string text;
+        public string Text
         {
-            // Load Notes from databse
+            get { return text; }
+            set
+            {
+                if (text != value)
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                    
+                }
+            }
+        }
+        private int wordCount;
+        public int WordCount
+        {
+            get { return wordCount; }
+            set
+            {
+                if (wordCount != value)
+                {
+                    wordCount = value;
+                    OnPropertyChanged(nameof(WordCount));
+                }
+            }
+        }
+        public ICommand WordCountCommand { get;}
+        public NoteVM()
+        {
+            instance = this;
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
+            model = new WordCounterModel();
+            WordCountCommand = new RelayCommand(UpdateWordCount);
             LoadPageCommand = new RelayCommand(LoadPage);
             SavePageCommand = new RelayCommand(SavePage);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
@@ -166,6 +197,12 @@ namespace Note.ViewModel
         {
             return true;
         }
+        private void UpdateWordCount(object obj)
+        {
+            WordCount = model.CountWords(Text);
+            CurNote.LastEdited = DateTime.Now;
+        }
+        
     }
 }
         

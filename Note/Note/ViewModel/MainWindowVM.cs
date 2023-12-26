@@ -70,7 +70,9 @@ namespace Note.ViewModel
             
             DataAccess.Instance.UpdateNote(note);
 
-            NotesView.ListNote.Add(note);
+            //NotesView.ListNote.Add(note);
+            NoteVM.Instance.ListNote.Add(note);
+
 
             CurrentView = NotesView;
         }

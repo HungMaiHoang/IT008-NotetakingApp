@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 namespace Note.Utilities
 {
-    class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private readonly Action<object> _execute;
         private readonly Func<object, bool> _canExecute;
