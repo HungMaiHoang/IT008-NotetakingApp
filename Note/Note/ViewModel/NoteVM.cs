@@ -89,6 +89,8 @@ namespace Note.ViewModel
         public ICommand SavePageCommand { get; set; }
         public ICommand DeleteNoteCommand { get; set; }
         public ICommand TestCommand { get; set; }
+        public ICommand NoteToTrashCommand { get; set; }
+
         public ICommand ShowInsertTableWindowCommand { get; set; }
         
         private void LoadPage(object obj)
@@ -170,6 +172,7 @@ namespace Note.ViewModel
             LoadPageCommand = new RelayCommand(LoadPage);
             SavePageCommand = new RelayCommand(SavePage);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
+            NoteToTrashCommand = new RelayCommand(NoteToTrash);
             TestCommand = new RelayCommand(Test);
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
 
@@ -204,7 +207,12 @@ namespace Note.ViewModel
             WordCount = model.CountWords(Text);
             CurNote.LastEdited = DateTime.Now;
         }
-        
+        private void NoteToTrash(object obj)
+        {
+            DataAccess.Instance.NoteToTrash(CurNote);
+            ListNote.Remove(CurNote);
+        }
+
     }
 }
         

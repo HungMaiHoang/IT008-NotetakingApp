@@ -163,7 +163,7 @@
                                             miniNoteHeadLine="{Binding HeadLine}"
                                             miniNoteDate="{Binding LastEdited}"
                                             miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"/>
-                                            
+
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -364,7 +364,6 @@
                         </in:EventTrigger>
                     </in:Interaction.Triggers>-->
                 </RichTextBox>
-                
             </Grid>
             <StatusBar VerticalAlignment="Bottom">
                 <StatusBar.ItemsPanel>
@@ -393,15 +392,15 @@
 
                 <!-- Additional controls on the right -->
                 <StatusBarItem Grid.Column="2" Margin="0 0 0 0">
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <!--<TextBlock Text="Last Modified: "></TextBlock>-->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <!--<TextBlock Text="Last Modified: "></TextBlock>-->
                         <TextBlock Text="{Binding CurNote.LastEdited, Converter={StaticResource TimeAgoConvert}, StringFormat='Last Modified: {0:G}'}"></TextBlock>
-                    
-                </StackPanel>
+
+                    </StackPanel>
                 </StatusBarItem>
-                
-                    
-                
+
+
+
             </StatusBar>
         </Grid>
     </Grid>
