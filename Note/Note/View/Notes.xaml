@@ -309,16 +309,16 @@
                 <RichTextBox 
                     x:Name="richTextBox" 
                     SelectionChanged="TextBox_SelectionChanged"
-                    Grid.Row="1" 
+                    Grid.Row="2" 
                     Grid.ColumnSpan="2"
                     Loaded="richTextBox_Loaded">
                     <FlowDocument Name="myFlowDocument">
                     </FlowDocument>
-                    <in:Interaction.Triggers>
+                    <!--<in:Interaction.Triggers>
                         <in:EventTrigger EventName="TextChanged">
                             <in:InvokeCommandAction Command="{Binding WordCountCommand}"/>
                         </in:EventTrigger>
-                    </in:Interaction.Triggers>
+                    </in:Interaction.Triggers>-->
                 </RichTextBox>
                 
             </Grid>
