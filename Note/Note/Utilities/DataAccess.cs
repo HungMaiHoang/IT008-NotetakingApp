@@ -14,6 +14,7 @@ using System.Windows;
 using System.Security.Permissions;
 using Note.ViewModel;
 using Note.View;
+using System.Windows.Markup;
 
 namespace Note.Utilities
 {
@@ -116,18 +117,26 @@ namespace Note.Utilities
         /// Please do not use this outside NoteModel/Create new rtf file in database
         /// </summary>
         /// <param name="rtfContent"></param>
-        public ObjectId CreateRTFNote(TextRange rtfContent)
+        public ObjectId CreateRTFNote(FlowDocument flowDocument)
         {
+            string xamlString = XamlWriter.Save(flowDocument);
+            byte[] xamlBytes = System.Text.Encoding.UTF8.GetBytes(xamlString);
 
-            using (var rtfMemoryStream = new MemoryStream())
-            {
-                rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
-                rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+            // GridFs update operation
+            ObjectId fileId = gridFSBucket.UploadFromBytes(rtfDocumentName, xamlBytes);
+            return fileId;
 
-                // GridFs update operation
-                var fileId = gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
-                return fileId;
-            }
+            //using (var rtfMemoryStream = new MemoryStream())
+            //{
+            //    rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
+            //    rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+
+            //    // GridFs update operation
+                
+
+            //    var fileId = gridFSBucket.UploadFromStream(rtfDocumentName, rtfMemoryStream);
+            //    return fileId;
+            //}
         }
 
         /// <summary>
@@ -135,22 +144,30 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="rtfContent"></param>
-        public async void UpdateRTFNote(ObjectId fileId, TextRange rtfContent)
+        public async void UpdateRTFNote(ObjectId fileId, FlowDocument flowDocument)
         {
             // Delete Old file
             gridFSBucket.Delete(fileId);
 
-            using (var rtfMemoryStream = new MemoryStream())
+            string xamlString = XamlWriter.Save(flowDocument);
+            byte[] xamlBytes = System.Text.Encoding.UTF8.GetBytes(xamlString);
+            // GridFS update operation
+            await Task.Run(() =>
             {
-                rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
-                rtfMemoryStream.Seek(0, SeekOrigin.Begin);
+                gridFSBucket.UploadFromBytesAsync(fileId, rtfDocumentName, xamlBytes);
+            });
+
+            //using (var rtfMemoryStream = new MemoryStream())
+            //{
+            //    rtfContent.Save(rtfMemoryStream, DataFormats.Rtf);
+            //    rtfMemoryStream.Seek(0, SeekOrigin.Begin);
                 
-                // GridFS update operation
-                await Task.Run(() =>
-                {
-                    gridFSBucket.UploadFromStream(fileId, rtfDocumentName, rtfMemoryStream);
-                });
-            }
+            //    // GridFS update operation
+            //    await Task.Run(() =>
+            //    {
+            //        gridFSBucket.UploadFromStream(fileId, rtfDocumentName, rtfMemoryStream);
+            //    });
+            //}
         }
 
         /// <summary>
@@ -158,11 +175,14 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="rtfContent"></param>
-        public async void LoadRTFNote(ObjectId fileId, TextRange rtfContent)
+        public async FlowDocument LoadRTFNote(ObjectId fileId)
         {
+            byte[] xamlBytes;
             // GridFS download operation
-            var rtfMemoryStream = new MemoryStream();
-            await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);            
+            xamlBytes = gridFSBucket.DownloadAsBytesAsync(fileId);
+
+            //var rtfMemoryStream = new MemoryStream();
+            //await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
 
             // Set RTF Content
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);
