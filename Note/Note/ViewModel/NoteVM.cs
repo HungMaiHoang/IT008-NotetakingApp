@@ -159,7 +159,7 @@ namespace Note.ViewModel
         public ICommand WordCountCommand { get;}
         public NoteVM()
         {
-            instance = this;
+            //instance = this;
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 

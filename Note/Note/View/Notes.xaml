@@ -161,7 +161,7 @@
                                             miniNoteHeadLine="{Binding HeadLine}"
                                             miniNoteDate="{Binding LastEdited}"
                                             miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"/>
-
+                                            
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

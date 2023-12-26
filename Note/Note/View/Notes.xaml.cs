@@ -256,7 +256,7 @@ namespace Note.View
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //NoteVM.Instance.Text = TextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
+            NoteVM.Instance.Text = richTextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
         }
     }
 }
