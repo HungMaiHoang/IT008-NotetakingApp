@@ -108,7 +108,6 @@ namespace Note.Model
         {
             FlowDocument doc = new FlowDocument();
             TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
-            rtfContent.Text = "Start Texting....";
             return DataAccess.Instance.CreateRTFNote(rtfContent);
         }
     }

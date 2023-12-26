@@ -59,7 +59,6 @@ namespace Note.Utilities
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
                 var results = notesCollection.Find(_ => true);
-
                 //MessageBox.Show(results.Count().ToString());
                 return results.ToList();
 
@@ -163,7 +162,7 @@ namespace Note.Utilities
         {
             // GridFS download operation
             var rtfMemoryStream = new MemoryStream();
-                await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);
+            await gridFSBucket.DownloadToStreamAsync(fileId, rtfMemoryStream);            
 
             // Set RTF Content
             rtfMemoryStream.Seek(0, SeekOrigin.Begin);

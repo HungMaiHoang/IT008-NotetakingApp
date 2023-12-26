@@ -126,12 +126,11 @@ namespace Note.View
             var selectedText = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
             Boldbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontWeightProperty).Equals(FontWeights.Bold);
             Italicbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontStyleProperty).Equals(FontStyles.Italic);
-            Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+            //Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
             LeftAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Left);
             CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
             RightAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Right);
             JustifyAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Justify);
-
         }
 
         private void TextBox_KeyEnterUpdate(object sender, KeyEventArgs e)
@@ -146,10 +145,17 @@ namespace Note.View
             }
         }
 
+        /// <summary>
+        /// Get RichTextBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void richTextBox_Loaded(object sender, RoutedEventArgs e)
         {
-            RichTextBox myRtb = sender as RichTextBox;
-            NoteVM.Instance.PageContent = new TextRange(myRtb.Document.ContentStart, myRtb.Document.ContentEnd);
+            NoteVM.Instance.PageContent = sender as RichTextBox;
+
+            //RichTextBox myRtb = sender as RichTextBox;
+            //NoteVM.Instance.PageContent = new TextRange(myRtb.Document.ContentStart, myRtb.Document.ContentEnd);
         }
 
 

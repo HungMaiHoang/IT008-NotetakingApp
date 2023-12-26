@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -72,8 +73,8 @@ namespace Note.ViewModel
             }
         }
 
-        private TextRange _pageContent;
-        public TextRange PageContent
+        private RichTextBox _pageContent;
+        public RichTextBox PageContent
         {
             get => _pageContent;
             set
@@ -96,14 +97,12 @@ namespace Note.ViewModel
                 CurNote = (obj as NoteModel);
                 PageTitle = CurNote.Title;
 
-                //MessageBox.Show(PageContent.ToString());
+                // Load Content
+                TextRange myTR = new TextRange(PageContent.Document.ContentStart, PageContent.Document.ContentEnd);
+                myTR.ClearAllProperties();
+                DataAccess.Instance.LoadRTFNote(CurNote.FileId, myTR);
 
-                PageContent.ClearAllProperties();
-                DataAccess.Instance.LoadRTFNote(CurNote.FileId, PageContent);
-
-
-                //TextRange temp = new TextRange(PageContent.ContentStart, PageContent.ContentEnd);
-                //DataAccess.Instance.LoadRTFNote(CurNote.Id, temp);
+                
             }
             catch (Exception ex)
             {
@@ -112,7 +111,8 @@ namespace Note.ViewModel
         }
         private void SavePage(object obj)
         {
-            DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent);
+            TextRange myTR = new TextRange(PageContent.Document.ContentStart, PageContent.Document.ContentEnd);
+            DataAccess.Instance.UpdateRTFNote(CurNote.FileId, myTR);
         }
         private void DeleteNote(object obj)
         {
