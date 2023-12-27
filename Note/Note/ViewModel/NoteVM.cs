@@ -46,6 +46,7 @@ namespace Note.ViewModel
                     DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
                     DataAccess.Instance.UpdateNote(CurNote);
                 }
+
                 _curNote = value;
                 OnPropertyChanged(nameof(CurNote));
             }
@@ -122,8 +123,7 @@ namespace Note.ViewModel
         }
         private void Test(object obj)
         {
-            //PageContent.Text = "Testing";
-            DataAccess.Instance.GetAllNotes();
+            MessageBox.Show(Text);
         }
         // count word
         private WordCounterModel model;
@@ -137,7 +137,6 @@ namespace Note.ViewModel
                 {
                     text = value;
                     OnPropertyChanged(nameof(Text));
-                    
                 }
             }
         }

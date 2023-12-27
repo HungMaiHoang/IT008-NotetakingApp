@@ -106,7 +106,7 @@
                                Foreground="Black" HorizontalAlignment="Left" Margin="20,0,0,0"></TextBlock>
                     <Button 
                         Style="{StaticResource MaterialDesignFloatingActionButton}"
-                        Command="{Binding DeleteNoteCommand}"/>
+                        Command="{Binding TestCommand}"/>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0.5" >
@@ -313,14 +313,15 @@
                     SelectionChanged="TextBox_SelectionChanged"
                     Grid.Row="2" 
                     Grid.ColumnSpan="2"
-                    Loaded="richTextBox_Loaded">
+                    Loaded="richTextBox_Loaded"
+                    TextChanged="TextBox_TextChanged">
                     <FlowDocument Name="myFlowDocument">
                     </FlowDocument>
-                    <!--<in:Interaction.Triggers>
+                    <in:Interaction.Triggers>
                         <in:EventTrigger EventName="TextChanged">
                             <in:InvokeCommandAction Command="{Binding WordCountCommand}"/>
                         </in:EventTrigger>
-                    </in:Interaction.Triggers>-->
+                    </in:Interaction.Triggers>
                 </RichTextBox>
             </Grid>
             <StatusBar VerticalAlignment="Bottom">
