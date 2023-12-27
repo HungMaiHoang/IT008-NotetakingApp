@@ -40,12 +40,13 @@ namespace Note.ViewModel
             get => _curNote;
             set
             {
+                // Update note to database before change the value
+                if (CurNote is NoteModel && CurNote != null)
+                {
+                    DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
+                    DataAccess.Instance.UpdateNote(CurNote);
+                }
                 _curNote = value;
-                //Update note to database
-                //if (CurNote is NoteModel)
-                //{
-                //    DataAccess.Instance.UpdateNote(CurNote);
-                //}
                 OnPropertyChanged(nameof(CurNote));
             }
         }
