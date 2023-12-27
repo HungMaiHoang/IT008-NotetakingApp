@@ -72,7 +72,6 @@ namespace Note.ViewModel
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable();
             TrashView.ListNote.Clear();
             TrashView.ListNote = new ObservableCollection<NoteModel>(listTemp);
-
             CurrentView = TrashView;
         }
         private void NewNote(object obj)

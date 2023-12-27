@@ -151,7 +151,7 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public void NoteToTrash(NoteModel note)
+        public Task NoteToTrash(NoteModel note)
         {
             //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);

@@ -117,14 +117,14 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <view:miniNote 
-                            Padding="0 0 0 0"
-                            Margin="-3 -1 -4 -1"
-                            miniNoteTitle="{Binding Title}" 
-                            miniNoteHeadLine="{Binding HeadLine}"
-                            miniNoteDate="{Binding LastEdited}"
-                            miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"/>
-
+                                <view:miniNote
+                                    Padding="0 0 0 0"
+                                    Margin="-3 -1 -4 -1"
+                                    miniNoteTitle="{Binding Title}" 
+                                    miniNoteHeadLine="{Binding HeadLine}"
+                                    miniNoteDate="{Binding LastEdited}"
+                                    miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}">
+                                </view:miniNote>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

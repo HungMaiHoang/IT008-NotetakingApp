@@ -135,7 +135,7 @@ namespace Note.ViewModel
         {
             try
             {
-                CurNote = (obj as NoteModel);
+                CurNote = obj as NoteModel;
                 PageTitle = CurNote.Title;
 
                 // Load Content
