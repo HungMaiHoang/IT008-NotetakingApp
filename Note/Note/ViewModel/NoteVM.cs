@@ -40,12 +40,14 @@ namespace Note.ViewModel
             get => _curNote;
             set
             {
+                
                 _curNote = value;
                 //Update note to database
                 //if (CurNote is NoteModel)
                 //{
                 //    DataAccess.Instance.UpdateNote(CurNote);
                 //}
+                
                 OnPropertyChanged(nameof(CurNote));
             }
         }
@@ -113,11 +115,11 @@ namespace Note.ViewModel
         }
         private void DeleteNote(object obj)
         {
-            //if (CurNote is NoteModel && CurNote != null)
-            //{
-            //    ListNote.Remove(CurNote);
-            //DataAccess.Instance.DeleteNote(CurNote);
-            //}
+            if (CurNote is NoteModel && CurNote != null)
+            {
+                DataAccess.Instance.DeleteNote(CurNote.Id);
+                ListNote.Remove(CurNote);
+            }
         }
         private void Test(object obj)
         {
