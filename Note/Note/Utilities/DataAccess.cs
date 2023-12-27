@@ -125,10 +125,13 @@ namespace Note.Utilities
         /// <returns></returns>
         public Task NoteToTrash(NoteModel note)
         {
-            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-            var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
-            var update = Builders<NoteModel>.Update.Set("Status","disable");
-            return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
+            //var update = Builders<NoteModel>.Update.Set("Status","disable");
+            //return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+
+            note.Status = "disable";
+            return UpdateNote(note);
         }
 
         /// <summary>
