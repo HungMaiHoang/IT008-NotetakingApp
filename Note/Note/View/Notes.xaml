@@ -190,8 +190,13 @@
                                             </StackPanel>
                                         </MenuItem.Header>
                                     </MenuItem>-->
-                                                                <MenuItem x:Name="DeleteNote" Foreground="White" Margin="5 0 5 0" Height="40"  Command= "{Binding DataContext.NoteToTrashCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
-                                              CommandParameter="{Binding}">
+                                                                <MenuItem 
+                                                                    x:Name="DeleteNote" 
+                                                                    Foreground="White" 
+                                                                    Margin="5 0 5 0" 
+                                                                    Height="40"  
+                                                                    Command= "{Binding DataContext.NoteToTrashCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                                                    CommandParameter="{Binding}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
                                                                             <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
