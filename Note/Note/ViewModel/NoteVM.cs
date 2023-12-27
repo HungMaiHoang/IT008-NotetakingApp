@@ -34,6 +34,7 @@ namespace Note.ViewModel
                 return _instance;
             }
         }
+        // Current Note in NoteVM
         private NoteModel _curNote;
         public NoteModel CurNote
         {
@@ -51,7 +52,7 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(CurNote));
             }
         }
-
+        // Current List Note in NoteVM
         private ObservableCollection<NoteModel> _listNote;
         public ObservableCollection<NoteModel> ListNote
         {
@@ -63,6 +64,8 @@ namespace Note.ViewModel
             }
         }
 
+        #region Page Things
+        // Note Title
         private string _pageTitle;
         public string PageTitle
         {
@@ -74,7 +77,7 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(PageTitle));
             }
         }
-
+        // Content from RichTextBox
         private RichTextBox _pageContent;
         public RichTextBox PageContent
         {
@@ -85,15 +88,49 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(PageContent));
             }
         }
+        // Plain Text from Page Content
+        private string _plainText;
+        public string PlainText
+        {
+            get { return _plainText; }
+            set
+            {
+                if (_plainText != value)
+                {
+                    _plainText = value;
+                    OnPropertyChanged(nameof(PlainText));
+                }
+            }
+        }
+        #endregion
 
+        #region Word Counting
+        private WordCounterModel wordCounterModel;
+        private int wordCount;
+        public int WordCount
+        {
+            get { return wordCount; }
+            set
+            {
+                if (wordCount != value)
+                {
+                    wordCount = value;
+                    OnPropertyChanged(nameof(WordCount));
+                }
+            }
+        }
+        #endregion
+
+        #region Command
         public ICommand LoadPageCommand { get; set; }
         public ICommand SavePageCommand { get; set; }
         public ICommand DeleteNoteCommand { get; set; }
-        public ICommand TestCommand { get; set; }
         public ICommand NoteToTrashCommand { get; set; }
-
         public ICommand ShowInsertTableWindowCommand { get; set; }
+        public ICommand WordCountCommand { get; }
+        public ICommand TestCommand { get; set; }
         
+
         private void LoadPage(object obj)
         {
             try
@@ -121,53 +158,48 @@ namespace Note.ViewModel
                 ListNote.Remove(CurNote);
             }
         }
+        private void NoteToTrash(object obj)
+        {
+            DataAccess.Instance.NoteToTrash(CurNote);
+            ListNote.Remove(CurNote);
+        }
+        private void ShowInsertTAbleWindow(object obj)
+        {
+            InsertTableWindow insertTableWindow = new InsertTableWindow();
+            insertTableWindow.ShowDialog();
+        }
+        private bool CanShowWindow(object obj)
+        {
+            return true;
+        }
+        private void UpdateWordCount(object obj)
+        {
+            WordCount = wordCounterModel.CountWords(PlainText);
+            CurNote.LastEdited = DateTime.Now;
+        }
         private void Test(object obj)
         {
-            MessageBox.Show(Text);
+            MessageBox.Show(PlainText);
         }
-        // count word
-        private WordCounterModel model;
-        private string text;
-        public string Text
-        {
-            get { return text; }
-            set
-            {
-                if (text != value)
-                {
-                    text = value;
-                    OnPropertyChanged(nameof(Text));
-                }
-            }
-        }
-        private int wordCount;
-        public int WordCount
-        {
-            get { return wordCount; }
-            set
-            {
-                if (wordCount != value)
-                {
-                    wordCount = value;
-                    OnPropertyChanged(nameof(WordCount));
-                }
-            }
-        }
-        public ICommand WordCountCommand { get;}
+        #endregion
+
         public NoteVM()
         {
-            //instance = this;
+            // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
-            model = new WordCounterModel();
+            // Set up World Counter
+            wordCounterModel = new WordCounterModel();
+
+            // Set up Command
             WordCountCommand = new RelayCommand(UpdateWordCount);
             LoadPageCommand = new RelayCommand(LoadPage);
             SavePageCommand = new RelayCommand(SavePage);
             DeleteNoteCommand = new RelayCommand(DeleteNote);
             NoteToTrashCommand = new RelayCommand(NoteToTrash);
-            TestCommand = new RelayCommand(Test);
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
+            TestCommand = new RelayCommand(Test);
 
         }
         /// <summary>
@@ -180,32 +212,6 @@ namespace Note.ViewModel
                 CurNote = ListNote.First();
             }
         }
-        private void ShowInsertTAbleWindow(object obj)
-        {
-            InsertTableWindow insertTableWindow = new InsertTableWindow();
-            insertTableWindow.ShowDialog();
-            
-        }
-
-        // Phương thức tìm kiếm đối tượng con trong cấu trúc Visual Tree
-        
-
-
-        private bool CanShowWindow(object obj)
-        {
-            return true;
-        }
-        private void UpdateWordCount(object obj)
-        {
-            WordCount = model.CountWords(Text);
-            CurNote.LastEdited = DateTime.Now;
-        }
-        private void NoteToTrash(object obj)
-        {
-            DataAccess.Instance.NoteToTrash(CurNote);
-            ListNote.Remove(CurNote);
-        }
-
     }
 }
         

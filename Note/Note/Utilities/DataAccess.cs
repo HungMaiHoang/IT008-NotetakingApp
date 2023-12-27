@@ -34,14 +34,17 @@ namespace Note.Utilities
             }
         }
 
+        // Database, collection, file name
         private const string ConnectionString = "mongodb://localhost:27017";
         private const string DatabaseName = "Note_taking";
         private const string NoteCollection = "Notes";
         private const string rtfDocumentName = "document.rtf";
 
+        // Basic Property
         private MongoClient client;
         private IMongoDatabase database;
         private GridFSBucket gridFSBucket;
+
         private DataAccess()
         {
             client = new MongoClient(ConnectionString);
@@ -49,11 +52,22 @@ namespace Note.Utilities
             gridFSBucket = new GridFSBucket(database);
         }
 
+        #region Note Data Access
+        /// <summary>
+        /// Return T Collection from database
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <returns></returns>
         private IMongoCollection<T> ConnectToMongo<T>(in string collection)
         {
             return database.GetCollection<T>(collection);
         }
 
+        /// <summary>
+        /// Get all Notes from NoteCollection
+        /// </summary>
+        /// <returns></returns>
         public List<NoteModel> GetAllNotes()
         {
             try
@@ -70,24 +84,45 @@ namespace Note.Utilities
             }
         }
 
+        /// <summary>
+        /// Get Note with exact Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public NoteModel GetNoteWithId(ObjectId id)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             return notesCollection.Find(p => p.Id == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Insert new Note to database
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
         public Task InsertNote(NoteModel note)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             return notesCollection.InsertOneAsync(note);
         }
 
+        /// <summary>
+        /// Upadte Note to database
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
         public Task UpdateNote(NoteModel note)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
             return notesCollection.ReplaceOneAsync(filter, note, new ReplaceOptions { IsUpsert = true });
         }
+
+        /// <summary>
+        /// Remove note from available to Trash
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
         public Task NoteToTrash(NoteModel note)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
@@ -96,14 +131,11 @@ namespace Note.Utilities
             return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
         }
 
-        //public Task DeleteNote(NoteModel note)
-        //{
-        //    //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-
-        //    //gridFSBucket.DeleteAsync(note.FileId);
-
-        //    //return notesCollection.DeleteOneAsync(c => c.Id == note.Id);
-        //}
+        /// <summary>
+        /// Delete note with exact Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task DeleteNote(ObjectId id)
         {
             var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
@@ -117,6 +149,7 @@ namespace Note.Utilities
 
             return notesCollection.DeleteOneAsync(c => c.Id == id);
         }
+        #endregion
 
         #region GridFS
         /// <summary>

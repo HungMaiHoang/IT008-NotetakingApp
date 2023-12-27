@@ -157,6 +157,7 @@ namespace Note.View
         {
             NoteVM.Instance.PageContent = sender as RichTextBox;
         }
+
         private void btnAddBulletList_Click(object sender, RoutedEventArgs e)
         {
             AddBulletList();
@@ -261,7 +262,7 @@ namespace Note.View
         {
             //NoteVM.Instance.Text = richTextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
             TextRange myTR = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
-            NoteVM.Instance.Text = myTR.Text;
+            NoteVM.Instance.PlainText = myTR.Text;
         }
     }
 }

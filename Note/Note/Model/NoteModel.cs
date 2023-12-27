@@ -13,7 +13,6 @@ namespace Note.Model
 {
     public  class NoteModel : ViewModelBase
     {
-        
         private ObjectId id;
         private string title;
         private DateTime lastEdited;        
@@ -96,15 +95,7 @@ namespace Note.Model
 
         public NoteModel()
         {
-            // Create base property
-            //Id = ObjectId.GenerateNewId();
-            //Title = "Title";
-            //LastEdited = DateTime.Now;
-            //HeadLine = "";
-            //FlowDocument doc = new FlowDocument();
-            //TextRange rtfContent = new TextRange(doc.ContentStart, doc.ContentEnd);
 
-            //FileId = DataAccess.Instance.CreateRTFNote(rtfContent);
         }
 
         public static NoteModel CreateNewNote()
