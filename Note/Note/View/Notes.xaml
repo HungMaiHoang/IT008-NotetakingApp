@@ -190,12 +190,12 @@
                                             </StackPanel>
                                         </MenuItem.Header>
                                     </MenuItem>-->
-                                                                <MenuItem x:Name="DeleteNote" Foreground="White" Margin="5 0 5 0" Height="40"  Command= "{Binding DataContext.DeleteNoteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                                                <MenuItem x:Name="DeleteNote" Foreground="White" Margin="5 0 5 0" Height="40"  Command= "{Binding DataContext.NoteToTrashCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
                                               CommandParameter="{Binding}">
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
                                                                             <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
-                                                                            <TextBlock Text="Remove playlist" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                            <TextBlock Text="Remove note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>

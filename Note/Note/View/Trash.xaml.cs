@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Note.View
         public Trash()
         {
             InitializeComponent();
+            DataContext = TrashVM.Instance;
         }
     }
 }

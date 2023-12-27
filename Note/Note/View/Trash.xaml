@@ -15,6 +15,7 @@
            mc:Ignorable="d" 
            d:DesignHeight="704" d:DesignWidth="1025"
            xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+   
     <UserControl.Resources>
         <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="Transparent"/>

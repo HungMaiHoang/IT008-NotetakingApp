@@ -161,6 +161,7 @@
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
+    <Compile Include="ViewModel\TrashVM.cs" />
     <Compile Include="View\Blank.xaml.cs">
       <DependentUpon>Blank.xaml</DependentUpon>
     </Compile>

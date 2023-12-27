@@ -143,7 +143,6 @@ namespace Note.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
             }
         }
         private void SavePage(object obj)
@@ -154,8 +153,9 @@ namespace Note.ViewModel
         {
             if (CurNote is NoteModel && CurNote != null)
             {
-                DataAccess.Instance.DeleteNote(CurNote.Id);
-                ListNote.Remove(CurNote);
+                //DataAccess.Instance.DeleteNote(CurNote.Id);
+                NoteToTrash(null);
+                //ListNote.Remove(CurNote);
             }
         }
         private void NoteToTrash(object obj)
@@ -174,7 +174,8 @@ namespace Note.ViewModel
         }
         private void UpdateWordCount(object obj)
         {
-            WordCount = wordCounterModel.CountWords(PlainText);
+            //WordCount = wordCounterModel.CountWords(PlainText);
+            WordCount = WordCouting.WordCount(PlainText);
             CurNote.LastEdited = DateTime.Now;
         }
         private void Test(object obj)
@@ -186,7 +187,8 @@ namespace Note.ViewModel
         public NoteVM()
         {
             // Get database in ListNote
-            List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
+            //   List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             // Set up World Counter
