@@ -19,16 +19,7 @@ namespace Note.ViewModel
 {
     internal class InsertTableVM:ViewModelBase
     {
-        TableModel tablemd =new TableModel();
-        public TableModel Tablemd
-        {
-            get => tablemd;
-            set
-            {
-                tablemd = value;
-                OnPropertyChanged(nameof(Tablemd));
-            }
-        }
+       
         public ICommand InsertTableCommand { get; set; }
         public InsertTableVM()
         {
