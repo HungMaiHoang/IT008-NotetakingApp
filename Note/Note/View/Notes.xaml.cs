@@ -126,7 +126,10 @@ namespace Note.View
             var selectedText = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
             Boldbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontWeightProperty).Equals(FontWeights.Bold);
             Italicbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontStyleProperty).Equals(FontStyles.Italic);
-            //Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+            if(selectedText.GetPropertyValue(Inline.TextDecorationsProperty)!=null)
+            {
+            Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+            }
             LeftAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Left);
             CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
             RightAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Right);

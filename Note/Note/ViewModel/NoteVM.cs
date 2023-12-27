@@ -115,11 +115,11 @@ namespace Note.ViewModel
         }
         private void DeleteNote(object obj)
         {
-            //if (CurNote is NoteModel && CurNote != null)
-            //{
-            //    ListNote.Remove(CurNote);
-            //DataAccess.Instance.DeleteNote(CurNote);
-            //}
+            if (CurNote is NoteModel && CurNote != null)
+            {
+                DataAccess.Instance.DeleteNote(CurNote.Id);
+                ListNote.Remove(CurNote);
+            }
         }
         private void Test(object obj)
         {
