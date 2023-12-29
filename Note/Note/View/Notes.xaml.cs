@@ -28,7 +28,16 @@ namespace Note.View
 
     public partial class Notes : UserControl
     {
-        private bool isTextChangedEventHandled = true;
+        private FontFamily _selectedFont;
+        public FontFamily SelectedFont
+        {
+            get { return _selectedFont; }
+            set
+            {
+                _selectedFont = value;
+
+            }
+        }
 
         public Notes()
         {
@@ -326,6 +335,16 @@ namespace Note.View
             if (FontSizeBox.Text != null && Double.TryParse(FontSizeBox.Text, out double fontSize))
             {
                 richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
+            }
+        }
+
+        private void FontBox_DropDownClosed(object sender, EventArgs e)
+        {
+            FontFamily selectedFont = FontBox.SelectedItem as FontFamily;
+            if (selectedFont != null)
+            {
+               
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, selectedFont);
             }
         }
     }

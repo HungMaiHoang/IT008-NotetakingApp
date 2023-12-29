@@ -16,6 +16,7 @@
              d:DesignHeight="704" d:DesignWidth="1025"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
     <UserControl.Resources>
+        <ObjectDataProvider x:Key="FontFamilies" MethodName="GetFamilies" ObjectType="{x:Type Fonts}" />
         <ul:TimeAgoConvert x:Key="TimeAgoConvert"></ul:TimeAgoConvert>
         <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="Transparent"/>
@@ -313,6 +314,19 @@
                                 <Label
                                      VerticalAlignment="Center"
                                     Content="Font :" />
+                                <ComboBox
+                                    x:Name="FontBox"
+                                    ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                    IsTextSearchEnabled="True"
+                                    DropDownClosed="FontBox_DropDownClosed"
+                                    
+                                    >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{Binding}" ></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
                                 <Label
                                     VerticalAlignment="Center"
                                     Content="Font size:" />
