@@ -317,7 +317,9 @@
                                 <ComboBox
                                     x:Name="FontBox"
                                     ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                    IsEditable="True"
                                     IsTextSearchEnabled="True"
+                                    PreviewKeyDown="Font_PreviewKeyDown"
                                     DropDownClosed="FontBox_DropDownClosed"
                                     
                                     >

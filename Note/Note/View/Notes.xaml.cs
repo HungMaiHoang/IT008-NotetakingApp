@@ -28,17 +28,7 @@ namespace Note.View
 
     public partial class Notes : UserControl
     {
-        private FontFamily _selectedFont;
-        public FontFamily SelectedFont
-        {
-            get { return _selectedFont; }
-            set
-            {
-                _selectedFont = value;
-
-            }
-        }
-
+        
         public Notes()
         {
             InitializeComponent();
@@ -345,6 +335,18 @@ namespace Note.View
             {
                
                 richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, selectedFont);
+            }
+        }
+
+        private void Font_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FontFamily selectedFont = FontBox.SelectedItem as FontFamily;
+                if (selectedFont != null)
+                {
+                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, selectedFont);
+                }
             }
         }
     }
