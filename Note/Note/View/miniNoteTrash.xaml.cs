@@ -21,39 +21,27 @@ namespace Note.View
     /// <summary>
     /// Interaction logic for miniNote.xaml
     /// </summary>
-    public partial class miniNote : UserControl, INotifyPropertyChanged
+    public partial class miniNoteTrash : UserControl, INotifyPropertyChanged
     {
 
-        //public static readonly DependencyProperty WidthProperty =
-        //    DependencyProperty.Register(
-        //        "miniNoteWidth",
-        //        typeof(double),
-        //        typeof(miniNote),
-        //        new PropertyMetadata(249.9));
-        //public double miniNoteWidth
-        //{
-        //    get {  return (double)GetValue(WidthProperty); }
-        //    set {  SetValue(WidthProperty, value); }
-        //}
-
         #region Dependency Property
-        public static readonly DependencyProperty TitleProperty = 
+        public static readonly DependencyProperty TitleProperty =
             DependencyProperty.Register(
-                "miniNoteTitle", 
-                typeof(string), 
-                typeof(miniNote),
+                "miniNoteTrashTitle",
+                typeof(string),
+                typeof(miniNoteTrash),
                 new PropertyMetadata("Unknow"));
-        public string miniNoteTitle
+        public string miniNoteTrashTitle
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
 
-        public static readonly DependencyProperty DateProperty = 
+        public static readonly DependencyProperty DateProperty =
             DependencyProperty.Register(
-                "miniNoteDate", 
-                typeof(DateTime), 
-                typeof(miniNote),
+                "miniNoteTrashDate",
+                typeof(DateTime),
+                typeof(miniNoteTrash),
                 new PropertyMetadata(DateTime.Now));
         //public DateTime miniNoteDate
         //{
@@ -61,7 +49,7 @@ namespace Note.View
         //    set { SetValue(DateProperty, value); OnPropertyChanged(nameof(miniNoteDate)); }
         //}
 
-        public DateTime miniNoteDate
+        public DateTime miniNoteTrashDate
         {
             get
             {
@@ -76,35 +64,35 @@ namespace Note.View
             set
             {
                 SetValue(DateProperty, value);
-                OnPropertyChanged(nameof(miniNoteDate));
+                OnPropertyChanged(nameof(miniNoteTrashDate));
             }
         }
 
-        public static readonly DependencyProperty HeadLineProperty = 
+        public static readonly DependencyProperty HeadLineProperty =
             DependencyProperty.Register(
-                "miniNoteHeadLine", 
-                typeof(string), 
-                typeof(miniNote),
+                "miniNoteTrashHeadLine",
+                typeof(string),
+                typeof(miniNoteTrash),
                 new PropertyMetadata(""));
-        public string miniNoteHeadLine
+        public string miniNoteTrashHeadLine
         {
             get { return (string)GetValue(HeadLineProperty); }
-            set { SetValue(HeadLineProperty, value); OnPropertyChanged(nameof(miniNoteHeadLine)); }
+            set { SetValue(HeadLineProperty, value); OnPropertyChanged(nameof(miniNoteTrashHeadLine)); }
         }
 
-        public static readonly DependencyProperty BtnCommandProperty = 
+        public static readonly DependencyProperty BtnCommandProperty =
             DependencyProperty.Register(
-                "miniNoteBtnCommand", 
-                typeof(ICommand), 
-                typeof(miniNote));
-        public ICommand miniNoteBtnCommand
+                "miniNoteTrashBtnCommand",
+                typeof(ICommand),
+                typeof(miniNoteTrash));
+        public ICommand miniNoteTrashBtnCommand
         {
             get { return (ICommand)GetValue(BtnCommandProperty); }
-            set { SetValue(BtnCommandProperty, value); OnPropertyChanged(nameof(miniNoteBtnCommand)); }
+            set { SetValue(BtnCommandProperty, value); OnPropertyChanged(nameof(miniNoteTrashBtnCommand)); }
         }
         #endregion
 
-        public miniNote()
+        public miniNoteTrash()
         {
             InitializeComponent();
         }

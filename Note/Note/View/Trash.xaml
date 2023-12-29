@@ -81,7 +81,7 @@
             </Button>
         </Grid>
         </Border>
-        <StackPanel Margin="0 10 0 0"
+        <StackPanel Margin="75 0 0 30"
     Name="ListBoxNotes"
     >
             <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
@@ -89,8 +89,8 @@
         HorizontalScrollBarVisibility="Hidden"
         Style="{StaticResource MaterialDesignScrollViewer}"
         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
-        Height="550">
-                <ListBox 
+        Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
+                <ListBox
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Style="{StaticResource ListBoxStyle1}"
@@ -103,7 +103,7 @@
                             <Style.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="10"/>
-                                    <Setter Property="Margin" Value="10 10 0 0"/>
+                                    <Setter Property="Margin" Value="25 25 0 0"/>
                                     <Setter Property="Padding" Value="0 0 0 0"/>
                                 </Style>
                             </Style.Resources>
@@ -117,14 +117,14 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <view:miniNote
+                                <view:miniNoteTrash
                                     Padding="0 0 0 0"
                                     Margin="-3 -1 -4 -1"
-                                    miniNoteTitle="{Binding Title}" 
-                                    miniNoteHeadLine="{Binding HeadLine}"
-                                    miniNoteDate="{Binding LastEdited}"
-                                    miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}">
-                                </view:miniNote>
+                                    miniNoteTrashTitle="{Binding Title}" 
+                                    miniNoteTrashHeadLine="{Binding HeadLine}"
+                                    miniNoteTrashDate="{Binding LastEdited}"
+                                    miniNoteTrashBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}">
+                                </view:miniNoteTrash>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
