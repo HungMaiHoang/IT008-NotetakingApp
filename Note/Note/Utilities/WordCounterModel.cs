@@ -36,5 +36,14 @@ namespace Note.Utilities
 
             return wordCount;
         }
+
+    }
+    public class WordCouting
+    {
+        public static int WordCount(string s)
+        {
+            return s.Split(new char[] { ' ' },
+                StringSplitOptions.RemoveEmptyEntries).Length;
+        }
     }
 }

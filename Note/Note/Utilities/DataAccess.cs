@@ -85,6 +85,34 @@ namespace Note.Utilities
             }
         }
 
+        public List<NoteModel> GetNoteEnable()
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var results = notesCollection.Find(p => p.Status == "enable");
+                return results.ToList();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+        public List<NoteModel> GetNoteDisable()
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var results = notesCollection.Find(p => p.Status == "disable");
+                return results.ToList();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
         /// <summary>
         /// Get Note with exact Id
         /// </summary>
@@ -147,7 +175,7 @@ namespace Note.Utilities
             NoteModel temp = GetNoteWithId(id);
             if (temp != null)
             {
-                MessageBox.Show("deleting");
+               // MessageBox.Show("deleting");
                 gridFSBucket.DeleteAsync(temp.FileId);
             }
 
@@ -179,7 +207,11 @@ namespace Note.Utilities
         public async void UpdateRTFNote(ObjectId fileId, FlowDocument flowDocument)
         {
             // Delete Old file
-            gridFSBucket.Delete(fileId);
+            try
+            {
+                gridFSBucket.Delete(fileId);
+            }
+            catch { }
 
             string xamlString = XamlWriter.Save(flowDocument);
             byte[] xamlBytes = System.Text.Encoding.UTF8.GetBytes(xamlString);

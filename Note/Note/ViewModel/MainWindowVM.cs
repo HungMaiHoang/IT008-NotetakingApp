@@ -31,12 +31,14 @@ namespace Note.ViewModel
         private NoteVM NotesView;
         private ReminderVM RemindersView;
         private TaskVM TasksView;
+        private TrashVM TrashView;
 
         // View Navigate Command
         public ICommand HomeCommand { get; set; }
         public ICommand NotesCommand { get; set; }
         public ICommand RemindersCommand { get; set; }
         public ICommand TasksCommand { get; set; }
+        public ICommand TrashCommand { get; set; }
 
         // Action Command
         public ICommand NewNoteCommand { get; set; }
@@ -55,7 +57,8 @@ namespace Note.ViewModel
             //}
 
             // Load Notes from database
-            List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
+            //List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
             NotesView.ListNote.Clear();
             NotesView.ListNote = new ObservableCollection<NoteModel>(listTemp);
 
@@ -64,6 +67,13 @@ namespace Note.ViewModel
         }
         private void Reminder(object obj) => CurrentView = RemindersView;
         private void Task(object obj) => CurrentView = TasksView;
+        private void Trash(object obj) 
+        {
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable();
+            TrashView.ListNote.Clear();
+            TrashView.ListNote = new ObservableCollection<NoteModel>(listTemp);
+            CurrentView = TrashView;
+        }
         private void NewNote(object obj)
         {
             NoteModel note = NoteModel.CreateNewNote();
@@ -86,15 +96,17 @@ namespace Note.ViewModel
             NotesView = NoteVM.Instance;
             RemindersView = new ReminderVM();
             TasksView = new TaskVM();
+            TrashView = TrashVM.Instance;
 
             HomeCommand = new RelayCommand(Home);
             NotesCommand = new RelayCommand(Note);
             RemindersCommand = new RelayCommand(Reminder);
             TasksCommand = new RelayCommand(Task);
             NewNoteCommand = new RelayCommand(NewNote);
+            TrashCommand = new RelayCommand(Trash);
 
             // Startup view
-            CurrentView = BlankView;
+            CurrentView = HomeView;
         }
     }
 }

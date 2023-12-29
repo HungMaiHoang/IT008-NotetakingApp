@@ -30,6 +30,8 @@
     <DataTemplate DataType="{x:Type vm:miniNoteVM}">
         <view:miniNote/>
     </DataTemplate>
-
+    <DataTemplate DataType="{x:Type vm:TrashVM}">
+        <view:Trash/>
+    </DataTemplate>
 
 </ResourceDictionary>

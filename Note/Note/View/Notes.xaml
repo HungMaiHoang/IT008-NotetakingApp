@@ -163,7 +163,7 @@
                                             miniNoteHeadLine="{Binding HeadLine}"
                                             miniNoteDate="{Binding LastEdited}"
                                             miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"/>
-
+                                            
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -200,7 +200,7 @@
                                                                     <MenuItem.Header>
                                                                         <StackPanel Orientation="Horizontal">
                                                                             <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
-                                                                            <TextBlock Text="Remove playlist" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                            <TextBlock Text="Remove note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>

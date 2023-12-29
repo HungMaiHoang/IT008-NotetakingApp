@@ -287,7 +287,8 @@
                     <Menu:Btn
                         Style="{StaticResource MaterialDesignFlatButton}" 
                         Height="40" 
-                        Width="255">
+                        Width="255"
+                        Command="{Binding TrashCommand}">
                         <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <Image Height="20" Width="20" Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
                             <TextBlock FontSize="16" Style="{StaticResource Text_Style}" Text="Trash"/>
