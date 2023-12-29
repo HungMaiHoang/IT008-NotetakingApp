@@ -123,7 +123,9 @@
                                     miniNoteTrashTitle="{Binding Title}" 
                                     miniNoteTrashHeadLine="{Binding HeadLine}"
                                     miniNoteTrashDate="{Binding LastEdited}"
-                                    miniNoteTrashBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}">
+                                    miniNoteTrashBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
+                                    miniNoteTrashBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.RestoreCommand}"
+                                    miniNoteTrashBtnDeleteForeverCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteForeverCommand}">
                                 </view:miniNoteTrash>
                             </StackPanel>
                         </DataTemplate>

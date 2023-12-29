@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Note.ViewModel
 {
@@ -40,10 +41,26 @@ namespace Note.ViewModel
         {
             get { return _curMote; } set { _curMote = value; OnPropertyChanged(nameof(CurNote)); }
         }
+        public ICommand RestoreCommand { get; set; }
+        public ICommand DeleteForeverCommand { get; set; }
         public TrashVM() {
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable();
             _listnote= new ObservableCollection<NoteModel>(listTemp);
+            RestoreCommand = new RelayCommand(Restore);
+            DeleteForeverCommand = new RelayCommand(DeleteForever);
 
+        }
+        private void Restore(object obj)
+        {
+            CurNote = obj as NoteModel;
+            DataAccess.Instance.RestoreNote(CurNote);
+            ListNote.Remove(CurNote);
+        }
+        private void DeleteForever(object obj)
+        {
+            CurNote = obj as NoteModel;
+            DataAccess.Instance.DeleteNote(CurNote.Id);
+            ListNote.Remove(CurNote);
         }
     }
 }

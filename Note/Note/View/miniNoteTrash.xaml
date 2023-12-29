@@ -62,7 +62,7 @@
         Width="250" 
         UniformCornerRadius="10">
         <RadioButton
-            Command="{Binding miniNoteTrashBtnCommand, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
+            Command="{Binding miniNoteTrashBtnCommand, RelativeSource={RelativeSource AncestorType=view:miniNoteTrash}}"
             CommandParameter="{Binding}"
             Style="{StaticResource RadioButtonStyle1}"
             Margin="0"
@@ -98,7 +98,9 @@
                             Width="20"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                             Style="{StaticResource MaterialDesignIconForegroundButton}"
-                            ToolTip="Restore">
+                            ToolTip="Restore"
+                            Command="{Binding miniNoteTrashBtnRestoreCommand, RelativeSource={RelativeSource AncestorType=view:miniNoteTrash}}"
+                            CommandParameter="{Binding}">
                         <materialDesign:PackIcon Kind="Restore" 
                                                  Height="15" 
                                                  Width="15"
@@ -108,12 +110,14 @@
                             
                         </materialDesign:PackIcon>
                     </Button>
-                    <Button
+                    <Button Margin="5 0 0 0"
+                            Command="{Binding miniNoteTrashBtnDeleteForeverCommand, RelativeSource={RelativeSource AncestorType=view:miniNoteTrash}}"
+                            CommandParameter="{Binding}"
                         Height="20"
                         Width="20"
                           IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                           Style="{StaticResource MaterialDesignIconForegroundButton}"
-                          ToolTip="MaterialDesignIconForegroundButton">
+                          ToolTip="Delete Forever">
                         <materialDesign:PackIcon
                             Kind="DeleteForever"
                             Height="15"

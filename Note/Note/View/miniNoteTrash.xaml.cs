@@ -90,7 +90,31 @@ namespace Note.View
             get { return (ICommand)GetValue(BtnCommandProperty); }
             set { SetValue(BtnCommandProperty, value); OnPropertyChanged(nameof(miniNoteTrashBtnCommand)); }
         }
+
+
+        public static readonly DependencyProperty BtnRestoreCommandProperty =
+            DependencyProperty.Register(
+                "miniNoteTrashBtnRestoreCommand",
+                typeof(ICommand),
+                typeof(miniNoteTrash));
+        public ICommand miniNoteTrashBtnRestoreCommand
+        {
+            get { return (ICommand)GetValue(BtnRestoreCommandProperty); }
+            set { SetValue(BtnRestoreCommandProperty, value); OnPropertyChanged(nameof(miniNoteTrashBtnRestoreCommand)); }
+        }
+
+        public static readonly DependencyProperty BtnDeleteForeverCommandProperty =
+            DependencyProperty.Register(
+                "miniNoteTrashBtnDeleteForeverCommand",
+                typeof(ICommand),
+                typeof(miniNoteTrash));
+        public ICommand miniNoteTrashBtnDeleteForeverCommand
+        {
+            get { return (ICommand)GetValue(BtnDeleteForeverCommandProperty); }
+            set { SetValue(BtnDeleteForeverCommandProperty, value); OnPropertyChanged(nameof(miniNoteTrashBtnDeleteForeverCommand)); }
+        }
         #endregion
+
 
         public miniNoteTrash()
         {

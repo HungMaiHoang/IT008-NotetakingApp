@@ -181,6 +181,23 @@ namespace Note.Utilities
 
             return notesCollection.DeleteOneAsync(c => c.Id == id);
         }
+
+        /// <summary>
+        /// restore note from trash to available
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public Task RestoreNote(NoteModel note)
+        {
+            //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
+            //var update = Builders<NoteModel>.Update.Set("Status","disable");
+            //return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+
+            note.Status = "enable";
+            return UpdateNote(note);
+        }
+
         #endregion
 
 
