@@ -24,8 +24,12 @@ namespace Note.View
     /// <summary>
     /// Interaction logic for Notes.xaml
     /// </summary>
+    /// 
+
     public partial class Notes : UserControl
     {
+        private bool isTextChangedEventHandled = true;
+
         public Notes()
         {
             InitializeComponent();
@@ -303,5 +307,26 @@ namespace Note.View
                     MessageBox.Show($"Error opening link: {ex.Message}");
                 }
             }
+
+       
+        private void FontSize_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (FontSizeBox.Text != null && Double.TryParse(FontSizeBox.Text, out double fontSize))
+                {        
+                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void FontSizeBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (FontSizeBox.Text != null && Double.TryParse(FontSizeBox.Text, out double fontSize))
+            {
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
+            }
+        }
     }
 }
