@@ -11,7 +11,7 @@ using System.Windows.Documents;
 
 namespace Note.Model
 {
-    public  class NoteModel : ViewModelBase
+    public class NoteModel : ViewModelBase
     {
         private ObjectId id;
         private string title;
@@ -90,7 +90,7 @@ namespace Note.Model
                 // Update to database
                 DataAccess.Instance.UpdateNote(this);
                 OnPropertyChanged(nameof(FileId)); 
-            } 
+            }
         }
 
         public NoteModel()
