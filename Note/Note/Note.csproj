@@ -142,7 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\NoteModel.cs" />
-    <Compile Include="Model\TableModel.cs" />
+    <Compile Include="Model\UserModel.cs" />
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\FrameworkElementExtensions.cs" />
@@ -284,7 +284,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\PageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

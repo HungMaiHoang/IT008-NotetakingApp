@@ -38,6 +38,7 @@ namespace Note.Utilities
         private const string ConnectionString = "mongodb://localhost:27017";
         private const string DatabaseName = "Note_taking";
         private const string NoteCollection = "Notes";
+        private const string UserCollection = "Users";
         private const string rtfDocumentName = "document.rtf";
 
         // Basic Property
@@ -182,6 +183,7 @@ namespace Note.Utilities
         }
         #endregion
 
+
         #region GridFS
         /// <summary>
         /// Please do not use this outside NoteModel/Create new rtf file in database
@@ -235,5 +237,30 @@ namespace Note.Utilities
             return flowDocument;
         }
         #endregion
+
+        public Task UpdateUser(UserModel user)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            var filter = Builders<UserModel>.Filter.Eq("Id", user.Id);
+            return usersCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
+        }
+        public UserModel GetUserWithId(ObjectId id)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            return usersCollection.Find(p => p.Id == id).FirstOrDefault();
+        }
+        public Task InsertUser(UserModel user)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            return usersCollection.InsertOneAsync(user);
+        }
+        public Task DeleteUser(ObjectId id)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+
+            UserModel temp = GetUserWithId(id);
+
+            return usersCollection.DeleteOneAsync(c => c.Id == id);
+        }
     }
 }
