@@ -263,6 +263,45 @@ namespace Note.View
             //NoteVM.Instance.Text = richTextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
             TextRange myTR = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
             NoteVM.Instance.PlainText = myTR.Text;
+            richTextBox.IsDocumentEnabled = true;
+            List<Run> runsToAddHyperlink = new List<Run>();
+
+            TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+
+            foreach (Run run in richTextBox.Document.Blocks.OfType<Paragraph>().SelectMany(p => p.Inlines.OfType<Run>()))
+            {
+                if (Uri.IsWellFormedUriString(run.Text, UriKind.Absolute))
+                {
+                    runsToAddHyperlink.Add(run);
+                }
+            }
+
+            foreach (Run run in runsToAddHyperlink)
+            {
+                Hyperlink hyperlink = new Hyperlink(run.ContentStart, run.ContentEnd)
+                {
+                    NavigateUri = new Uri(run.Text),
+                    TargetName = "_blank",
+                    IsEnabled = true
+
+                };
+
+                hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+            }
         }
+            private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+            {
+
+                try
+                {
+
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+                    e.Handled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error opening link: {ex.Message}");
+                }
+            }
     }
 }
