@@ -370,12 +370,7 @@
                                     ToolTip="Add table"
                                     Click="InsertTable"
                                     />
-                                <Button 
-                                     Content="{materialDesign:PackIcon Kind=TableRemove}"
-                                     ToolBar.OverflowMode="AsNeeded"
-                                     ToolTip="Remove table"
-                                     Click="RemoveTable"
-    />
+                               
                                 <Button  Click="TextColor_Click"
                                     Content="{materialDesign:PackIcon Kind=FormatColorText}"
                                     ToolBar.OverflowMode="AsNeeded"

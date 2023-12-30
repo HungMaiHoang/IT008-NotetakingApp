@@ -29,7 +29,7 @@ namespace Note.View
 
     public partial class Notes : UserControl
     {
-        
+
         public Notes()
         {
             InitializeComponent();
@@ -130,9 +130,9 @@ namespace Note.View
             var selectedText = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
             Boldbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontWeightProperty).Equals(FontWeights.Bold);
             Italicbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontStyleProperty).Equals(FontStyles.Italic);
-            if(selectedText.GetPropertyValue(Inline.TextDecorationsProperty)!=null)
+            if (selectedText.GetPropertyValue(Inline.TextDecorationsProperty) != null)
             {
-            Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+                Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
             }
             LeftAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Left);
             CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
@@ -208,6 +208,17 @@ namespace Note.View
                 Image image = new Image();
                 BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
                 image.Source = bitmap;
+                if (bitmap.Width > richTextBox.ActualWidth || bitmap.Height > richTextBox.ActualHeight)
+                {
+                    image.Width = richTextBox.ActualWidth - 30; // Adjust as needed
+                    
+                }
+                else
+                {
+                    image.Width = bitmap.Width;
+
+                }
+
 
                 // Tạo đối tượng InlineUIContainer để chứa ảnh
                 InlineUIContainer container = new InlineUIContainer(image);
@@ -251,14 +262,7 @@ namespace Note.View
             // Add the table to the RichTextBox
             richTextBox.Document.Blocks.Add(table);
 
-        }
-
-        private void RemoveTable(object sender, RoutedEventArgs e)
-        {
-            //TextRange selectedTextRange = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
-            //Table table = new Table();
-
-        }
+        } 
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
