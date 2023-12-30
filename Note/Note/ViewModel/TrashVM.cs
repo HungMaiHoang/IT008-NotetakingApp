@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Note.Model;
 using Note.Utilities;
+using Note.View;
 using Note.Windows;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -73,11 +75,22 @@ namespace Note.ViewModel
 
         private void ClearTrash(object obj)
         {
-            foreach (var item in ListNote)
+
+            if (ListNote.Count() == 0)
+            {
+                MessageBox.Show("Empty Bin");
+                return;
+            }
+            MessageBoxResult result = MessageBox.Show("All notes in Trash will be permanently deleted.", "Empty Bin?", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            // Kiểm tra kết quả của cửa sổ thông báo
+            if (result == MessageBoxResult.Yes)
+            { 
+                foreach (var item in ListNote)
             {
                 DataAccess.Instance.DeleteNote(item.Id);
             }
             ListNote.Clear();
+            }
         }
 
         private void LoadPage(object obj)
@@ -105,7 +118,7 @@ namespace Note.ViewModel
         }
         private void DeleteForever(object obj)
         {
-            CurNote = obj as NoteModel;
+                CurNote = obj as NoteModel;
             DataAccess.Instance.DeleteNote(CurNote.Id);
             ListNote.Remove(CurNote);
         }

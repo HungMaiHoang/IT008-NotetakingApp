@@ -129,7 +129,7 @@ namespace Note.ViewModel
         public ICommand ShowInsertTableWindowCommand { get; set; }
         public ICommand WordCountCommand { get; }
         public ICommand TestCommand { get; set; }
-        
+        public ICommand NoteToArchivedCommand {  get; set; }
 
         private void LoadPage(object obj)
         {
@@ -148,6 +148,8 @@ namespace Note.ViewModel
         private void SavePage(object obj)
         {
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
+            CurNote.LastEdited = DateTime.Now;
+
         }
         private void DeleteNote(object obj)
         {
@@ -159,8 +161,13 @@ namespace Note.ViewModel
             }
         }
         private void NoteToTrash(object obj)
-        {
+        {            
             DataAccess.Instance.NoteToTrash(CurNote);
+            ListNote.Remove(CurNote);
+        }
+        private void NoteToArchived(object obj)
+        {
+            DataAccess.Instance.NoteToArchived(CurNote);
             ListNote.Remove(CurNote);
         }
         private void ShowInsertTAbleWindow(object obj)
@@ -176,7 +183,7 @@ namespace Note.ViewModel
         {
             //WordCount = wordCounterModel.CountWords(PlainText);
             WordCount = WordCouting.WordCount(PlainText);
-            CurNote.LastEdited = DateTime.Now;
+           // CurNote.LastEdited = DateTime.Now;
         }
         private void Test(object obj)
         {
@@ -202,7 +209,7 @@ namespace Note.ViewModel
             NoteToTrashCommand = new RelayCommand(NoteToTrash);
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
             TestCommand = new RelayCommand(Test);
-
+            NoteToArchivedCommand = new RelayCommand(NoteToArchived);
         }
         /// <summary>
         /// Select first note if has

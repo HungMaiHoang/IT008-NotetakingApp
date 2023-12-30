@@ -151,6 +151,7 @@
     <Compile Include="Utilities\TimeAgoConvert.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="Utilities\WordCounterModel.cs" />
+    <Compile Include="ViewModel\ArchivedVM.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="Utilities\NavigationVM.cs" />
@@ -162,6 +163,9 @@
     <Compile Include="ViewModel\ReminderVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
     <Compile Include="ViewModel\TrashVM.cs" />
+    <Compile Include="View\ArchiveNote.xaml.cs">
+      <DependentUpon>ArchiveNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Blank.xaml.cs">
       <DependentUpon>Blank.xaml</DependentUpon>
     </Compile>
@@ -173,6 +177,9 @@
     </Compile>
     <Compile Include="View\miniNote.xaml.cs">
       <DependentUpon>miniNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\miniNoteArchived.xaml.cs">
+      <DependentUpon>miniNoteArchived.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\miniNoteTrash.xaml.cs">
       <DependentUpon>miniNoteTrash.xaml</DependentUpon>
@@ -237,6 +244,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\ArchiveNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Blank.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -250,6 +261,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\miniNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\miniNoteArchived.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

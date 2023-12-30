@@ -32,14 +32,14 @@ namespace Note.ViewModel
         private ReminderVM RemindersView;
         private TaskVM TasksView;
         private TrashVM TrashView;
-
+        private ArchivedVM ArchivedView;
         // View Navigate Command
         public ICommand HomeCommand { get; set; }
         public ICommand NotesCommand { get; set; }
         public ICommand RemindersCommand { get; set; }
         public ICommand TasksCommand { get; set; }
         public ICommand TrashCommand { get; set; }
-
+        public ICommand ArchivedCommand { get; set; }
         // Action Command
         public ICommand NewNoteCommand { get; set; }
 
@@ -74,6 +74,13 @@ namespace Note.ViewModel
             TrashView.ListNote = new ObservableCollection<NoteModel>(listTemp);
             CurrentView = TrashView;
         }
+        private void Archived(object obj)
+        {
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived();
+            ArchivedView.ListNote.Clear();
+            ArchivedView.ListNote = new ObservableCollection<NoteModel>(listTemp);
+            CurrentView = ArchivedView;
+        }
         private void NewNote(object obj)
         {
             NoteModel note = NoteModel.CreateNewNote();
@@ -98,6 +105,7 @@ namespace Note.ViewModel
             RemindersView = new ReminderVM();
             TasksView = new TaskVM();
             TrashView = TrashVM.Instance;
+            ArchivedView = ArchivedVM.Instance;
 
             HomeCommand = new RelayCommand(Home);
             NotesCommand = new RelayCommand(Note);
@@ -105,7 +113,7 @@ namespace Note.ViewModel
             TasksCommand = new RelayCommand(Task);
             NewNoteCommand = new RelayCommand(NewNote);
             TrashCommand = new RelayCommand(Trash);
-
+            ArchivedCommand = new RelayCommand(Archived);
             // Startup view
             CurrentView = HomeView;
         }

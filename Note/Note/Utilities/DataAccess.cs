@@ -93,7 +93,7 @@ namespace Note.Utilities
                 var results = notesCollection.Find(p => p.Status == "enable");
                 return results.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
@@ -107,7 +107,22 @@ namespace Note.Utilities
                 var results = notesCollection.Find(p => p.Status == "disable");
                 return results.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public List<NoteModel> GetNoteArchived()
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var results = notesCollection.Find(p => p.Status == "archived");
+                return results.ToList();
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
@@ -162,7 +177,11 @@ namespace Note.Utilities
             note.Status = "disable";
             return UpdateNote(note);
         }
-
+        public Task NoteToArchived(NoteModel note)
+        {
+            note.Status = "archived";
+            return UpdateNote(note);
+        }
         /// <summary>
         /// Delete note with exact Id
         /// </summary>
@@ -175,7 +194,7 @@ namespace Note.Utilities
             NoteModel temp = GetNoteWithId(id);
             if (temp != null)
             {
-               // MessageBox.Show("deleting");
+                // MessageBox.Show("deleting");
                 gridFSBucket.DeleteAsync(temp.FileId);
             }
 
@@ -279,5 +298,6 @@ namespace Note.Utilities
 
             return usersCollection.DeleteOneAsync(c => c.Id == id);
         }
+    
     }
 }

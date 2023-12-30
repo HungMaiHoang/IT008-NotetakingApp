@@ -35,8 +35,9 @@
             <Setter Property="BorderBrush" Value="#008080"></Setter>
         </Style>
     </Window.Resources>
-    <DockPanel LastChildFill="True">
-        
+    <DockPanel LastChildFill="True" Background="#ffffff">
+        <materialDesign:Card UniformCornerRadius="10" Margin="2 5 0 2">
+            
         <Grid Background="#008080"  x:Name="expandedMenu" Visibility="Visible" Width="255">
             <StackPanel>
                 
@@ -295,6 +296,7 @@
                         </Grid>
                     </Menu:Btn>
                     <Menu:Btn
+                        Command="{Binding ArchivedCommand}"
                         Style="{StaticResource MaterialDesignFlatButton}" 
                         Height="40" 
                         Width="255">
@@ -306,6 +308,9 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
+        </materialDesign:Card>
+        <materialDesign:Card UniformCornerRadius="10" Margin="0 5 0 2">
+            
         <Grid Background="#008080" Grid.Column="0" x:Name="collapseMenu" Visibility="Collapsed" Width="65">
             <StackPanel>
                 <Grid Height="30" Width="65" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,30,0,0" >
@@ -440,6 +445,7 @@
                 </Menu:Btn>
             </StackPanel>
         </Grid>
+        </materialDesign:Card>
         <Grid Background="#FEF8E2"  >
             <ContentControl Name="WorkView" Content="{Binding CurrentView}">
             </ContentControl>

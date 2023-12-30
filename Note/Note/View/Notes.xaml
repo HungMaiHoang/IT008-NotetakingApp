@@ -172,7 +172,7 @@
                                 <ContextMenu x:Name="ContextMenuListNote">
                                     <ContextMenu.Style>
                                         <Style TargetType="ContextMenu">
-                                            <Setter Property="Height" Value="45"/>
+                                            <Setter Property="Height" Value="80"/>
                                             <Setter Property="Width" Value="230"/>
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Setter Property="Padding" Value="0"/>
@@ -205,7 +205,20 @@
                                                                         </StackPanel>
                                                                     </MenuItem.Header>
                                                                 </MenuItem>
-                                                                
+                                                                <MenuItem 
+                                                                    x:Name="ArchivedNote" 
+                                                                    Foreground="White" 
+                                                                    Margin="5 0 5 0" 
+                                                                    Height="40"  
+                                                                    Command= "{Binding DataContext.NoteToArchivedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                                                    CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="ArchiveAdd" Foreground="White"/>
+                                                                            <TextBlock Text="Archive note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
                                                             </StackPanel>
                                                         </Border>
                                                     </ControlTemplate>
