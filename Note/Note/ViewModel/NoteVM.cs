@@ -21,7 +21,6 @@ namespace Note.ViewModel
 {
     public class NoteVM : ViewModelBase
     {
-        private Notes view;
         // Singleton
         private static NoteVM _instance;
         public static NoteVM Instance
