@@ -1,0 +1,30 @@
+﻿<Window x:Class="Note.Windows.DetailNoteTrashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Note.Windows"
+        xmlns:in="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="DetailNoteTrashWindow" Height="450" Width="800"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        PreviewMouseDown="Window_PreviewMouseDown"
+        Deactivated="Window_Deactivated">
+    <RichTextBox x:Name="richTextBox" 
+                 Grid.Row="2" 
+                 Grid.ColumnSpan="2"
+                 Loaded="richTextBox_Loaded" 
+                 IsReadOnly="True"
+                 >
+        <FlowDocument Name="myFlowDocument">
+        </FlowDocument>
+        <in:Interaction.Triggers>
+            <in:EventTrigger EventName="TextChanged">
+                <in:InvokeCommandAction Command="{Binding WordCountCommand}"/>
+            </in:EventTrigger>
+        </in:Interaction.Triggers>
+
+    </RichTextBox>
+</Window>

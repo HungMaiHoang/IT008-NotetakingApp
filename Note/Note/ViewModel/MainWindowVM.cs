@@ -81,7 +81,8 @@ namespace Note.ViewModel
             DataAccess.Instance.UpdateNote(note);
 
             //NotesView.ListNote.Add(note);
-            NoteVM.Instance.ListNote.Add(note);
+            // sua lai them vao dau danh sach
+            NoteVM.Instance.ListNote.Insert(0,note);
 
 
             CurrentView = NotesView;

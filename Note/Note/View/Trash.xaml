@@ -57,18 +57,43 @@
                 BorderBrush="Black">
             
         <Grid DockPanel.Dock="Top"
-              Margin="0 25 0 0"
-              Height="90">
+              Margin="0 9 0 0"
+              Height="100">
             
         <TextBlock Text="Trash"
                    FontSize="36"
                    FontWeight="Medium"
                    FontFamily="Monserrat"
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Top"
                    HorizontalAlignment="Center"
-                   
-                   ></TextBlock>
-            <Button HorizontalAlignment="Right" Margin="0 0 30 0"
+                   Margin="0 20 0 0"></TextBlock>
+                <TextBlock Text="Notes in the Trash are deleted after 7 days."
+                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                           FontFamily="Monserrat"
+                           FontSize="16"
+                           FontStyle="Oblique"
+                           VerticalAlignment="Bottom"
+                           HorizontalAlignment="Center"
+                           Margin="0 0 0 5" ></TextBlock>
+                <TextBlock VerticalAlignment="Bottom" 
+                           HorizontalAlignment="Right"
+                           Margin="0 0 150 10"
+                           FontSize="16"
+                           >
+                  <Hyperlink
+                    Style="{StaticResource MaterialDesignSubtitle2Hyperlink}"
+                      Foreground="#3789c4"
+                      FontSize="16">
+                      Clear the trash
+                   <in:Interaction.Triggers>
+    <in:EventTrigger EventName="Click">
+        <in:InvokeCommandAction Command="{Binding ClearTrashCommand}"/>
+    </in:EventTrigger>
+</in:Interaction.Triggers>
+                </Hyperlink>
+                    
+                </TextBlock>
+                <!--<Button HorizontalAlignment="Right" Margin="0 0 30 0"
                     
     Style="{StaticResource MaterialDesignFloatingActionButton}">
                 
@@ -78,7 +103,7 @@
     Style="{StaticResource MaterialDesignFloatingActionButton}"
                 HorizontalAlignment="Right" Margin=" 0 0 120 0">
                 <materialDesign:PackIcon Kind="DeleteForever" Height="40" Width="40" Foreground="AntiqueWhite"/>
-            </Button>
+            </Button>-->
         </Grid>
         </Border>
         <StackPanel Margin="75 0 0 30"

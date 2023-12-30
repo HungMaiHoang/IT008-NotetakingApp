@@ -195,6 +195,9 @@
     <Compile Include="View\Trash.xaml.cs">
       <DependentUpon>Trash.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DetailNoteTrashWindow.xaml.cs">
+      <DependentUpon>DetailNoteTrashWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\InsertTableWindow.xaml.cs">
       <DependentUpon>InsertTableWindow.xaml</DependentUpon>
     </Compile>
@@ -275,6 +278,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Trash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DetailNoteTrashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -254,27 +254,20 @@
                                 Style="{StaticResource MaterialDesignToolBar}"
                                 VerticalAlignment="Top" 
                                 Margin="0,10,0,0">
-                                <Button
-                                    Content="{materialDesign:PackIcon Kind=ContentSave}"
-                                    ToolTip="Save" 
-                                    Command="{Binding SavePageCommand}"/>
-                                <Separator />
-                                <Button
-                                    Command="Cut"
-                                    Content="{materialDesign:PackIcon Kind=ContentCut}"
-                                    ToolBar.OverflowMode="AsNeeded"
-                                    ToolTip="Cut" />
-                                <Button
-                                    Command="Copy"
-                                    Content="{materialDesign:PackIcon Kind=ContentCopy}"
-                                    ToolBar.OverflowMode="AsNeeded"
-                                    ToolTip="Copy that stuff" />
-                                <Separator />
-                                <Button
-                                    Command="Paste"
-                                    Content="{materialDesign:PackIcon Kind=ContentPaste}"
-                                    ToolBar.OverflowMode="AsNeeded"
-                                    ToolTip="Paste some stuff" />
+
+
+                                <Label 
+                                    VerticalAlignment="Center"
+                                    Content="Font:" 
+                                  />    
+
+                                <ComboBox Name="FontFamilyComboBox">
+                                    <ComboBoxItem Content="Arial" IsSelected="True"/>
+                                    <ComboBoxItem Content="Times New Roman" />
+                                    <ComboBoxItem Content="Verdana" />
+                                    <ComboBoxItem Content="Tahoma" />
+                                </ComboBox>
+                                <Separator/>
                                 <!--
                                     when badging in a toolbar, make sure the parent ToolBar.ClipToBounds="False", and
                                     manually apply the button style
@@ -352,6 +345,29 @@
                                     Content="{materialDesign:PackIcon Kind=FormatColorText}"
                                     ToolBar.OverflowMode="AsNeeded"
                                     ToolTip="Text Color" />
+                                
+                                
+                                <Button
+                                    Content="{materialDesign:PackIcon Kind=ContentSave}"
+                                    ToolTip="Save" 
+                                    Command="{Binding SavePageCommand}"/>
+                                <Separator />
+                                <Button
+                                    Command="Cut"
+                                    Content="{materialDesign:PackIcon Kind=ContentCut}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Cut" />
+                                <Button
+                                    Command="Copy"
+                                    Content="{materialDesign:PackIcon Kind=ContentCopy}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Copy that stuff" />
+                                <Separator />
+                                <Button
+                                    Command="Paste"
+                                    Content="{materialDesign:PackIcon Kind=ContentPaste}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Paste some stuff" />
                             </ToolBar>
                         </ToolBarTray>
                     </Grid>
