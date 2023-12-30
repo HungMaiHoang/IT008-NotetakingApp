@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Driver;
 using MongoDB.Driver.Core.WireProtocol.Messages.Encoders.BinaryEncoders;
 using Note.Model;
 using Note.Utilities;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +35,7 @@ namespace Note.ViewModel
         private TaskVM TasksView;
         private TrashVM TrashView;
         private ArchivedVM ArchivedView;
+        private SearchVM SearchView;
         // View Navigate Command
         public ICommand HomeCommand { get; set; }
         public ICommand NotesCommand { get; set; }
@@ -40,6 +43,7 @@ namespace Note.ViewModel
         public ICommand TasksCommand { get; set; }
         public ICommand TrashCommand { get; set; }
         public ICommand ArchivedCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
         // Action Command
         public ICommand NewNoteCommand { get; set; }
 
@@ -86,15 +90,17 @@ namespace Note.ViewModel
             NoteModel note = NoteModel.CreateNewNote();
             
             DataAccess.Instance.UpdateNote(note);
-
+            DataAccess.Instance.CreateTTLIndexForNote(note, 30);
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
             NoteVM.Instance.ListNote.Insert(0,note);
-
-
             CurrentView = NotesView;
         }
 
+        private void Search(object obj)
+        {
+            CurrentView = SearchView;
+        }
         public MainWindowVM(MainWindow view)
         {
             MyView = view;
@@ -106,6 +112,8 @@ namespace Note.ViewModel
             TasksView = new TaskVM();
             TrashView = TrashVM.Instance;
             ArchivedView = ArchivedVM.Instance;
+            SearchView = SearchVM.Instance;
+
 
             HomeCommand = new RelayCommand(Home);
             NotesCommand = new RelayCommand(Note);
@@ -114,6 +122,7 @@ namespace Note.ViewModel
             NewNoteCommand = new RelayCommand(NewNote);
             TrashCommand = new RelayCommand(Trash);
             ArchivedCommand = new RelayCommand(Archived);
+            SearchCommand = new RelayCommand(Search);
             // Startup view
             CurrentView = HomeView;
         }

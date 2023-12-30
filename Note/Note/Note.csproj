@@ -161,6 +161,7 @@
     <Compile Include="ViewModel\NoteVM.cs" />
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
+    <Compile Include="ViewModel\SearchVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
     <Compile Include="ViewModel\TrashVM.cs" />
     <Compile Include="View\ArchiveNote.xaml.cs">
@@ -192,6 +193,9 @@
     </Compile>
     <Compile Include="View\Reminders.xaml.cs">
       <DependentUpon>Reminders.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SignUpWindow.xaml.cs">
       <DependentUpon>SignUpWindow.xaml</DependentUpon>
@@ -281,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Reminders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

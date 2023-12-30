@@ -39,6 +39,8 @@ namespace Note.ViewModel
             {
                 _listnote = value;
                 OnPropertyChanged(nameof(ListNote));
+                
+                //DataAccess.Instance.HandleTTLDeletion().GetAwaiter().GetResult();
             }
         }
         private NoteModel _curMote;

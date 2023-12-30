@@ -163,6 +163,7 @@ namespace Note.ViewModel
         private void NoteToTrash(object obj)
         {            
             DataAccess.Instance.NoteToTrash(CurNote);
+            
             ListNote.Remove(CurNote);
         }
         private void NoteToArchived(object obj)
