@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,6 +45,8 @@ namespace Note.ViewModel
                 // Update note to database before change the value
                 if (CurNote is NoteModel && CurNote != null)
                 {
+                    //PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n", string.Empty);
+
                     DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
                     DataAccess.Instance.UpdateNote(CurNote);
                 }
@@ -102,6 +105,21 @@ namespace Note.ViewModel
                 }
             }
         }
+        // First 20 character of PlantText
+        private string _pageHeadLine;
+        public string PageHeadLine
+        {
+            get => _pageHeadLine;
+            set
+            {
+                if (_pageHeadLine != value && CurNote != null)
+                {
+                    _pageHeadLine = value;
+                    CurNote.HeadLine = value;
+                    OnPropertyChanged(nameof(PageHeadLine));
+                }
+            }
+        }
         #endregion
 
         #region Word Counting
@@ -131,7 +149,7 @@ namespace Note.ViewModel
         public ICommand TestCommand { get; set; }
         
 
-        private void LoadPage(object obj)
+        private async void LoadPage(object obj)
         {
             try
             {
@@ -139,7 +157,7 @@ namespace Note.ViewModel
                 PageTitle = CurNote.Title;
 
                 // Load Content
-                PageContent.Document = DataAccess.Instance.LoadRTFNote(CurNote.FileId);
+                PageContent.Document = await DataAccess.Instance.LoadRTFNote(CurNote.FileId);
             }
             catch (Exception ex)
             {
@@ -147,6 +165,8 @@ namespace Note.ViewModel
         }
         private void SavePage(object obj)
         {
+            PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n|\r", string.Empty);
+
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
         }
         private void DeleteNote(object obj)
@@ -180,14 +200,13 @@ namespace Note.ViewModel
         }
         private void Test(object obj)
         {
-            MessageBox.Show(PlainText);
+            MessageBox.Show(PageHeadLine);
         }
         #endregion
 
         public NoteVM()
         {
             // Get database in ListNote
-            //   List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
@@ -202,17 +221,33 @@ namespace Note.ViewModel
             NoteToTrashCommand = new RelayCommand(NoteToTrash);
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
             TestCommand = new RelayCommand(Test);
-
         }
-        /// <summary>
-        /// Select first note if has
-        /// </summary>
-        public void SelectFirstNoteIfHas()
+
+
+        public async Task<List<NoteModel>> SearchWithText(List<NoteModel> list, string text)
         {
-            if (ListNote.Count > 0)
+            List<NoteModel> res = new List<NoteModel>();
+
+            Regex regex = new Regex(text, RegexOptions.IgnoreCase);
+            FlowDocument myDoc;
+
+            foreach (var item in list)
             {
-                CurNote = ListNote.First();
+                if (regex.IsMatch(item.Title) || regex.IsMatch(item.HeadLine))
+                {
+                    res.Add(item);
+                }
+                else
+                {
+                    myDoc = await DataAccess.Instance.LoadRTFNote(item.FileId);
+                    TextRange myTR = new TextRange(myDoc.ContentStart, myDoc.ContentEnd);
+                    if (regex.IsMatch(myTR.Text))
+                    {
+                        res.Add(item);
+                    }
+                }
             }
+            return res;
         }
     }
 }

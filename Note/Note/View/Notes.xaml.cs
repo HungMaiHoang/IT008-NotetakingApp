@@ -260,7 +260,6 @@ namespace Note.View
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //NoteVM.Instance.Text = richTextBox.Document.ContentStart.GetTextInRun(LogicalDirection.Forward);
             TextRange myTR = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
             NoteVM.Instance.PlainText = myTR.Text;
         }

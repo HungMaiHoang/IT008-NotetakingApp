@@ -76,6 +76,13 @@
                     <RowDefinition>
                     </RowDefinition>
                 </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   Margin="20,0,0,0"
+                   Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                   Text="{Binding miniNoteTitle, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
+                   FontSize="18"/>
                 <TextBlock Grid.Row="1"
                     Width="100"
                     HorizontalAlignment="Left"
@@ -87,23 +94,17 @@
                     Style="{StaticResource MaterialDesignOverlineTextBlock}"
                     Text="{Binding miniNoteDate,Converter={StaticResource TimeAgoConvert},RelativeSource={RelativeSource AncestorType=view:miniNote}}" />
                 <TextBlock Grid.Row="1"
-                       Width="130"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="125,0,0,0"
-                       Text="{Binding miniNoteHeadLine, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
-                       TextWrapping="NoWrap"
-                       TextTrimming="CharacterEllipsis"
-                       Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                       FontSize="14"
-                       />
-                <TextBlock Grid.Row="0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Margin="20,0,0,0"
-                       Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                       Text="{Binding miniNoteTitle, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
-                       FontSize="18"/>
+                    Width="100"
+                    Height="15"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Margin="125,0,0,1"
+                    Text="{Binding miniNoteHeadLine, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
+                    TextWrapping="NoWrap"
+                    TextTrimming="CharacterEllipsis"
+                    Style="{StaticResource MaterialDesignOverlineTextBlock}"
+                    FontSize="14"
+                    />
             </Grid>
 
         </RadioButton>

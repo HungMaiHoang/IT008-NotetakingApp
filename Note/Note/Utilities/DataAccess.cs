@@ -227,10 +227,10 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="fileId"></param>
         /// <param name="rtfContent"></param>
-        public FlowDocument LoadRTFNote(ObjectId fileId)
+        public async Task<FlowDocument> LoadRTFNote(ObjectId fileId)
         {
             // GridFS download operation
-            byte[] xamlBytes = gridFSBucket.DownloadAsBytes(fileId);
+            byte[] xamlBytes = await gridFSBucket.DownloadAsBytesAsync(fileId);
 
             string xamlString = System.Text.Encoding.UTF8.GetString(xamlBytes);
             FlowDocument flowDocument = (FlowDocument)XamlReader.Parse(xamlString);
