@@ -1,4 +1,5 @@
 ﻿//using MaterialDesignThemes.Wpf;
+using Amazon.Runtime.Documents;
 using Note.Utilities;
 using Note.ViewModel;
 using Note.Windows;
@@ -226,7 +227,6 @@ namespace Note.View
             int Columns = insertTableWindow.GetColumns();
             int Rows = insertTableWindow.GetRows();
             Table table = new Table();
-            richTextBox.BeginChange();
             var gridLenghtConvertor = new GridLengthConverter();
             table.Columns.Add(new TableColumn());
             table.RowGroups.Add(new TableRowGroup());
@@ -251,7 +251,6 @@ namespace Note.View
             // Add the table to the RichTextBox
             richTextBox.Document.Blocks.Add(table);
 
-            richTextBox.EndChange();
         }
 
         private void RemoveTable(object sender, RoutedEventArgs e)
@@ -349,5 +348,17 @@ namespace Note.View
                 }
             }
         }
+        private void RichTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
+            Point position = e.GetPosition(richTextBox);
+           
+                Paragraph newParagraph = new Paragraph();
+                richTextBox.Document.Blocks.Add(newParagraph);
+
+                richTextBox.CaretPosition = newParagraph.ContentStart;
+            
+        }
+
     }
 }
