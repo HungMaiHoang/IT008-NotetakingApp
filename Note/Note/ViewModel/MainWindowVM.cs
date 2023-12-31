@@ -88,9 +88,14 @@ namespace Note.ViewModel
         private void NewNote(object obj)
         {
             NoteModel note = NoteModel.CreateNewNote();
-            
+
+            DataAccess.Instance.SetTimeTrashFSFile(note, DateTime.MaxValue);
+
             DataAccess.Instance.UpdateNote(note);
-            DataAccess.Instance.CreateTTLIndexForNote(note, 30);
+            DataAccess.Instance.CreateTTLIndexForNote("TimeTrashTTL", 15);
+
+            DataAccess.Instance.CreateTTLIndexForFSFile("TimeTrashFSTTL", 15);
+
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
             NoteVM.Instance.ListNote.Insert(0,note);
