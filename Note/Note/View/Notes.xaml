@@ -16,6 +16,7 @@
              d:DesignHeight="704" d:DesignWidth="1025"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
     <UserControl.Resources>
+        <ObjectDataProvider x:Key="FontFamilies" MethodName="GetFamilies" ObjectType="{x:Type Fonts}" />
         <ul:TimeAgoConvert x:Key="TimeAgoConvert"></ul:TimeAgoConvert>
         <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="Transparent"/>
@@ -315,15 +316,43 @@
                                 </ListBox>
                                 <Separator />
                                 <Label
+                                     VerticalAlignment="Center"
+                                    Content="Font :" />
+                                <ComboBox
+                                    x:Name="FontBox"
+                                    ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                    IsEditable="True"
+                                    IsTextSearchEnabled="True"
+                                    PreviewKeyDown="Font_PreviewKeyDown"
+                                    DropDownClosed="FontBox_DropDownClosed"
+                                    
+                                    >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{Binding}" ></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Label
                                     VerticalAlignment="Center"
                                     Content="Font size:" />
-                                <ComboBox>
+                                <ComboBox 
+                                    x:Name="FontSizeBox"
+                                    IsEditable="True" 
+                                    PreviewKeyDown="FontSize_PreviewKeyDown"
+                                    DropDownClosed="FontSizeBox_DropDownClosed">
+                                    
+                                    <ComboBoxItem Content="8" />
+                                    <ComboBoxItem Content="9" />
                                     <ComboBoxItem Content="10" />
+                                    <ComboBoxItem Content="11" />
                                     <ComboBoxItem
                                         Content="12"
                                         IsSelected="True"/>
                                     <ComboBoxItem Content="14" />
                                     <ComboBoxItem Content="16" />
+                                    <ComboBoxItem Content="18" />
+                                    <ComboBoxItem Content="20" />
                                 </ComboBox>
                                 <Separator/>
                                 <Button
@@ -345,12 +374,7 @@
                                     ToolTip="Add table"
                                     Click="InsertTable"
                                     />
-                                <Button 
-                                     Content="{materialDesign:PackIcon Kind=TableRemove}"
-                                     ToolBar.OverflowMode="AsNeeded"
-                                     ToolTip="Remove table"
-                                     Click="RemoveTable"
-    />
+                               
                                 <Button  Click="TextColor_Click"
                                     Content="{materialDesign:PackIcon Kind=FormatColorText}"
                                     ToolBar.OverflowMode="AsNeeded"
@@ -388,7 +412,8 @@
                     Grid.Row="2" 
                     Grid.ColumnSpan="2"
                     Loaded="richTextBox_Loaded"
-                    TextChanged="TextBox_TextChanged">
+                    TextChanged="TextBox_TextChanged"
+                    MouseDoubleClick="RichTextBox_MouseDoubleClick">
                     <FlowDocument Name="myFlowDocument">
                     </FlowDocument>
                     <in:Interaction.Triggers>

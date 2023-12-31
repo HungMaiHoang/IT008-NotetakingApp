@@ -1,4 +1,5 @@
 ﻿//using MaterialDesignThemes.Wpf;
+using Amazon.Runtime.Documents;
 using Note.Utilities;
 using Note.ViewModel;
 using Note.Windows;
@@ -24,8 +25,11 @@ namespace Note.View
     /// <summary>
     /// Interaction logic for Notes.xaml
     /// </summary>
+    /// 
+
     public partial class Notes : UserControl
     {
+
         public Notes()
         {
             InitializeComponent();
@@ -126,9 +130,9 @@ namespace Note.View
             var selectedText = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
             Boldbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontWeightProperty).Equals(FontWeights.Bold);
             Italicbutton.IsSelected = selectedText.GetPropertyValue(TextElement.FontStyleProperty).Equals(FontStyles.Italic);
-            if(selectedText.GetPropertyValue(Inline.TextDecorationsProperty)!=null)
+            if (selectedText.GetPropertyValue(Inline.TextDecorationsProperty) != null)
             {
-            Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
+                Underlinebutton.IsSelected = selectedText.GetPropertyValue(Inline.TextDecorationsProperty).Equals(TextDecorations.Underline);
             }
             LeftAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Left);
             CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
@@ -204,6 +208,17 @@ namespace Note.View
                 Image image = new Image();
                 BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
                 image.Source = bitmap;
+                if (bitmap.Width > richTextBox.ActualWidth || bitmap.Height > richTextBox.ActualHeight)
+                {
+                    image.Width = richTextBox.ActualWidth - 30; // Adjust as needed
+                    
+                }
+                else
+                {
+                    image.Width = bitmap.Width;
+
+                }
+
 
                 // Tạo đối tượng InlineUIContainer để chứa ảnh
                 InlineUIContainer container = new InlineUIContainer(image);
@@ -223,7 +238,6 @@ namespace Note.View
             int Columns = insertTableWindow.GetColumns();
             int Rows = insertTableWindow.GetRows();
             Table table = new Table();
-            richTextBox.BeginChange();
             var gridLenghtConvertor = new GridLengthConverter();
             table.Columns.Add(new TableColumn());
             table.RowGroups.Add(new TableRowGroup());
@@ -248,20 +262,106 @@ namespace Note.View
             // Add the table to the RichTextBox
             richTextBox.Document.Blocks.Add(table);
 
-            richTextBox.EndChange();
-        }
-
-        private void RemoveTable(object sender, RoutedEventArgs e)
-        {
-            //TextRange selectedTextRange = new TextRange(richTextBox.Selection.Start, richTextBox.Selection.End);
-            //Table table = new Table();
-
-        }
+        } 
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextRange myTR = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
             NoteVM.Instance.PlainText = myTR.Text;
+            richTextBox.IsDocumentEnabled = true;
+            List<Run> runsToAddHyperlink = new List<Run>();
+
+            TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+
+            foreach (Run run in richTextBox.Document.Blocks.OfType<Paragraph>().SelectMany(p => p.Inlines.OfType<Run>()))
+            {
+                if (Uri.IsWellFormedUriString(run.Text, UriKind.Absolute))
+                {
+                    runsToAddHyperlink.Add(run);
+                }
+            }
+
+            foreach (Run run in runsToAddHyperlink)
+            {
+                Hyperlink hyperlink = new Hyperlink(run.ContentStart, run.ContentEnd)
+                {
+                    NavigateUri = new Uri(run.Text),
+                    TargetName = "_blank",
+                    IsEnabled = true
+
+                };
+
+                hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+            }
         }
+            private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+            {
+
+                try
+                {
+
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(e.Uri.AbsoluteUri));
+                    e.Handled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error opening link: {ex.Message}");
+                }
+            }
+
+       
+        private void FontSize_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (FontSizeBox.Text != null && Double.TryParse(FontSizeBox.Text, out double fontSize))
+                {        
+                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void FontSizeBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (FontSizeBox.Text != null && Double.TryParse(FontSizeBox.Text, out double fontSize))
+            {
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontSizeProperty, fontSize);
+            }
+        }
+
+        private void FontBox_DropDownClosed(object sender, EventArgs e)
+        {
+            FontFamily selectedFont = FontBox.SelectedItem as FontFamily;
+            if (selectedFont != null)
+            {
+               
+                richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, selectedFont);
+            }
+        }
+
+        private void Font_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                FontFamily selectedFont = FontBox.SelectedItem as FontFamily;
+                if (selectedFont != null)
+                {
+                    richTextBox.Selection.ApplyPropertyValue(TextElement.FontFamilyProperty, selectedFont);
+                }
+            }
+        }
+        private void RichTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            
+            Point position = e.GetPosition(richTextBox);
+           
+                Paragraph newParagraph = new Paragraph();
+                richTextBox.Document.Blocks.Add(newParagraph);
+
+                richTextBox.CaretPosition = newParagraph.ContentStart;
+            
+        }
+
     }
 }
