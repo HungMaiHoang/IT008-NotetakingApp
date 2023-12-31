@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Note.ViewModel
 {
@@ -21,6 +24,28 @@ namespace Note.ViewModel
                     _instance = new SearchVM();
                 }
                 return _instance;
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText; 
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
+
+        private NoteModel _curNote;
+        public NoteModel CurNote
+        {
+            get => _curNote;
+            set
+            {
+                _curNote = value;
+                OnPropertyChanged(nameof(CurNote));
             }
         }
 
@@ -59,6 +84,32 @@ namespace Note.ViewModel
 
         private SearchVM()
         {
+        }
+
+        public async Task<ObservableCollection<NoteModel>> SearchWithText(ObservableCollection<NoteModel> list, string text)
+        {
+            ObservableCollection<NoteModel> res = new ObservableCollection<NoteModel>();
+
+            Regex regex = new Regex(text, RegexOptions.IgnoreCase);
+            FlowDocument myDoc;
+
+            foreach (var item in list)
+            {
+                if (regex.IsMatch(item.Title) || regex.IsMatch(item.HeadLine))
+                {
+                    res.Add(item);
+                }
+                else
+                {
+                    myDoc = await DataAccess.Instance.LoadRTFNote(item.FileId);
+                    TextRange myTR = new TextRange(myDoc.ContentStart, myDoc.ContentEnd);
+                    if (regex.IsMatch(myTR.Text))
+                    {
+                        res.Add(item);
+                    }
+                }
+            }
+            return res;
         }
     }
 }

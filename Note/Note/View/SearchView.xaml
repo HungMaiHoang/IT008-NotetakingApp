@@ -68,19 +68,21 @@
                     <materialDesign:Card VerticalAlignment="Center"
                                          HorizontalAlignment="Center" Height="50"
                                          UniformCornerRadius="10">
-                        
-                    <TextBox materialDesign:HintAssist.Hint="Search" 
+
+                        <TextBox materialDesign:HintAssist.Hint="Search"     
+                             Text="{Binding SearchText}"
                              Height="50"
                              Padding="25 5 0 0"
                              Width="800"
                              VerticalContentAlignment="Center"
-                   FontSize="25"
-                   FontWeight="Normal"
-                   FontFamily="San Francisco"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   Margin="0 0 0 0"></TextBox>
-                    <!--<TextBlock Text="Notes in the Trash are deleted after 7 days."
+                             FontSize="25"
+                             FontWeight="Normal"
+                             FontFamily="San Francisco"
+                             VerticalAlignment="Center"
+                             HorizontalAlignment="Center"
+                             Margin="0 0 0 0"
+                             KeyUp="TextBox_KeyEnterUpdate"/>
+                        <!--<TextBlock Text="Notes in the Trash are deleted after 7 days."
                            Style="{StaticResource MaterialDesignCaptionTextBlock}"
                            FontFamily="Monserrat"
                            FontSize="16"
@@ -137,7 +139,7 @@
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             Style="{StaticResource ListBoxStyle1}"
-            ItemsSource="{Binding ListNote}" 
+            ItemsSource="{Binding ArchivedList}" 
             SelectedItem="{Binding CurNote}"
             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
             Height="{Binding ActualHeight, ElementName=ListBoxNotes}">

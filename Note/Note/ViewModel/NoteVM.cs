@@ -229,33 +229,6 @@ namespace Note.ViewModel
             TestCommand = new RelayCommand(Test);
             NoteToArchivedCommand = new RelayCommand(NoteToArchived);
         }
-
-
-        public async Task<List<NoteModel>> SearchWithText(List<NoteModel> list, string text)
-        {
-            List<NoteModel> res = new List<NoteModel>();
-
-            Regex regex = new Regex(text, RegexOptions.IgnoreCase);
-            FlowDocument myDoc;
-
-            foreach (var item in list)
-            {
-                if (regex.IsMatch(item.Title) || regex.IsMatch(item.HeadLine))
-                {
-                    res.Add(item);
-                }
-                else
-                {
-                    myDoc = await DataAccess.Instance.LoadRTFNote(item.FileId);
-                    TextRange myTR = new TextRange(myDoc.ContentStart, myDoc.ContentEnd);
-                    if (regex.IsMatch(myTR.Text))
-                    {
-                        res.Add(item);
-                    }
-                }
-            }
-            return res;
-        }
     }
 }
         
