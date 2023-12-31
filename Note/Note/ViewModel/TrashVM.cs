@@ -95,7 +95,7 @@ namespace Note.ViewModel
             }
         }
 
-        private void LoadPage(object obj)
+        private async void LoadPage(object obj)
         {
 
             try
@@ -103,7 +103,7 @@ namespace Note.ViewModel
                 DetailNoteTrashWindow detailNoteTrashWindow = new DetailNoteTrashWindow();
                 CurNote = obj as NoteModel;
                 // Load Content
-                PageContent.Document = DataAccess.Instance.LoadRTFNote(CurNote.FileId);
+                PageContent.Document = await DataAccess.Instance.LoadRTFNote(CurNote.FileId);
                 detailNoteTrashWindow.Show();
             }
             catch (Exception ex)

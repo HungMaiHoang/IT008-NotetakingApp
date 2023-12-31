@@ -19,7 +19,7 @@ namespace Note.Model
         private string headLine;
         private string status;
         private ObjectId fileId;
-        public DateTime timeTrash;
+        private DateTime timeTrash;
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id 
@@ -47,7 +47,10 @@ namespace Note.Model
         [BsonElement("Last Edited")]
         public DateTime LastEdited 
         { 
-            get => lastEdited; 
+            get
+            {
+                return TimeZoneInfo.ConvertTimeFromUtc(lastEdited, TimeZoneInfo.Local);
+            }
             set 
             { 
                 lastEdited = value;
@@ -114,7 +117,7 @@ namespace Note.Model
             return new NoteModel {
                 Id = ObjectId.GenerateNewId(),
                 Title = "Title",
-                LastEdited = DateTime.Now,
+                LastEdited = DateTime.UtcNow,
                 HeadLine = "",
                 Status="enable",
                 TimeTrash = DateTime.MaxValue,

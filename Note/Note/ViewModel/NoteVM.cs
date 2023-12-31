@@ -167,8 +167,7 @@ namespace Note.ViewModel
             PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n|\r", string.Empty);
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
-            CurNote.LastEdited = DateTime.Now;
-
+            CurNote.LastEdited = DateTime.UtcNow;
         }
         private void DeleteNote(object obj)
         {
