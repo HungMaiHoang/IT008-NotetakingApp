@@ -52,8 +52,6 @@ namespace Note.Utilities
             database = client.GetDatabase(DatabaseName);
             gridFSBucket = new GridFSBucket(database);
         }
-
-        #region Note Data Access
         /// <summary>
         /// Return T Collection from database
         /// </summary>
@@ -64,6 +62,9 @@ namespace Note.Utilities
         {
             return database.GetCollection<T>(collection);
         }
+
+        #region Note Data Access
+
 
         /// <summary>
         /// Get all Notes from NoteCollection
