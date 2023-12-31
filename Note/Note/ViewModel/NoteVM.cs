@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -146,7 +146,7 @@ namespace Note.ViewModel
         public ICommand ShowInsertTableWindowCommand { get; set; }
         public ICommand WordCountCommand { get; }
         public ICommand TestCommand { get; set; }
-        
+        public ICommand NoteToArchivedCommand {  get; set; }
 
         private async void LoadPage(object obj)
         {
@@ -167,6 +167,8 @@ namespace Note.ViewModel
             PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n|\r", string.Empty);
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
+            CurNote.LastEdited = DateTime.Now;
+
         }
         private void DeleteNote(object obj)
         {
@@ -178,8 +180,14 @@ namespace Note.ViewModel
             }
         }
         private void NoteToTrash(object obj)
-        {
+        {            
             DataAccess.Instance.NoteToTrash(CurNote);
+            
+            ListNote.Remove(CurNote);
+        }
+        private void NoteToArchived(object obj)
+        {
+            DataAccess.Instance.NoteToArchived(CurNote);
             ListNote.Remove(CurNote);
         }
         private void ShowInsertTAbleWindow(object obj)
@@ -195,7 +203,7 @@ namespace Note.ViewModel
         {
             //WordCount = wordCounterModel.CountWords(PlainText);
             WordCount = WordCouting.WordCount(PlainText);
-            CurNote.LastEdited = DateTime.Now;
+           // CurNote.LastEdited = DateTime.Now;
         }
         private void Test(object obj)
         {
@@ -220,6 +228,7 @@ namespace Note.ViewModel
             NoteToTrashCommand = new RelayCommand(NoteToTrash);
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
             TestCommand = new RelayCommand(Test);
+            NoteToArchivedCommand = new RelayCommand(NoteToArchived);
         }
 
 

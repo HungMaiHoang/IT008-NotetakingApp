@@ -94,7 +94,7 @@ namespace Note.Utilities
                 var results = notesCollection.Find(p => p.Status == "enable");
                 return results.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
@@ -108,7 +108,22 @@ namespace Note.Utilities
                 var results = notesCollection.Find(p => p.Status == "disable");
                 return results.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        public List<NoteModel> GetNoteArchived()
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var results = notesCollection.Find(p => p.Status == "archived");
+                return results.ToList();
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
@@ -161,9 +176,15 @@ namespace Note.Utilities
             //return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
 
             note.Status = "disable";
+            note.TimeTrash = DateTime.Now;
             return UpdateNote(note);
         }
-
+        public Task NoteToArchived(NoteModel note)
+        {
+            
+            note.Status = "archived";
+            return UpdateNote(note);
+        }
         /// <summary>
         /// Delete note with exact Id
         /// </summary>
@@ -176,11 +197,39 @@ namespace Note.Utilities
             NoteModel temp = GetNoteWithId(id);
             if (temp != null)
             {
-               // MessageBox.Show("deleting");
+                // MessageBox.Show("deleting");
                 gridFSBucket.DeleteAsync(temp.FileId);
             }
 
             return notesCollection.DeleteOneAsync(c => c.Id == id);
+        }
+
+        /// <summary>
+        /// restore note from trash to available
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public Task RestoreNote(NoteModel note)
+        {
+            //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+            //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
+            //var update = Builders<NoteModel>.Update.Set("Status","disable");
+            //return notesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+
+            note.Status = "enable";
+            note.TimeTrash = DateTime.MaxValue;
+            return UpdateNote(note);
+        }
+
+        public void CreateTTLIndexForNote(NoteModel note, int expireAfterSeconds)
+        {
+            var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+
+            var indexModel = new CreateIndexModel<NoteModel>(
+                Builders<NoteModel>.IndexKeys.Ascending(n => n.TimeTrash),
+                new CreateIndexOptions { ExpireAfter = TimeSpan.FromSeconds(expireAfterSeconds) });
+
+            notesCollection.Indexes.CreateOne(indexModel);
         }
         #endregion
 
@@ -262,6 +311,40 @@ namespace Note.Utilities
             UserModel temp = GetUserWithId(id);
 
             return usersCollection.DeleteOneAsync(c => c.Id == id);
+        }
+
+
+
+        public async Task HandleTTLDeletion()
+        {
+
+            var collection = ConnectToMongo<NoteModel>(NoteCollection);
+
+
+            var options = new ChangeStreamOptions { FullDocument = ChangeStreamFullDocumentOption.UpdateLookup };
+
+            using (var cursor = await collection.WatchAsync(options))
+            {
+                while (await cursor.MoveNextAsync())
+                {
+                    var batch = cursor.Current;
+
+                    foreach (var change in batch)
+                    {
+                        if (change.OperationType == ChangeStreamOperationType.Delete)
+                        {
+                            var deletedDocumentId = change.DocumentKey["Id"].AsObjectId;
+
+                            // Retrieve the document to get the fileId
+                            var deletedDocument = await collection.Find(p=> p.Id == deletedDocumentId).FirstOrDefaultAsync();
+                            var fileId = deletedDocument.FileId;
+
+                            // Manually delete the document from GridFS
+                            await gridFSBucket.DeleteAsync(fileId);
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -33,5 +33,10 @@
     <DataTemplate DataType="{x:Type vm:TrashVM}">
         <view:Trash/>
     </DataTemplate>
-
+    <DataTemplate DataType="{x:Type vm:ArchivedVM}">
+        <view:ArchiveNote/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type vm:SearchVM}">
+        <view:SearchView/>
+    </DataTemplate>
 </ResourceDictionary>

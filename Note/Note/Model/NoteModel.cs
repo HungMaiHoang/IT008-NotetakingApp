@@ -19,7 +19,7 @@ namespace Note.Model
         private string headLine;
         private string status;
         private ObjectId fileId;
-
+        public DateTime timeTrash;
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id 
@@ -92,7 +92,18 @@ namespace Note.Model
                 OnPropertyChanged(nameof(FileId)); 
             }
         }
-
+        [BsonElement("Time Trash")]
+        public DateTime TimeTrash
+        {
+            get => timeTrash;
+            set
+            {
+                timeTrash = value;
+                //update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(TimeTrash));
+            }
+        }
         public NoteModel()
         {
 
@@ -106,6 +117,7 @@ namespace Note.Model
                 LastEdited = DateTime.Now,
                 HeadLine = "",
                 Status="enable",
+                TimeTrash = DateTime.MaxValue,
                 FileId = createFileID()
             };
         }

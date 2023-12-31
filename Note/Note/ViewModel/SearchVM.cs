@@ -1,19 +1,18 @@
 ﻿using Note.Model;
-using Note.Utilities;
+using System.Collections.ObjectModel;
+﻿using Note.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Note.ViewModel
 {
-    internal class SearchVM : ViewModelBase
+    public class SearchVM:ViewModelBase
     {
-        // Singleton
-        private SearchVM _instance;
-        public SearchVM Instance
+        private static SearchVM _instance;
+        public static SearchVM Instance
         {
             get
             {

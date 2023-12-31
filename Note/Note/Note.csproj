@@ -152,6 +152,7 @@
     <Compile Include="Utilities\TimeAgoConvert.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="Utilities\WordCounterModel.cs" />
+    <Compile Include="ViewModel\ArchivedVM.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="Utilities\NavigationVM.cs" />
@@ -161,8 +162,12 @@
     <Compile Include="ViewModel\NoteVM.cs" />
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
+    <Compile Include="ViewModel\SearchVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
     <Compile Include="ViewModel\TrashVM.cs" />
+    <Compile Include="View\ArchiveNote.xaml.cs">
+      <DependentUpon>ArchiveNote.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Blank.xaml.cs">
       <DependentUpon>Blank.xaml</DependentUpon>
     </Compile>
@@ -175,6 +180,12 @@
     <Compile Include="View\miniNote.xaml.cs">
       <DependentUpon>miniNote.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\miniNoteArchived.xaml.cs">
+      <DependentUpon>miniNoteArchived.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\miniNoteTrash.xaml.cs">
+      <DependentUpon>miniNoteTrash.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Notes.xaml.cs">
       <DependentUpon>Notes.xaml</DependentUpon>
     </Compile>
@@ -184,6 +195,9 @@
     <Compile Include="View\Reminders.xaml.cs">
       <DependentUpon>Reminders.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SignUpWindow.xaml.cs">
       <DependentUpon>SignUpWindow.xaml</DependentUpon>
     </Compile>
@@ -192,6 +206,9 @@
     </Compile>
     <Compile Include="View\Trash.xaml.cs">
       <DependentUpon>Trash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DetailNoteTrashWindow.xaml.cs">
+      <DependentUpon>DetailNoteTrashWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\InsertTableWindow.xaml.cs">
       <DependentUpon>InsertTableWindow.xaml</DependentUpon>
@@ -232,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\ArchiveNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Blank.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -248,6 +269,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\miniNoteArchived.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\miniNoteTrash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Notes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -260,6 +289,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\SearchView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SignUpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -269,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Trash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DetailNoteTrashWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

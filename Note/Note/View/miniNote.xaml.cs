@@ -24,6 +24,18 @@ namespace Note.View
     public partial class miniNote : UserControl, INotifyPropertyChanged
     {
 
+        //public static readonly DependencyProperty WidthProperty =
+        //    DependencyProperty.Register(
+        //        "miniNoteWidth",
+        //        typeof(double),
+        //        typeof(miniNote),
+        //        new PropertyMetadata(249.9));
+        //public double miniNoteWidth
+        //{
+        //    get {  return (double)GetValue(WidthProperty); }
+        //    set {  SetValue(WidthProperty, value); }
+        //}
+
         #region Dependency Property
         public static readonly DependencyProperty TitleProperty = 
             DependencyProperty.Register(
