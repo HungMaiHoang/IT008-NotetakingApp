@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Note.View
         public LoginWindow()
         {
             InitializeComponent();
+            DataContext = new LoginWindowVM();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

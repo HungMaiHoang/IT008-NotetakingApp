@@ -230,6 +230,7 @@
                              Margin=" 0 5 0 0"
                              Padding="20 0 0 0"
                              VerticalAlignment="Center"
+                             Text="{Binding InputUserName}"
                              >
                             <TextBox.Background>
                                 <ImageBrush ImageSource="/Images/user.png"
@@ -274,7 +275,7 @@
                                 materialDesign:ButtonAssist.CornerRadius="20"
                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                                 Style="{StaticResource ButtonStyle1}"
-                            
+                                Command="{Binding LoginCommand}"
                                 >
                             <TextBlock
                                      Text="LOG IN" />
