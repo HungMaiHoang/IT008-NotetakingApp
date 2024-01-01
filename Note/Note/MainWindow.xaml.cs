@@ -1,4 +1,5 @@
-﻿using Note.ViewModel;
+﻿using Note.Model;
+using Note.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace Note
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(UserModel curUser)
         {            
             InitializeComponent();
-            DataContext = new MainWindowVM(this);
+            DataContext = new MainWindowVM(this, curUser);
         }
 
         private void btn_menutab_expanded_Menu_Click(object sender, RoutedEventArgs e)

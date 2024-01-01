@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Note.View
         public SignUpWindow()
         {
             InitializeComponent();
+            DataContext = new SignUpWindowVM(this);
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -48,6 +50,17 @@ namespace Note.View
         }
         private bool isFullScreen = false;
         private double storedLeft, storedTop, storedWidth, storedHeight;
+
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SignUpWindowVM).Password = (sender as PasswordBox).Password;
+        }
+
+        private void txtConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            (DataContext as SignUpWindowVM).ConfirmPassword = (sender as PasswordBox).Password;
+        }
+
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
             if (isFullScreen)

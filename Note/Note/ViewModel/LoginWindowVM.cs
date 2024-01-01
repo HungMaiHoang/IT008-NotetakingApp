@@ -1,4 +1,5 @@
-﻿using Note.Utilities;
+﻿using Note.Model;
+using Note.Utilities;
 using Note.View;
 using System;
 using System.Collections.Generic;
@@ -29,22 +30,54 @@ namespace Note.ViewModel
             get => _inputUserPassword;
             set
             {
-                _inputUserName = value;
+                _inputUserPassword = value;
                 OnPropertyChanged(nameof(InputUserPassword));
             }
         }
 
         public ICommand LoginCommand { get; set; }
         public ICommand SignUpCommand { get; set; }
-        private void Login(object obj)
+        private async void Login(object obj)
         {
-            MainWindow view = new MainWindow();
-            view.Show();
-            myView.Close();
+            // Blank User Name
+            if (InputUserName == null)
+            {
+                MessageBox.Show("User Name can not be null!");
+                return;
+            }
+            // Blank Password
+            if (InputUserPassword == null)
+            {
+                MessageBox.Show("User Password can not be null!");
+                return;
+            }
+
+            UserModel usermodel = await DataAccess.Instance.GetUserWithUsername(InputUserName);
+
+            // Wrong username
+            if (usermodel == null)
+            {
+                MessageBox.Show("User does not exist!");
+                return;
+            }
+
+            // Verify password
+            if (PasswordHasher.Verify(InputUserPassword, usermodel.Password))
+            {
+                MainWindow view = new MainWindow(usermodel);
+                view.Show();
+                myView.Close();
+            }
+            else
+            {
+                MessageBox.Show("Wrong password!");
+            }
         }
         private void SignUp(object obj)
         {
-
+            SignUpWindow view = new SignUpWindow();
+            view.Show();
+            myView.Close();
         }
 
         public LoginWindowVM(LoginWindow view)

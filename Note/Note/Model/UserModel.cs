@@ -63,14 +63,14 @@ namespace Note.Model
                 OnPropertyChanged(nameof(Password));
             }
         }
-        public static UserModel CreateNewUser()
+        public static UserModel CreateNewUser(string name, string username, string password)
         {
             return new UserModel
             {
                 Id = ObjectId.GenerateNewId(),
-                Name = "",
-                UserName = "",
-                Password = "",
+                Name = name,
+                UserName = username,
+                Password = password,
             };
         }
     }

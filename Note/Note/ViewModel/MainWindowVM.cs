@@ -21,6 +21,17 @@ namespace Note.ViewModel
     {
         private MainWindow MyView;
 
+
+        private UserModel _curUser;
+        public UserModel CurUser
+        {
+            get => _curUser;
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged(nameof(CurUser));
+            }
+        }
         private ViewModelBase _currentView;
         public ViewModelBase CurrentView
         {
@@ -28,7 +39,6 @@ namespace Note.ViewModel
             set { _currentView = value; OnPropertyChanged(nameof(CurrentView)); }
         }
 
-        private BlankVM BlankView;
         private HomeVM HomeView;
         private NoteVM NotesView;
         private ReminderVM RemindersView;
@@ -106,11 +116,11 @@ namespace Note.ViewModel
         {
             CurrentView = SearchView;
         }
-        public MainWindowVM(MainWindow view)
+        public MainWindowVM(MainWindow view, UserModel user)
         {
             MyView = view;
+            CurUser = user;
 
-            BlankView = new BlankVM();
             HomeView = new HomeVM();
             NotesView = NoteVM.Instance;
             RemindersView = new ReminderVM();

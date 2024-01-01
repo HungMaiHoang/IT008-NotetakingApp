@@ -16,6 +16,7 @@ using Note.ViewModel;
 using Note.View;
 using System.Windows.Markup;
 using System.Collections.ObjectModel;
+using MongoDB.Driver.Core.Operations;
 
 namespace Note.Utilities
 {
@@ -270,6 +271,46 @@ namespace Note.Utilities
         }
         #endregion
 
+        #region User Data Access
+        public Task UpdateUser(UserModel user)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            var filter = Builders<UserModel>.Filter.Eq("Id", user.Id);
+            return usersCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
+        }
+        public UserModel GetUserWithId(ObjectId id)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            return usersCollection.Find(p => p.Id == id).FirstOrDefault();
+        }
+        public Task<UserModel> GetUserWithUsername(string username)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            var filter = Builders<UserModel>.Filter.Eq("UserName", username);
+            return usersCollection.Find(filter).FirstOrDefaultAsync();
+        }
+        public Task InsertUser(UserModel user)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            return usersCollection.InsertOneAsync(user);
+        }
+        public Task DeleteUser(ObjectId id)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+
+            UserModel temp = GetUserWithId(id);
+
+            return usersCollection.DeleteOneAsync(c => c.Id == id);
+        }
+        public async Task<bool> NotExistUserWithUsername(string username)
+        {
+            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
+            var filter = Builders<UserModel>.Filter.Eq("UserName", username);
+            long totalUser = await usersCollection.CountDocumentsAsync(filter);
+            if (totalUser == 0) return true;
+            else return false;
+        }
+        #endregion
 
         #region GridFS
         /// <summary>
@@ -325,30 +366,8 @@ namespace Note.Utilities
         }
         #endregion
 
-        public Task UpdateUser(UserModel user)
-        {
-            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
-            var filter = Builders<UserModel>.Filter.Eq("Id", user.Id);
-            return usersCollection.ReplaceOneAsync(filter, user, new ReplaceOptions { IsUpsert = true });
-        }
-        public UserModel GetUserWithId(ObjectId id)
-        {
-            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
-            return usersCollection.Find(p => p.Id == id).FirstOrDefault();
-        }
-        public Task InsertUser(UserModel user)
-        {
-            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
-            return usersCollection.InsertOneAsync(user);
-        }
-        public Task DeleteUser(ObjectId id)
-        {
-            var usersCollection = ConnectToMongo<UserModel>(UserCollection);
 
-            UserModel temp = GetUserWithId(id);
-
-            return usersCollection.DeleteOneAsync(c => c.Id == id);
-        }
+        
 
 
 

@@ -51,6 +51,12 @@ namespace Note.View
         }
         private bool isFullScreen = false;
         private double storedLeft, storedTop, storedWidth, storedHeight;
+
+        private void txtPassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            (DataContext as LoginWindowVM).InputUserPassword = (sender as PasswordBox).Password;
+        }
+
         private void btnMaximize_Click(object sender, RoutedEventArgs e)
         {
             if (isFullScreen)

@@ -167,6 +167,7 @@
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
     <Compile Include="ViewModel\SearchVM.cs" />
+    <Compile Include="ViewModel\SignUpWindowVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
     <Compile Include="ViewModel\TrashVM.cs" />
     <Compile Include="View\ArchiveNote.xaml.cs">
