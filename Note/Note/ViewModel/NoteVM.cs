@@ -213,7 +213,7 @@ namespace Note.ViewModel
         public NoteVM()
         {
             // Get database in ListNote
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(UserHolder.CurUser);
             ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             // Set up World Counter

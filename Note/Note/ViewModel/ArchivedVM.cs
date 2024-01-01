@@ -59,7 +59,7 @@ namespace Note.ViewModel
         public ICommand RestoreCommand { get; set; }
         public ArchivedVM()
         {
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived(UserHolder.CurUser);
             _listnote = new ObservableCollection<NoteModel>(listTemp);
             RestoreCommand = new RelayCommand(Restore);
         }

@@ -22,10 +22,10 @@ namespace Note
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(UserModel curUser)
+        public MainWindow()
         {            
             InitializeComponent();
-            DataContext = new MainWindowVM(this, curUser);
+            DataContext = new MainWindowVM(this);
         }
 
         private void btn_menutab_expanded_Menu_Click(object sender, RoutedEventArgs e)

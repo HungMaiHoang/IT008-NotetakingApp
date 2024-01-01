@@ -67,7 +67,7 @@ namespace Note.ViewModel
         public ICommand ClearTrashCommand { get; set; }
         public TrashVM()
         {
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable(UserHolder.CurUser);
             _listnote = new ObservableCollection<NoteModel>(listTemp);
             RestoreCommand = new RelayCommand(Restore);
             DeleteForeverCommand = new RelayCommand(DeleteForever);

@@ -88,12 +88,14 @@ namespace Note.Utilities
             }
         }
 
-        public List<NoteModel> GetNoteEnable()
+        public List<NoteModel> GetNoteEnable(UserModel user)
         {
             try
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-                var results = notesCollection.Find(p => p.Status == "enable");
+                var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "enable" && p.UserId == user.Id);
+                var results = notesCollection.Find(filter);
+                //var results = notesCollection.Find(p => p.Status == "enable");
                 return results.ToList();
             }
             catch (Exception ex)
@@ -102,12 +104,14 @@ namespace Note.Utilities
                 return null;
             }
         }
-        public List<NoteModel> GetNoteDisable()
+        public List<NoteModel> GetNoteDisable(UserModel user)
         {
             try
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-                var results = notesCollection.Find(p => p.Status == "disable");
+                var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "disable" && p.UserId == user.Id);
+                var results = notesCollection.Find(filter);
+                //var results = notesCollection.Find(p => p.Status == "disable");
                 return results.ToList();
             }
             catch (Exception ex)
@@ -117,12 +121,14 @@ namespace Note.Utilities
             }
         }
 
-        public List<NoteModel> GetNoteArchived()
+        public List<NoteModel> GetNoteArchived(UserModel user)
         {
             try
             {
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
-                var results = notesCollection.Find(p => p.Status == "archived");
+                var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "archived" && p.UserId == user.Id);
+                var results = notesCollection.Find(filter);
+                //var results = notesCollection.Find(p => p.Status == "archived");
                 return results.ToList();
             }
             catch (Exception ex)

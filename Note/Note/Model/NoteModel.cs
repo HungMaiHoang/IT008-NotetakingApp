@@ -18,6 +18,7 @@ namespace Note.Model
         private DateTime lastEdited;        
         private string headLine;
         private string status;
+        private ObjectId userId;
         private ObjectId fileId;
         private DateTime timeTrash;
         [BsonId]
@@ -41,7 +42,7 @@ namespace Note.Model
                 title = value; 
                 // Update to database
                 DataAccess.Instance.UpdateNote(this);
-                OnPropertyChanged(nameof(Title)); 
+                OnPropertyChanged(nameof(Title));
             }
         }
         [BsonElement("Last Edited")]
@@ -83,6 +84,17 @@ namespace Note.Model
                 OnPropertyChanged(nameof(Status));
             }
         }
+        public ObjectId UserId
+        {
+            get => userId;
+            set
+            {
+                userId = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(UserId));
+            }
+        }
         [BsonElement("File Id")]
         public ObjectId FileId 
         { 
@@ -112,7 +124,7 @@ namespace Note.Model
 
         }
 
-        public static NoteModel CreateNewNote()
+        public static NoteModel CreateNewNote(UserModel user)
         {
             return new NoteModel {
                 Id = ObjectId.GenerateNewId(),
@@ -121,6 +133,7 @@ namespace Note.Model
                 HeadLine = "",
                 Status="enable",
                 TimeTrash = DateTime.MaxValue,
+                UserId = user.Id,
                 FileId = createFileID()
             };
         }

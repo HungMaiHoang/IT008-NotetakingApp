@@ -19,16 +19,14 @@ namespace Note.ViewModel
 {
     internal class MainWindowVM : ViewModelBase
     {
-        private MainWindow MyView;
-
-
+        private MainWindow myView;
         private UserModel _curUser;
         public UserModel CurUser
         {
             get => _curUser;
             set
             {
-                _currentView = value;
+                _curUser = value;
                 OnPropertyChanged(nameof(CurUser));
             }
         }
@@ -61,43 +59,32 @@ namespace Note.ViewModel
         private void Home(object obj) => CurrentView = HomeView;
         private void Note(object obj)
         {
-
-
-            // Delete bug Note
-            //NoteModel temp = DataAccess.Instance.GetNoteWithId(new ObjectId("000000000000000000000000"));
-            //if (temp != null)
-            //{
-            //    DataAccess.Instance.DeleteNote(temp);
-            //}
-
             // Load Notes from database
-            //List<NoteModel> listTemp = DataAccess.Instance.GetAllNotes();
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(CurUser);
             NotesView.ListNote.Clear();
             NotesView.ListNote = new ObservableCollection<NoteModel>(listTemp);
 
             CurrentView = NotesView;
-            //NotesView.SelectFirstNoteIfHas();
         }
         private void Reminder(object obj) => CurrentView = RemindersView;
         private void Task(object obj) => CurrentView = TasksView;
         private void Trash(object obj) 
         {
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable(CurUser);
             TrashView.ListNote.Clear();
             TrashView.ListNote = new ObservableCollection<NoteModel>(listTemp);
             CurrentView = TrashView;
         }
         private void Archived(object obj)
         {
-            List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived();
+            List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived(CurUser);
             ArchivedView.ListNote.Clear();
             ArchivedView.ListNote = new ObservableCollection<NoteModel>(listTemp);
             CurrentView = ArchivedView;
         }
         private void NewNote(object obj)
         {
-            NoteModel note = NoteModel.CreateNewNote();
+            NoteModel note = NoteModel.CreateNewNote(CurUser);
 
             DataAccess.Instance.SetTimeTrashFSFile(note, DateTime.MaxValue);
 
@@ -116,10 +103,10 @@ namespace Note.ViewModel
         {
             CurrentView = SearchView;
         }
-        public MainWindowVM(MainWindow view, UserModel user)
+        public MainWindowVM(MainWindow view)
         {
-            MyView = view;
-            CurUser = user;
+            myView = view;
+            CurUser = UserHolder.CurUser;
 
             HomeView = new HomeVM();
             NotesView = NoteVM.Instance;

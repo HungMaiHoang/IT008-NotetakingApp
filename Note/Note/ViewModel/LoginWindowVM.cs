@@ -64,7 +64,8 @@ namespace Note.ViewModel
             // Verify password
             if (PasswordHasher.Verify(InputUserPassword, usermodel.Password))
             {
-                MainWindow view = new MainWindow(usermodel);
+                UserHolder.CreateUser(usermodel);
+                MainWindow view = new MainWindow();
                 view.Show();
                 myView.Close();
             }
