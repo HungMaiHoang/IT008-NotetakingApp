@@ -363,5 +363,27 @@ namespace Note.View
             
         }
 
+        private void DeleteTable(object sender, RoutedEventArgs e)
+        {
+            // Lấy vị trí con trỏ hiện tại trong RichTextBox
+            TextPointer caretPosition = richTextBox.CaretPosition;
+
+            // Nếu con trỏ không trỏ vào bất kỳ vị trí nào, không làm gì cả
+            if (caretPosition == null)
+                return;
+
+            // Lấy Block hiện tại mà con trỏ trỏ đến
+            Block currentBlock = richTextBox.Document.Blocks.Where(block =>
+            {
+                return block.ContentStart.CompareTo(caretPosition) == -1 &&
+                       block.ContentEnd.CompareTo(caretPosition) == 1;
+            }).FirstOrDefault();
+
+            // Nếu tìm thấy Block, xóa nó
+            if (currentBlock is Table)
+            {
+                richTextBox.Document.Blocks.Remove(currentBlock);
+            }
+        }
     }
 }
