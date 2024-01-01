@@ -148,7 +148,7 @@ namespace Note.ViewModel
         public ICommand TestCommand { get; set; }
         public ICommand NoteToArchivedCommand {  get; set; }
 
-        private async void LoadPage(object obj)
+        public async void LoadPage(object obj)
         {
             try
             {

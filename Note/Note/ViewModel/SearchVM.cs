@@ -49,6 +49,28 @@ namespace Note.ViewModel
             }
         }
 
+
+        private NoteModel _curNoteArchived;
+        public NoteModel CurNoteArchived
+        {
+            get => _curNoteArchived;
+            set
+            {
+                _curNoteArchived = value;
+                OnPropertyChanged(nameof(CurNoteArchived));
+            }
+        }
+
+        private NoteModel _curNoteTrash;
+        public NoteModel CurNoteTrash
+        {
+            get => _curNoteTrash;
+            set
+            {
+                _curNoteTrash = value;
+                OnPropertyChanged(nameof(CurNoteTrash));
+            }
+        }
         private ObservableCollection<NoteModel> _notesList;
         public ObservableCollection<NoteModel> NotesList 
         { 
@@ -57,6 +79,7 @@ namespace Note.ViewModel
             {
                 _notesList = value;
                 OnPropertyChanged(nameof(NotesList));
+
             }
         }
 
@@ -68,6 +91,7 @@ namespace Note.ViewModel
             { 
                 _trashList = value;
                 OnPropertyChanged(nameof(TrashList));
+
             }
         }
 
@@ -79,11 +103,74 @@ namespace Note.ViewModel
             {
                 _archivedList = value;
                 OnPropertyChanged(nameof(ArchivedList));
+              
             }
         }
 
+        private bool _isListBox1Visible;
+
+        public bool IsListBox1Visible
+        {
+            get { return _isListBox1Visible; }
+            set
+            {
+                if (_isListBox1Visible != value)
+                {
+                    _isListBox1Visible = value;
+                    OnPropertyChanged(nameof(IsListBox1Visible));
+                }
+            }
+        }
+        private bool _isListBox2Visible;
+
+        public bool IsListBox2Visible
+        {
+            get { return _isListBox2Visible; }
+            set
+            {
+                if (_isListBox2Visible != value)
+                {
+                    _isListBox2Visible = value;
+                    OnPropertyChanged(nameof(IsListBox2Visible));
+                }
+            }
+        }
+        private bool _isListBox3Visible;
+
+        public bool IsListBox3Visible
+        {
+            get { return _isListBox3Visible; }
+            set
+            {
+                if (_isListBox3Visible != value)
+                {
+                    _isListBox3Visible = value;
+                    OnPropertyChanged(nameof(IsListBox3Visible));
+                }
+            }
+        }
+
+ 
+        public ICommand GoToArchivedCommand {  get; set; }
+        public ICommand GoToNoteCommand { get; set; }
         private SearchVM()
         {
+            GoToArchivedCommand = new RelayCommand(GoToArchived);
+            GoToNoteCommand = new RelayCommand(GoToNote);
+        }
+
+        private void GoToNote(object obj)
+        {
+            CurNote = obj as NoteModel;
+            MainWindowVM.Instance.CurrentView = NoteVM.Instance;
+            NoteVM.Instance.CurNote = CurNote;
+            NoteVM.Instance.LoadPage(CurNote);
+        }
+
+        private void GoToArchived(object obj)
+        {
+            MainWindowVM.Instance.CurrentView = ArchivedVM.Instance;
+            ArchivedVM.Instance.CurNote = CurNoteArchived;
         }
 
         public async Task<ObservableCollection<NoteModel>> SearchWithText(ObservableCollection<NoteModel> list, string text)

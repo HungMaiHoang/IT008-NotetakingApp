@@ -146,7 +146,9 @@
     </ApplicationDefinition>
     <Compile Include="Model\NoteModel.cs" />
     <Compile Include="Model\UserModel.cs" />
+    <Compile Include="Utilities\BooleanToVisibilityConverter.cs" />
     <Compile Include="Utilities\Btn.cs" />
+    <Compile Include="Utilities\CheckDocument.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
     <Compile Include="Utilities\FrameworkElementExtensions.cs" />
     <Compile Include="Utilities\MyRichTextBox.cs" />

@@ -116,7 +116,7 @@
         <materialDesign:Card UniformCornerRadius="15" Background="#fef8e2"
                              Margin="0 5 0 0">
             
-        <StackPanel Margin="75 0 0 30"
+        <Grid Margin="75 0 0 30"
     Name="ListBoxNotes"
     >
             <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
@@ -166,7 +166,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </ScrollViewer>
-        </StackPanel>
+        </Grid>
         </materialDesign:Card>
     </DockPanel>
 </UserControl>

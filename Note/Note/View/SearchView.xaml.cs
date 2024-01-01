@@ -37,7 +37,25 @@ namespace Note.View
                 //if (binding != null) { binding.UpdateSource(); }
 
                 SearchVM view = SearchVM.Instance;
-                view.ArchivedList = await view.SearchWithText(NoteVM.Instance.ListNote, (sender as TextBox).Text);
+                view.ArchivedList = await view.SearchWithText(ArchivedVM.Instance.ListNote, (sender as TextBox).Text);
+                if(view.ArchivedList.Count > 0)
+                {   
+                    view.IsListBox1Visible = true;
+                }
+                else view.IsListBox1Visible = false;
+                view.NotesList = await view.SearchWithText(NoteVM.Instance.ListNote, (sender as TextBox).Text);
+                if (view.NotesList.Count > 0)
+                {
+                    view.IsListBox2Visible = true;
+                }
+                else view.IsListBox2Visible = false;
+                view.TrashList = await view.SearchWithText(TrashVM.Instance.ListNote, (sender as TextBox).Text);
+                if (view.TrashList.Count > 0)
+                {
+                    view.IsListBox3Visible = true;
+                }
+                else view.IsListBox3Visible = false;
+
             }
         }
     }
