@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:Note.View"
         mc:Ignorable="d"
         Title="LoginWindow" Height="550" Width="800"
@@ -312,7 +313,14 @@
                                        FontWeight="Medium"
                                        FontFamily="monserrat"
                                        Cursor="Hand"
-                                       Margin=" 8 0 0 0"/>
+                                       Margin=" 8 0 0 0"
+                                       >
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding SignUpCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBlock>
                         </StackPanel>
                     </StackPanel>
                 </materialDesign:Card>

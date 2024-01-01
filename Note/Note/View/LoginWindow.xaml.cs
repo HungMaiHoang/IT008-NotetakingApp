@@ -24,7 +24,7 @@ namespace Note.View
         public LoginWindow()
         {
             InitializeComponent();
-            DataContext = new LoginWindowVM();
+            DataContext = new LoginWindowVM(this);
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)

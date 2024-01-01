@@ -160,6 +160,7 @@
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="Utilities\NavigationVM.cs" />
     <Compile Include="ViewModel\InsertTableVM.cs" />
+    <Compile Include="ViewModel\LoginWindowVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\miniNoteVM.cs" />
     <Compile Include="ViewModel\NoteVM.cs" />
