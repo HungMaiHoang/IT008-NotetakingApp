@@ -351,10 +351,10 @@
                                        Margin=" 8 0 0 0"
                                        >
                                 <i:Interaction.Triggers>
-    <i:EventTrigger EventName="MouseDown">
-        <i:InvokeCommandAction Command="{Binding SignUpCommand}"/>
-    </i:EventTrigger>
-</i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <i:InvokeCommandAction Command="{Binding LoginCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>

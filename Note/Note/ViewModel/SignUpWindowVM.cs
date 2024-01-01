@@ -67,7 +67,7 @@ namespace Note.ViewModel
                     {
                         string hash = PasswordHasher.Hash(Password);
                         UserModel usermodel = UserModel.CreateNewUser(Name, UserName, hash);
-                        await DataAccess.Instance.InsertUser(usermodel);
+                        await DataAccess.Instance.UpdateUser(usermodel);
                     }
                     else
                     {
