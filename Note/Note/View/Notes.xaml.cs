@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 
 namespace Note.View
@@ -37,7 +38,7 @@ namespace Note.View
         }
         private void Bold(object sender, RoutedEventArgs e)
         {
-            ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Bold);
+            ApplyFormattingText(TextElement.FontWeightProperty, FontWeights.Bold);          
         }
         private void UnBold(object sender, RoutedEventArgs e)
         {
@@ -138,6 +139,13 @@ namespace Note.View
             CenterAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Center);
             RightAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Right);
             JustifyAlign.IsSelected = selectedText.GetPropertyValue(Paragraph.TextAlignmentProperty).Equals(TextAlignment.Justify);
+            double fontSize = richTextBox.Selection.GetPropertyValue(TextElement.FontSizeProperty) as double? ?? 0.0;
+            FontSizeBox.Text = fontSize.ToString();
+            FontFamily fontFamily = richTextBox.Selection.GetPropertyValue(TextElement.FontFamilyProperty) as FontFamily;
+            if (fontFamily != null)
+            {
+                FontBox.Text = fontFamily.ToString();
+            }
         }
 
         private void TextBox_KeyEnterUpdate(object sender, KeyEventArgs e)
@@ -205,7 +213,7 @@ namespace Note.View
                 string imagePath = openFileDialog.FileName;
 
                 // Tạo đối tượng Image từ đường dẫn ảnh
-                Image image = new Image();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
                 BitmapImage bitmap = new BitmapImage(new Uri(imagePath));
                 image.Source = bitmap;
                 if (bitmap.Width > richTextBox.ActualWidth || bitmap.Height > richTextBox.ActualHeight)
@@ -246,7 +254,7 @@ namespace Note.View
                 TableRow row = new TableRow();
                 for (int j = 0; j < Columns; j++)
                 {
-                    row.Cells.Add(new TableCell(new Paragraph(new Run($"Cell {i + 1}")))
+                    row.Cells.Add(new TableCell(new Paragraph(new Run("")))
                     {
                         BorderBrush = Brushes.Black,
                         BorderThickness = new Thickness(1)
@@ -258,6 +266,7 @@ namespace Note.View
             // Set table border properties
             table.BorderThickness = new Thickness(1);
             table.BorderBrush = Brushes.Black;
+            
 
             // Add the table to the RichTextBox
             richTextBox.Document.Blocks.Add(table);
@@ -351,17 +360,29 @@ namespace Note.View
                 }
             }
         }
-        private void RichTextBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void RichTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
-            Point position = e.GetPosition(richTextBox);
-           
-                Paragraph newParagraph = new Paragraph();
-                richTextBox.Document.Blocks.Add(newParagraph);
+             Point position = e.GetPosition(richTextBox);
 
-                richTextBox.CaretPosition = newParagraph.ContentStart;
-            
-        }
+             // Lấy vị trí trong văn bản tương ứng với vị trí double-click
+            TextPointer textPointer = richTextBox.GetPositionFromPoint(position, true);
+            TextPointer caretPosition = richTextBox.CaretPosition;
+            if (textPointer != caretPosition)
+            {
+      
+            // Nếu không có dòng, thêm một dòng mới
+            Paragraph newParagraph = new Paragraph();
+            richTextBox.Document.Blocks.Add(newParagraph);
+
+            // Đặt caret tại đầu dòng mới
+            richTextBox.CaretPosition = newParagraph.ContentStart;
+            }
+            else
+            {
+                return;
+            }
+       
+    }
 
         private void DeleteTable(object sender, RoutedEventArgs e)
         {

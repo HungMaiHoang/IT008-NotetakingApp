@@ -276,6 +276,7 @@
                                     Width="80"
                                     x:Name="FontBox"
                                     ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                    SelectedIndex="2"
                                     IsEditable="True"
                                     IsTextSearchEnabled="True"
                                     PreviewKeyDown="Font_PreviewKeyDown"
@@ -312,6 +313,7 @@
                                     <ListBoxItem Name="JustifyAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
                                 </ListBox>
                                 <Separator />
+                                
                                 <ListBox SelectionMode="Extended">
                                     <ListBox.ToolTip>
                                         <StackPanel>
@@ -320,7 +322,7 @@
                                             <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem Name="Boldbutton" Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
+                                    <ListBoxItem Name="Boldbutton"  Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
                                     <ListBoxItem Name="Italicbutton" Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
                                     <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
@@ -407,6 +409,8 @@
                 </Grid>
                 <RichTextBox 
                     x:Name="richTextBox" 
+                    FontSize="12"
+                    FontFamily="Arial"
                     SelectionChanged="TextBox_SelectionChanged"
                     Grid.Row="2" 
                     Grid.ColumnSpan="2"
