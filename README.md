@@ -39,4 +39,8 @@ Leaves is a simple and powerful note management application designed to help you
 This is video demo:
 ## VI.Code of conducting
 [Code of conducting](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/Code%20of%20conducting)
-## License
+
+Thank you for choosing Visic! We hope you enjoy the app.
+
+## VII.License
+[MIT](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/LICENSE) © 2023,[Leaves]
