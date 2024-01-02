@@ -40,7 +40,8 @@ This is video demo:
 ## VI.Code of conducting
 [Code of conducting](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/Code%20of%20conducting)
 
-Thank you for choosing Visic! We hope you enjoy the app.
-
 ## VII.License
 [MIT](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/LICENSE) © 2023,[Leaves]
+
+Thank you for choosing Visic! We hope you enjoy the app.
+
