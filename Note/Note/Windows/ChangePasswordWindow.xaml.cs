@@ -41,5 +41,10 @@ namespace Note.Windows
         {
             (DataContext as ChangePasswordVM).ConfirmPassword = (sender as PasswordBox).Password;
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

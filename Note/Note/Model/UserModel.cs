@@ -4,6 +4,7 @@ using MongoDB.Driver.Core.Authentication;
 using Note.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Note.Model
         private string password;
         private bool settingAdd;
         private string dayDelete;
+        private byte[] image;
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id
@@ -89,6 +91,21 @@ namespace Note.Model
                 OnPropertyChanged(nameof(DayDelete));
             }
         }
+
+        [BsonElement("Image")]
+        public byte[] Image
+        {
+            get => image;
+            set
+            {
+                image = value;
+                // Update to database
+                DataAccess.Instance.UpdateUser(this);
+                OnPropertyChanged(nameof(Image));
+            }
+        }
+     
+
         public static UserModel CreateNewUser(string name, string username, string password)
         {
             return new UserModel
@@ -98,7 +115,8 @@ namespace Note.Model
                 UserName = username,
                 Password = password,
                 SettingAdd = true,
-                DayDelete = "7"
+                DayDelete = "7",
+                Image = File.ReadAllBytes("Images/defaultavatar.jpg")
             };
         }
     }

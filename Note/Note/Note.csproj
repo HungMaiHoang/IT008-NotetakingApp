@@ -401,6 +401,9 @@
     <Resource Include="Images\user-icon-image-25.png" />
     <Resource Include="Images\key.png" />
     <Resource Include="Images\background2.png" />
+    <None Include="Images\defaultavatar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="mongocrypt.dll" />
   </ItemGroup>
   <ItemGroup />

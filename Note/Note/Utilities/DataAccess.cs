@@ -17,6 +17,7 @@ using Note.View;
 using System.Windows.Markup;
 using System.Collections.ObjectModel;
 using MongoDB.Driver.Core.Operations;
+using System.Windows.Media.Imaging;
 
 namespace Note.Utilities
 {
@@ -336,6 +337,25 @@ namespace Note.Utilities
             long totalUser = await usersCollection.CountDocumentsAsync(filter);
             if (totalUser == 0) return true;
             else return false;
+        }
+
+        public void SaveImageToMongoDb(byte[] data, UserModel user)
+        {
+            var collection = ConnectToMongo<UserModel>(UserCollection);
+            user.Image = data;
+        }
+
+        public  BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
+        {
+            using (MemoryStream memoryStream = new MemoryStream(byteArray))
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
         }
         #endregion
 

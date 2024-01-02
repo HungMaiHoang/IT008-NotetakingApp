@@ -58,5 +58,24 @@ namespace Note.View
 
             }
         }
+
+        private void ListBox_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            outerScrollViewer.ScrollToVerticalOffset(e.VerticalOffset);
+
+        }
+
+        private void OuterScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            double verticalOffset = e.VerticalOffset;
+            double extentHeight = e.ExtentHeight;
+            double viewportHeight = e.ViewportHeight;
+        }
+
+        private void ListBoxNotes_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            outerScrollViewer.ScrollToVerticalOffset(e.VerticalOffset);
+
+        }
     }
 }
