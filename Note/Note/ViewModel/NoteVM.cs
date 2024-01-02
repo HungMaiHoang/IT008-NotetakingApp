@@ -162,9 +162,14 @@ namespace Note.ViewModel
             get => _pageTitle;
             set
             {
-                _pageTitle = value;
-                CurNote.Title = value;
-                OnPropertyChanged(nameof(PageTitle));
+                try
+                {
+                    _pageTitle = value;
+                    ChangeOnFilter();
+                    CurNote.Title = value;
+                    OnPropertyChanged(nameof(PageTitle));
+                }
+                catch { }
             }
         }
         // Content from RichTextBox
@@ -258,6 +263,7 @@ namespace Note.ViewModel
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
             CurNote.LastEdited = DateTime.UtcNow;
+            ChangeOnFilter();
         }
         private void DeleteNote(object obj)
         {
@@ -340,7 +346,8 @@ namespace Note.ViewModel
             // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(UserHolder.CurUser);
             ListNote = new ObservableCollection<NoteModel>(listTemp);
-
+            
+            _listNote.CollectionChanged += listNoteChange;
             _listPinnedNote.CollectionChanged += listPinnedChange;
 
             if (ListPinnedNote.Count > 0)
@@ -351,6 +358,10 @@ namespace Note.ViewModel
             {
                 IsListBox1Visible = false;
             }
+
+            FilterListNote = "A->Z";
+            Task.Delay(1);
+            ChangeOnFilter();
 
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
@@ -366,6 +377,11 @@ namespace Note.ViewModel
             NoteToArchivedCommand = new RelayCommand(NoteToArchived);
             PinNoteCommand = new RelayCommand(PinNote);
             UnpinNoteCommand = new RelayCommand(UnpinNote);
+        }
+
+        private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ChangeOnFilter();
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -393,6 +409,8 @@ namespace Note.ViewModel
                     break;
                 case "Last Edit":
                     ListNote = FilterList.DescendingLastEdit(ListNote);
+                    break;
+                default:
                     break;
             }
         }
