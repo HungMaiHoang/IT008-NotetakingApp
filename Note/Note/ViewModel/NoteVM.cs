@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -64,6 +65,7 @@ namespace Note.ViewModel
                 _listNote = value;
                 ListUnpinnedNote = new ObservableCollection<NoteModel>();
                 ListPinnedNote = new ObservableCollection<NoteModel>();
+                _listPinnedNote.CollectionChanged += listPinnedChange;
                 foreach (var note in _listNote)
                 {
                     if (note.IsPinned)
@@ -120,6 +122,16 @@ namespace Note.ViewModel
             {
                 _presentedPinnedListBox = value;
                 OnPropertyChanged(nameof(PresentedPinnedListBox));
+            }
+        }
+        private bool _isListBox1Visible;
+        public bool IsListBox1Visible
+        {
+            get => _isListBox1Visible;
+            set
+            {
+                _isListBox1Visible = value;
+                OnPropertyChanged(nameof(IsListBox1Visible));
             }
         }
 
@@ -204,6 +216,8 @@ namespace Note.ViewModel
         public ICommand WordCountCommand { get; }
         public ICommand TestCommand { get; set; }
         public ICommand NoteToArchivedCommand {  get; set; }
+        public ICommand PinNoteCommand { get; set; }
+        public ICommand UnpinNoteCommand { get; set; }
 
         public async void LoadPage(object obj)
         {
@@ -240,28 +254,34 @@ namespace Note.ViewModel
             DataAccess.Instance.NoteToTrash(CurNote);
             
             ListNote.Remove(CurNote);
+            
             if (CurNote.IsPinned)
             {
+                CurNote.IsPinned = false;
                 ListPinnedNote.Remove(CurNote);
             }
             else
             {
                 ListUnpinnedNote.Remove(CurNote);
             }
+            
         }
         private void NoteToArchived(object obj)
         {
-            DataAccess.Instance.NoteToArchived(CurNote);      
+            DataAccess.Instance.NoteToArchived(CurNote);
             
             ListNote.Remove(CurNote);
+            
             if (CurNote.IsPinned)
             {
+                CurNote.IsPinned = false;
                 ListPinnedNote.Remove(CurNote);
             }
             else
             {
                 ListUnpinnedNote.Remove(CurNote);
             }
+            
         }
         private void ShowInsertTAbleWindow(object obj)
         {
@@ -278,6 +298,18 @@ namespace Note.ViewModel
             WordCount = WordCouting.WordCount(PlainText);
            // CurNote.LastEdited = DateTime.Now;
         }
+        private void PinNote(object obj)
+        {
+            CurNote.IsPinned = true;
+            ListPinnedNote.Add(CurNote);
+            ListUnpinnedNote.Remove(CurNote);
+        }
+        private void UnpinNote(object obj)
+        {
+            CurNote.IsPinned = false;
+            ListPinnedNote.Remove(CurNote);
+            ListUnpinnedNote.Add(CurNote);
+        }
         private void Test(object obj)
         {
             MessageBox.Show(PageHeadLine);
@@ -289,6 +321,17 @@ namespace Note.ViewModel
             // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(UserHolder.CurUser);
             ListNote = new ObservableCollection<NoteModel>(listTemp);
+
+            _listPinnedNote.CollectionChanged += listPinnedChange;
+
+            if (ListPinnedNote.Count > 0)
+            {
+                IsListBox1Visible = true;
+            }
+            else
+            {
+                IsListBox1Visible = false;
+            }
 
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
@@ -302,6 +345,19 @@ namespace Note.ViewModel
             ShowInsertTableWindowCommand = new RelayCommand(ShowInsertTAbleWindow, CanShowWindow);
             TestCommand = new RelayCommand(Test);
             NoteToArchivedCommand = new RelayCommand(NoteToArchived);
+            PinNoteCommand = new RelayCommand(PinNote);
+            UnpinNoteCommand = new RelayCommand(UnpinNote);
+        }
+        private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (ListPinnedNote.Count > 0)
+            {
+                IsListBox1Visible = true;
+            }
+            else
+            {
+                IsListBox1Visible = false;
+            }
         }
     }
 }
