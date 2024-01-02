@@ -146,6 +146,14 @@ namespace Note.ViewModel
             }
         }
 
+        private ObservableCollection<string> comboBoxItems = new ObservableCollection<string>() { "Title Ascending", "Title Descending", "LastEdit Asecending", "LastEdit Descending" };
+        public ObservableCollection<string> ComboBoxItems
+        {
+            get => comboBoxItems;
+            set { comboBoxItems = value;
+                OnPropertyChanged(nameof(ComboBoxItems));
+            }
+        }
         #region Page Things
         // Note Title
         private string _pageTitle;
