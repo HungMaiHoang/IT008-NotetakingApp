@@ -266,17 +266,28 @@
                                 VerticalAlignment="Top" 
                                 Margin="0,10,0,0">
 
-
                                 <Label 
                                     VerticalAlignment="Center"
                                     Content="Font:" 
-                                  />    
+                                  />
 
-                                <ComboBox Name="FontFamilyComboBox">
-                                    <ComboBoxItem Content="Arial" IsSelected="True"/>
-                                    <ComboBoxItem Content="Times New Roman" />
-                                    <ComboBoxItem Content="Verdana" />
-                                    <ComboBoxItem Content="Tahoma" />
+                                <ComboBox
+                                    
+                                    Width="80"
+                                    x:Name="FontBox"
+                                    ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+                                    SelectedIndex="2"
+                                    IsEditable="True"
+                                    IsTextSearchEnabled="True"
+                                    PreviewKeyDown="Font_PreviewKeyDown"
+                                    DropDownClosed="FontBox_DropDownClosed"
+     
+     >
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" FontFamily="{Binding}" ></TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <Separator/>
                                 <!--
@@ -302,6 +313,7 @@
                                     <ListBoxItem Name="JustifyAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
                                 </ListBox>
                                 <Separator />
+                                
                                 <ListBox SelectionMode="Extended">
                                     <ListBox.ToolTip>
                                         <StackPanel>
@@ -310,29 +322,12 @@
                                             <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
                                         </StackPanel>
                                     </ListBox.ToolTip>
-                                    <ListBoxItem Name="Boldbutton" Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
+                                    <ListBoxItem Name="Boldbutton"  Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
                                     <ListBoxItem Name="Italicbutton" Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
                                     <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
                                 <Separator />
-                                <Label
-                                     VerticalAlignment="Center"
-                                    Content="Font :" />
-                                <ComboBox
-                                    x:Name="FontBox"
-                                    ItemsSource="{x:Static Fonts.SystemFontFamilies}"
-                                    IsEditable="True"
-                                    IsTextSearchEnabled="True"
-                                    PreviewKeyDown="Font_PreviewKeyDown"
-                                    DropDownClosed="FontBox_DropDownClosed"
-                                    
-                                    >
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}" FontFamily="{Binding}" ></TextBlock>
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                                              
                                 <Label
                                     VerticalAlignment="Center"
                                     Content="Font size:" />
@@ -374,6 +369,12 @@
                                     ToolTip="Add table"
                                     Click="InsertTable"
                                     />
+                                <Button 
+                                    Content="{materialDesign:PackIcon Kind=TableRemove}"
+                                    ToolBar.OverflowMode="AsNeeded"
+                                    ToolTip="Delete table"
+                                    Click="DeleteTable"
+                                    />
                                
                                 <Button  Click="TextColor_Click"
                                     Content="{materialDesign:PackIcon Kind=FormatColorText}"
@@ -408,6 +409,8 @@
                 </Grid>
                 <RichTextBox 
                     x:Name="richTextBox" 
+                    FontSize="12"
+                    FontFamily="Arial"
                     SelectionChanged="TextBox_SelectionChanged"
                     Grid.Row="2" 
                     Grid.ColumnSpan="2"
