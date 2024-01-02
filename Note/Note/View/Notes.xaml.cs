@@ -416,6 +416,7 @@ namespace Note.View
         private void PinnedNoteListBox_Loaded(object sender, RoutedEventArgs e)
         {
             NoteVM.Instance.PresentedPinnedListBox = sender as ListBox;
+        }
         private void Export(object sender, RoutedEventArgs e)
         {
             // Tạo hộp thoại lưu file
