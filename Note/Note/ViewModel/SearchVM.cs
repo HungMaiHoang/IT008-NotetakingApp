@@ -190,9 +190,16 @@ namespace Note.ViewModel
             MainWindowVM.Instance.CurrentView = ArchivedVM.Instance;
 
             await Task.Delay(1);
-
-            ArchivedVM.Instance.PresentedListBox.SelectedIndex = ArchivedVM.Instance.ListNote.IndexOf(CurNote);
-            ArchivedVM.Instance.CurNote = CurNoteArchived;
+            try
+            {
+                ArchivedVM.Instance.PresentedListBox.SelectedIndex = ArchivedVM.Instance.ListNote.IndexOf(CurNote);
+                ArchivedVM.Instance.CurNote = CurNoteArchived;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private async void GoToTrash(object obj)
@@ -201,9 +208,15 @@ namespace Note.ViewModel
             MainWindowVM.Instance.CurrentView = TrashVM.Instance;
 
             await Task.Delay(1);
-
-            TrashVM.Instance.PresentedListBox.SelectedIndex = TrashVM.Instance.ListNote.IndexOf(CurNote);
-            TrashVM.Instance.CurNote = CurNoteTrash;
+            try
+            {
+                TrashVM.Instance.PresentedListBox.SelectedIndex = TrashVM.Instance.ListNote.IndexOf(CurNote);
+                TrashVM.Instance.CurNote = CurNoteTrash;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         public async Task<ObservableCollection<NoteModel>> SearchWithText(ObservableCollection<NoteModel> list, string text)
         {
