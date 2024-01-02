@@ -134,6 +134,17 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(IsListBox1Visible));
             }
         }
+        private int _filterListNote;
+        public int FilterListNote
+        {
+            get => _filterListNote;
+            set
+            {
+                _filterListNote = value;
+                ChangeOnFilter();
+                OnPropertyChanged(nameof(FilterListNote));
+            }
+        }
 
         #region Page Things
         // Note Title
@@ -357,6 +368,24 @@ namespace Note.ViewModel
             else
             {
                 IsListBox1Visible = false;
+            }
+        }
+        private void ChangeOnFilter()
+        {
+            switch(FilterListNote)
+            {
+                case 1:
+                    ListNote = FilterList.AscedingTitle(ListNote); 
+                    break;
+                case 2:
+                    ListNote = FilterList.DescendingTitle(ListNote);
+                    break;
+                case 3:
+                    ListNote = FilterList.AscedingLastEdit(ListNote);
+                    break;
+                case 4:
+                    ListNote = FilterList.DescendingLastEdit(ListNote);
+                    break;
             }
         }
     }

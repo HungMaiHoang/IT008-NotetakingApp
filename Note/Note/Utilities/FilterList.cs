@@ -10,19 +10,19 @@ namespace Note.Utilities
 {
     internal class FilterList
     {
-        public static ObservableCollection<NoteModel> AscedingLastEdit(List<NoteModel> list)
+        public static ObservableCollection<NoteModel> AscedingLastEdit(ObservableCollection<NoteModel> list)
         {
             return new ObservableCollection<NoteModel>(list.OrderBy(x => x.LastEdited).ToList());
         }
-        public static ObservableCollection<NoteModel> DescendingLastEdit(List<NoteModel> list)
+        public static ObservableCollection<NoteModel> DescendingLastEdit(ObservableCollection<NoteModel> list)
         {
             return new ObservableCollection<NoteModel>(list.OrderByDescending(x => x.LastEdited).ToList());
         }
-        public static ObservableCollection<NoteModel> AscedingTitle(List<NoteModel> list)
+        public static ObservableCollection<NoteModel> AscedingTitle(ObservableCollection<NoteModel> list)
         {
             return new ObservableCollection<NoteModel>(list.OrderBy(x => x.Title).ToList());
         }
-        public static ObservableCollection<NoteModel> DescendingTitle(List<NoteModel> list)
+        public static ObservableCollection<NoteModel> DescendingTitle(ObservableCollection<NoteModel> list)
         {
             return new ObservableCollection<NoteModel>(list.OrderByDescending(x => x.Title).ToList());
         }
