@@ -171,14 +171,13 @@ namespace Note.ViewModel
             get => _pageTitle;
             set
             {
-                try
+                if (CurNote is NoteModel && CurNote != null)
                 {
                     _pageTitle = value;
-                    ChangeOnFilter();
                     CurNote.Title = value;
+
                     OnPropertyChanged(nameof(PageTitle));
                 }
-                catch { }
             }
         }
         // Content from RichTextBox
@@ -272,7 +271,6 @@ namespace Note.ViewModel
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
             CurNote.LastEdited = DateTime.UtcNow;
-            ChangeOnFilter();
         }
         private void DeleteNote(object obj)
         {
@@ -408,10 +406,10 @@ namespace Note.ViewModel
         }
         private void ChangeOnFilter()
         {
-            switch(FilterListNote)
+            switch (FilterListNote)
             {
                 case "A->Z":
-                    ListNote = FilterList.AscedingTitle(ListNote); 
+                    ListNote = FilterList.AscedingTitle(ListNote);
                     break;
                 case "Z->A":
                     ListNote = FilterList.DescendingTitle(ListNote);

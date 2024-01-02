@@ -174,15 +174,14 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <view:miniNoteArchived
+                                        <view:miniNote
                                     Padding="0 0 0 0"
                                     Margin="-3 -1 -4 -1"
-                                    miniNoteArchivedTitle="{Binding Title}" 
-                                    miniNoteArchivedHeadLine="{Binding HeadLine}"
-                                    miniNoteArchivedDate="{Binding LastEdited}"
-                                    miniNoteArchivedBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.GoToArchivedCommand}"
-                                    miniNoteArchivedBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.RestoreCommand}">
-                                        </view:miniNoteArchived>
+                                    miniNoteTitle="{Binding Title}" 
+                                    miniNoteHeadLine="{Binding HeadLine}"
+                                    miniNoteDate="{Binding LastEdited}"
+                                    miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.GoToArchivedCommand}">
+                                        </view:miniNote>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
