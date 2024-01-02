@@ -167,10 +167,6 @@ namespace Note.ViewModel
                     _pageTitle = value;
                     CurNote.Title = value;
 
-                    var temp = CurNote;
-                    ChangeOnFilter();
-                    CurNote = temp;
-
                     OnPropertyChanged(nameof(PageTitle));
                 }
             }
@@ -266,9 +262,6 @@ namespace Note.ViewModel
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
             CurNote.LastEdited = DateTime.UtcNow;
-            var temp = CurNote;
-            ChangeOnFilter();
-            CurNote = temp;
         }
         private void DeleteNote(object obj)
         {
@@ -364,8 +357,6 @@ namespace Note.ViewModel
                 IsListBox1Visible = false;
             }
 
-            FilterListNote = "A->Z";
-
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
 
@@ -384,9 +375,6 @@ namespace Note.ViewModel
 
         private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var temp = CurNote;
-            ChangeOnFilter();
-            temp = CurNote;
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -401,7 +389,7 @@ namespace Note.ViewModel
         }
         private void ChangeOnFilter()
         {
-            switch(FilterListNote)
+            switch (FilterListNote)
             {
                 case "A->Z":
                     ListNote = FilterList.AscedingTitle(ListNote);
