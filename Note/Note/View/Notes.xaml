@@ -16,6 +16,7 @@
              d:DesignHeight="704" d:DesignWidth="1025"
              xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
     <UserControl.Resources>
+        <ul:BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
         <ObjectDataProvider x:Key="FontFamilies" MethodName="GetFamilies" ObjectType="{x:Type Fonts}" />
         <ul:TimeAgoConvert x:Key="TimeAgoConvert"></ul:TimeAgoConvert>
         <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
@@ -127,9 +128,16 @@
                         Style="{StaticResource MaterialDesignScrollViewer}"
                         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                         Height="550">
-                        <StackPanel>
-                        <ListBox
+                        <DockPanel LastChildFill="False">
+                            <TextBlock 
+                                DockPanel.Dock="Top" 
+                                Text="Pin"
+                                FontWeight="Bold" 
+                                Margin="10,10,0,0"
+                                Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"/>
+                            <ListBox
                             Name="PinnedNoteListBox"
+                            DockPanel.Dock="Top"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource ListBoxStyle1}"
@@ -137,8 +145,7 @@
                             SelectedItem="{Binding CurNote}"
                             SelectionMode="Single"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
-                            Visibility="Collapsed"
+                            Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter}}"
                             Loaded="PinnedNoteListBox_Loaded">
                             <in:Interaction.Behaviors>
                                 <ul:ScrollIntoViewForListBox/>
@@ -192,7 +199,7 @@
                                 <ContextMenu x:Name="ContextMenuPinnedListNote">
                                     <ContextMenu.Style>
                                         <Style TargetType="ContextMenu">
-                                            <Setter Property="Height" Value="80"/>
+                                            <Setter Property="Height" Value="120"/>
                                             <Setter Property="Width" Value="230"/>
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Setter Property="Padding" Value="0"/>
@@ -201,17 +208,22 @@
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="ContextMenu">
                                                         <Border Background="#575757" CornerRadius="4" >
-                                                            <StackPanel>
-                                                                <!--<MenuItem x:Name="AddSongToPlayList" Foreground="White" Margin="5 5 5 0" Height="40" Command= "{Binding DataContext.ShowAddSongToPlaylistWindowCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
-                      CommandParameter="{Binding}">
-                <MenuItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Plus" Foreground="White"/>
-                        <TextBlock Text="Add song" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
-                    </StackPanel>
-                </MenuItem.Header>
-            </MenuItem>-->
-                                                                <MenuItem 
+                                                                <StackPanel>
+                                                                    <MenuItem 
+                                                                        x:Name="UnpinNote" 
+                                                                        Foreground="White" 
+                                                                        Margin="5 0 5 0" 
+                                                                        Height="40"  
+                                                                        Command= "{Binding DataContext.UnpinNoteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                                                        CommandParameter="{Binding}">
+                                                                        <MenuItem.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
+                                                                                <TextBlock Text="Unpin note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                            </StackPanel>
+                                                                        </MenuItem.Header>
+                                                                    </MenuItem>
+                                                                    <MenuItem 
                                             x:Name="DeleteNote" 
                                             Foreground="White" 
                                             Margin="5 0 5 0" 
@@ -249,8 +261,10 @@
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
+                            <Border Margin="5 10 5 0" BorderThickness="1" BorderBrush="Black" DockPanel.Dock="Top" Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"/>
                             <ListBox
                             Name="NoteUnpinnedListBox"
+                            DockPanel.Dock="Top"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource ListBoxStyle1}"
@@ -258,7 +272,6 @@
                             SelectedItem="{Binding CurNote}"
                             SelectionMode="Single"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
                             Loaded="ListBox_Loaded">
                                 <in:Interaction.Behaviors>
                                 <ul:ScrollIntoViewForListBox/>
@@ -312,7 +325,7 @@
                                 <ContextMenu x:Name="ContextMenuListNote">
                                     <ContextMenu.Style>
                                         <Style TargetType="ContextMenu">
-                                            <Setter Property="Height" Value="80"/>
+                                            <Setter Property="Height" Value="120"/>
                                             <Setter Property="Width" Value="230"/>
                                             <Setter Property="Background" Value="Transparent"/>
                                             <Setter Property="Padding" Value="0"/>
@@ -322,16 +335,21 @@
                                                     <ControlTemplate TargetType="ContextMenu">
                                                         <Border Background="#575757" CornerRadius="4" >
                                                             <StackPanel>
-                                                                <!--<MenuItem x:Name="AddSongToPlayList" Foreground="White" Margin="5 5 5 0" Height="40" Command= "{Binding DataContext.ShowAddSongToPlaylistWindowCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
-                                              CommandParameter="{Binding}">
-                                        <MenuItem.Header>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="Plus" Foreground="White"/>
-                                                <TextBlock Text="Add song" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
-                                            </StackPanel>
-                                        </MenuItem.Header>
-                                    </MenuItem>-->
-                                                                <MenuItem 
+                                                                    <MenuItem 
+                                                                        x:Name="PinNote" 
+                                                                        Foreground="White" 
+                                                                        Margin="5 0 5 0"
+                                                                        Height="40"  
+                                                                        Command= "{Binding DataContext.PinNoteCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                                                        CommandParameter="{Binding}">   
+                                                                        <MenuItem.Header>
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
+                                                                                <TextBlock Text="Pin note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                            </StackPanel>
+                                                                        </MenuItem.Header>
+                                                                    </MenuItem>
+                                                                    <MenuItem 
                                                                     x:Name="DeleteNote" 
                                                                     Foreground="White" 
                                                                     Margin="5 0 5 0" 
@@ -369,7 +387,7 @@
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
-                        </StackPanel>
+                        </DockPanel>
                     </ScrollViewer>
                 </StackPanel>
             </Grid>
@@ -471,7 +489,7 @@
                                     <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
                                 <Separator />
-                                                              
+
                                 <Label
                                     VerticalAlignment="Center"
                                     Content="Font size:" />

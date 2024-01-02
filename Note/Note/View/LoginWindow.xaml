@@ -248,6 +248,7 @@
                                     Margin="0 15 0 0"></TextBlock>
 
                         <PasswordBox x:Name="txtPassword"
+                                     Style="{StaticResource MaterialDesignFilledRevealPasswordBox}"
                                  FontSize="13"
                                  FontWeight="Medium"
                                  FontFamily="Montserrat"

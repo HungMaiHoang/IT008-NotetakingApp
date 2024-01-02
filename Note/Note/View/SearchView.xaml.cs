@@ -55,7 +55,6 @@ namespace Note.View
                     view.IsListBox3Visible = true;
                 }
                 else view.IsListBox3Visible = false;
-
             }
         }
 
