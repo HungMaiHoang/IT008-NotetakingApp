@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows;
+using Note.View;
 
 namespace Note.ViewModel
 {
@@ -161,24 +164,36 @@ namespace Note.ViewModel
             GoToTrashCommand = new RelayCommand(GoToTrash);
         }
 
-        private void GoToNote(object obj)
+        private async void GoToNote(object obj)
         {
             CurNote = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = NoteVM.Instance;
+
+            await Task.Delay(1);
+
+            NoteVM.Instance.PresentedListBox.SelectedIndex = NoteVM.Instance.ListNote.IndexOf(CurNote);
+
             NoteVM.Instance.CurNote = CurNote;
         }
 
-        private void GoToArchived(object obj)
+        private async void GoToArchived(object obj)
         {
             CurNoteArchived = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = ArchivedVM.Instance;
+            await Task.Delay(1);
+
+            ArchivedVM.Instance.PresentedListBox.SelectedIndex = ArchivedVM.Instance.ListNote.IndexOf(CurNote);
             ArchivedVM.Instance.CurNote = CurNoteArchived;
         }
 
-        private void GoToTrash(object obj)
+        private async void GoToTrash(object obj)
         {
             CurNoteTrash = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = TrashVM.Instance;
+
+            await Task.Delay(1);
+
+            TrashVM.Instance.PresentedListBox.SelectedIndex = TrashVM.Instance.ListNote.IndexOf(CurNote);
             TrashVM.Instance.CurNote = CurNoteTrash;
         }
         public async Task<ObservableCollection<NoteModel>> SearchWithText(ObservableCollection<NoteModel> list, string text)

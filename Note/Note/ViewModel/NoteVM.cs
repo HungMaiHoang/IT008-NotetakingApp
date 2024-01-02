@@ -65,6 +65,16 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(ListNote));
             }
         }
+        private ListBox _presentedListBox;
+        public ListBox PresentedListBox
+        {
+            get => _presentedListBox;
+            set
+            {
+                _presentedListBox = value;
+                OnPropertyChanged(nameof(PresentedListBox));
+            }
+        }
 
         #region Page Things
         // Note Title

@@ -35,7 +35,7 @@
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
+                            <Trigger Property="IsEnabled" Value="True">
                                 <Setter Property="Opacity" Value=".56"/>
                             </Trigger>
                             <DataTrigger Binding="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource Mode=Self}}" Value="False">
@@ -87,7 +87,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
+            <ColumnDefinition Width="290" MinWidth="290" MaxWidth="545"></ColumnDefinition>
             <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -128,13 +128,19 @@
                         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                         Height="550">
                         <ListBox
+                            Name="NoteListBox"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource ListBoxStyle1}"
                             ItemsSource="{Binding ListNote}" 
                             SelectedItem="{Binding CurNote}"
+                            SelectionMode="Single"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
+                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
+                            Loaded="ListBox_Loaded">
+                            <in:Interaction.Behaviors>
+                                <ul:ScrollIntoViewForListBox/>
+                            </in:Interaction.Behaviors>
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -153,9 +159,23 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
+                                    <Border Margin="-4 0 -4 -1">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="10"/>
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="Padding" Value="4 1 4 1"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="#52c7b8" />
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
                                         <view:miniNote 
-                                            Padding="0 0 0 0"
+                                            x:Name="MyMiniNote"
+                                            Padding="0"
                                             Margin="-3 -1 -4 -1"
                                             miniNoteTitle="{Binding Title}" 
                                             miniNoteHeadLine="{Binding HeadLine}"
@@ -163,7 +183,7 @@
                                             miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
                                             />
 
-                                    </StackPanel>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ContextMenu>
