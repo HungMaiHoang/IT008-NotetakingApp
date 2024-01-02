@@ -134,8 +134,8 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(IsListBox1Visible));
             }
         }
-        private int _filterListNote;
-        public int FilterListNote
+        private string _filterListNote;
+        public string FilterListNote
         {
             get => _filterListNote;
             set
@@ -146,7 +146,7 @@ namespace Note.ViewModel
             }
         }
 
-        private ObservableCollection<string> comboBoxItems = new ObservableCollection<string>() { "Title Ascending", "Title Descending", "LastEdit Asecending", "LastEdit Descending" };
+        private ObservableCollection<string> comboBoxItems = new ObservableCollection<string>() { "A->Z", "Z->A", "Last Edit", "First Edit" };
         public ObservableCollection<string> ComboBoxItems
         {
             get => comboBoxItems;
@@ -382,16 +382,16 @@ namespace Note.ViewModel
         {
             switch(FilterListNote)
             {
-                case 1:
+                case "A->Z":
                     ListNote = FilterList.AscedingTitle(ListNote); 
                     break;
-                case 2:
+                case "Z->A":
                     ListNote = FilterList.DescendingTitle(ListNote);
                     break;
-                case 3:
+                case "First Edit":
                     ListNote = FilterList.AscedingLastEdit(ListNote);
                     break;
-                case 4:
+                case "Last Edit":
                     ListNote = FilterList.DescendingLastEdit(ListNote);
                     break;
             }
