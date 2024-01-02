@@ -215,7 +215,6 @@ namespace Note.ViewModel
             // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable();
             ListNote = new ObservableCollection<NoteModel>(listTemp);
-
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
 

@@ -1,5 +1,6 @@
 ﻿using Note.Model;
 using Note.Utilities;
+using Note.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,16 +58,35 @@ namespace Note.ViewModel
         }
 
         public ICommand RestoreCommand { get; set; }
+        public ICommand LoadPageCommand { get; set; }
         public ArchivedVM()
         {
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteArchived();
             _listnote = new ObservableCollection<NoteModel>(listTemp);
             RestoreCommand = new RelayCommand(Restore);
+            LoadPageCommand = new RelayCommand(LoadPage);
         }
-        private void Restore(object obj)
+
+        private async void LoadPage(object obj)
+        {
+
+            try
+            {
+                DetailNoteArchivedWindow detailNoteArchivedWindow = new DetailNoteArchivedWindow();
+                CurNote = obj as NoteModel;
+                // Load Content
+                PageContent.Document = await DataAccess.Instance.LoadRTFNote(CurNote.FileId);
+                detailNoteArchivedWindow.Show();
+            }
+            catch (Exception ex)
+            {
+            }
+
+        }
+        private async void Restore(object obj)
         {
             CurNote = obj as NoteModel;
-            DataAccess.Instance.RestoreNote(CurNote);
+            await DataAccess.Instance.RestoreNote(CurNote);
             ListNote.Remove(CurNote);
         }
     }

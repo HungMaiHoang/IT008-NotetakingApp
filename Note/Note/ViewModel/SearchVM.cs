@@ -153,10 +153,12 @@ namespace Note.ViewModel
  
         public ICommand GoToArchivedCommand {  get; set; }
         public ICommand GoToNoteCommand { get; set; }
+        public ICommand GoToTrashCommand {  get; set; }
         private SearchVM()
         {
             GoToArchivedCommand = new RelayCommand(GoToArchived);
             GoToNoteCommand = new RelayCommand(GoToNote);
+            GoToTrashCommand = new RelayCommand(GoToTrash);
         }
 
         private void GoToNote(object obj)
@@ -164,15 +166,21 @@ namespace Note.ViewModel
             CurNote = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = NoteVM.Instance;
             NoteVM.Instance.CurNote = CurNote;
-            NoteVM.Instance.LoadPage(CurNote);
         }
 
         private void GoToArchived(object obj)
         {
+            CurNoteArchived = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = ArchivedVM.Instance;
             ArchivedVM.Instance.CurNote = CurNoteArchived;
         }
 
+        private void GoToTrash(object obj)
+        {
+            CurNoteTrash = obj as NoteModel;
+            MainWindowVM.Instance.CurrentView = TrashVM.Instance;
+            TrashVM.Instance.CurNote = CurNoteTrash;
+        }
         public async Task<ObservableCollection<NoteModel>> SearchWithText(ObservableCollection<NoteModel> list, string text)
         {
             ObservableCollection<NoteModel> res = new ObservableCollection<NoteModel>();
