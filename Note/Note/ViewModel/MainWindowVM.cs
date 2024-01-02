@@ -4,6 +4,7 @@ using MongoDB.Driver.Core.WireProtocol.Messages.Encoders.BinaryEncoders;
 using Note.Model;
 using Note.Utilities;
 using Note.View;
+using Note.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -60,6 +61,7 @@ namespace Note.ViewModel
         public ICommand TrashCommand { get; set; }
         public ICommand ArchivedCommand { get; set; }
         public ICommand SearchCommand { get; set; }
+        public ICommand SettingCommand { get; set; }
         // Action Command
         public ICommand NewNoteCommand { get; set; }
 
@@ -96,13 +98,17 @@ namespace Note.ViewModel
 
             // await DataAccess.Instance.SetTimeTrashFSFile(note, DateTime.MaxValue);
             DataAccess.Instance.UpdateNote(note);
-     //       DataAccess.Instance.AddPropertyToGridFSFilesCollection("TimetoTrash", DateTime.MaxValue.ToString());
-     //       DataAccess.Instance.CreateTTLIndexForNote("TimeTrashTTL", 15);
+            //       DataAccess.Instance.AddPropertyToGridFSFilesCollection("TimetoTrash", DateTime.MaxValue.ToString());
+            //       DataAccess.Instance.CreateTTLIndexForNote("TimeTrashTTL", 15);
 
-       //     DataAccess.Instance.CreateTTLIndexForFSFile("timetrash_index", 15);
+            //     DataAccess.Instance.CreateTTLIndexForFSFile("timetrash_index", 15);
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
-            NoteVM.Instance.ListNote.Insert(0,note);
+            if (SettingWindowVM.Instance.IsCheckAddFirst)
+            {
+                 NoteVM.Instance.ListNote.Insert(0,note);
+            }
+            else NoteVM.Instance.ListNote.Add(note);
             CurrentView = NotesView;
       //      CreateTrigger createTrigger = new CreateTrigger();
         //    createTrigger.CreateTriggerDelete();
@@ -119,6 +125,11 @@ namespace Note.ViewModel
             view.IsListBox1Visible = false;
             view.IsListBox2Visible = false;
             view.IsListBox3Visible = false;
+        }
+        private void Settings(object obj)
+        {
+            SettingWindow settingWindow = new SettingWindow();
+            settingWindow.ShowDialog();
         }
         public MainWindowVM(MainWindow view)
         {
@@ -143,6 +154,7 @@ namespace Note.ViewModel
             TrashCommand = new RelayCommand(Trash);
             ArchivedCommand = new RelayCommand(Archived);
             SearchCommand = new RelayCommand(Search);
+            SettingCommand = new RelayCommand(Settings);
             // Startup view
             CurrentView = HomeView;
         }

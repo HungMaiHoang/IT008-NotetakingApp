@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,13 @@ namespace Note.Windows
         public SettingWindow()
         {
             InitializeComponent();
+            DataContext = SettingWindowVM.Instance;
+            SettingWindowVM.Instance.CloseAction = ()=> Application.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

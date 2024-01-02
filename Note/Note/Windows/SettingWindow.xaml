@@ -10,13 +10,14 @@
         xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
         Title="SettingWindow" Height="600" Width="400"
-        WindowStyle="None">
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen">
     <materialDesign:Card>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" ></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <materialDesign:Card Grid.Row="0" >
                 
@@ -31,7 +32,8 @@
             </materialDesign:Card>
             <materialDesign:Card Grid.Row="1">
                 <DockPanel LastChildFill="False">
-                    
+                    <Grid>
+                        
                 <Canvas Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
                     <Ellipse Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Ellipse.Fill>
@@ -40,6 +42,12 @@
                         </Ellipse.Fill>
                     </Ellipse>
                 </Canvas>
+                    <Button Margin="20 0 0 0" Height="50" Width="50"
+                            Command="{Binding ChangeAvatarCommand}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" 
+                        Background="Transparent"
+                        BorderBrush="Transparent"/>
+                    </Grid>
                     <TextBlock Text="Mai Hung" 
                                Margin=" 20 0 0 0"
                                FontSize="24"
@@ -47,17 +55,27 @@
                                HorizontalAlignment="Center"></TextBlock>
                     <StackPanel DockPanel.Dock="Right" Margin=" 0 0 10 0">
                         <Button 
-                        Margin="0 60 0 0"
-                        Content="Change Password"
+                        Margin="0 80 0 0"
+                        Content="Rename"
                         Background="Snow"
                         Foreground="Black"
                         Width="auto"></Button>
-                    <Button 
-                            Margin="0 10 0 0"
-                            Content="Sign Out"
-                            Background="Red"
-                            Foreground="White"
-                            Width="auto"></Button>
+
+                        <Button 
+                        Margin="0 10 0 0"
+                        Content="Change Password"
+                        Background="Snow"
+                        Foreground="Black"
+                        Width="auto"
+                            Command="{Binding ChangePasswordCommand}">
+                        </Button>
+                        <Button 
+                            Command="{Binding SignOutCommand}"
+        Margin="0 10 0 0"
+        Content="Sign Out"
+        Background="Red"
+        Foreground="White"
+        Width="auto"></Button>
                     </StackPanel>
                 </DockPanel>
             </materialDesign:Card>
@@ -78,22 +96,47 @@
                                Text="Add new note on top"
                                FontSize="15"/>
                     <ToggleButton DockPanel.Dock="Right"
-                                  Margin="0 0 50 0"
-                          IsChecked="True"
+                                  Margin="0 0 60 0"
+                          IsChecked="{Binding IsCheckAddFirst, Mode=TwoWay}"
                           Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
                           ToolTip="MaterialDesignSwitchLightToggleButton" />
                 </DockPanel>
-                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                <!--<DockPanel LastChildFill="False" Margin="0 5 0 0">
                     <TextBlock DockPanel.Dock="Left"
                                Margin="10 0 0 0"
                                FontSize="16"
                                Text="Dark mode"/>
                     <ToggleButton DockPanel.Dock="Right"
-                                  Margin="0 0 50 0"
+                                  Margin="0 0 60 0"
                           IsChecked="False"
                           Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
                           ToolTip="MaterialDesignSwitchLightToggleButton" />
+                </DockPanel>-->
+                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                    <TextBlock DockPanel.Dock="Left"
+               Margin="10 0 0 0"
+               FontSize="16"
+               Text="Remove note in trash after"/>
+                    <TextBlock DockPanel.Dock="Right" 
+                               Margin=" 0 0 30 0"
+                               FontSize="16"
+                               Text="days"
+                               ></TextBlock>
+                        <ComboBox DockPanel.Dock="Right" 
+                                  ItemsSource="{Binding ListDayDelete}"
+                                 SelectedItem="{Binding DayDelete, Mode=TwoWay}"
+                                  Margin="0 0 5 0" 
+                                  BorderThickness="0">
+                       
+                                    </ComboBox>
+                    
                 </DockPanel>
+                <Button Click="Button_Click"
+                    Margin="0 90 0 0"
+                    Content="Save And Close"
+                    Background="#008080"
+                    Foreground="White"
+                    Width="130"></Button>
             </StackPanel>
         </Grid>
     </materialDesign:Card>

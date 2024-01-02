@@ -16,6 +16,8 @@ namespace Note.Model
         private string name;
         private string userName;
         private string password;
+        private bool settingAdd;
+        private string dayDelete;
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id
@@ -63,6 +65,30 @@ namespace Note.Model
                 OnPropertyChanged(nameof(Password));
             }
         }
+        [BsonElement("SettingAdd")]
+        public bool SettingAdd
+        {
+            get => settingAdd;
+            set
+            {
+                settingAdd = value;
+                // Update to database
+                DataAccess.Instance.UpdateUser(this);
+                OnPropertyChanged(nameof(SettingAdd));
+            }
+        }
+        [BsonElement("DayDelete")]
+        public string DayDelete
+        {
+            get => dayDelete;
+            set
+            {
+                dayDelete = value;
+                // Update to database
+                DataAccess.Instance.UpdateUser(this);
+                OnPropertyChanged(nameof(DayDelete));
+            }
+        }
         public static UserModel CreateNewUser(string name, string username, string password)
         {
             return new UserModel
@@ -71,6 +97,8 @@ namespace Note.Model
                 Name = name,
                 UserName = username,
                 Password = password,
+                SettingAdd = true,
+                DayDelete = "7"
             };
         }
     }

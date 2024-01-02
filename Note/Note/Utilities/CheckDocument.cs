@@ -25,7 +25,7 @@ namespace Note.Utilities
             var currentDateTime = DateTime.UtcNow;
 
             // Tìm và xóa các tài liệu có thuộc tính datetime ít hơn ngày hiện tại
-            var filter = Builders<NoteModel>.Filter.Lt("TimeTrash", currentDateTime.AddSeconds(-608400));
+            var filter = Builders<NoteModel>.Filter.Lt("TimeTrash", currentDateTime.AddSeconds(-int.Parse(UserHolder.CurUser.DayDelete) * 24*60*60));
             var result = collection.Find(filter).ToList();
             foreach ( var item in result )
             {

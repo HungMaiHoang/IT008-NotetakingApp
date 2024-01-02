@@ -27,6 +27,7 @@ namespace Note.ViewModel
             }
         }
 
+  
         private string _searchText;
         public string SearchText
         {
