@@ -3,10 +3,98 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Note.Windows"
+        xmlns:local="clr-namespace:Note"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:Note.ViewModel"
+        xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
-        Title="SettingWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="SettingWindow" Height="600" Width="400"
+        WindowStyle="None">
+    <materialDesign:Card>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" ></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <materialDesign:Card Grid.Row="0" >
+                
+            <TextBlock Grid.Row="0" Text="Setting" 
+                       Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                        FontWeight="Medium"
+                        FontFamily="Montserrat"
+                       Padding="0 10 0 0"
+                       ></TextBlock>
+            </materialDesign:Card>
+            <materialDesign:Card Grid.Row="1">
+                <DockPanel LastChildFill="False">
+                    
+                <Canvas Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <Ellipse Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Images/leaves.png" />
+                               
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </Canvas>
+                    <TextBlock Text="Mai Hung" 
+                               Margin=" 20 0 0 0"
+                               FontSize="24"
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center"></TextBlock>
+                    <StackPanel DockPanel.Dock="Right" Margin=" 0 0 10 0">
+                        <Button 
+                        Margin="0 60 0 0"
+                        Content="Change Password"
+                        Background="Snow"
+                        Foreground="Black"
+                        Width="auto"></Button>
+                    <Button 
+                            Margin="0 10 0 0"
+                            Content="Sign Out"
+                            Background="Red"
+                            Foreground="White"
+                            Width="auto"></Button>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:Card>
+            <StackPanel Grid.Row="2">
+                
+            <TextBlock Grid.Row="2" 
+                       Text="General" 
+                       FontSize="20"
+                       VerticalAlignment="Top" 
+                       HorizontalAlignment="Left"
+                       FontFamily="Montserrat"
+                       FontWeight="Medium"
+                       Margin="10 10 0 0"
+                       Foreground="DeepSkyBlue"/>
+                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                    <TextBlock DockPanel.Dock="Left"
+                               Margin="10 0 0 0"
+                               Text="Add new note on top"
+                               FontSize="15"/>
+                    <ToggleButton DockPanel.Dock="Right"
+                                  Margin="0 0 50 0"
+                          IsChecked="True"
+                          Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                          ToolTip="MaterialDesignSwitchLightToggleButton" />
+                </DockPanel>
+                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                    <TextBlock DockPanel.Dock="Left"
+                               Margin="10 0 0 0"
+                               FontSize="16"
+                               Text="Dark mode"/>
+                    <ToggleButton DockPanel.Dock="Right"
+                                  Margin="0 0 50 0"
+                          IsChecked="False"
+                          Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
+                          ToolTip="MaterialDesignSwitchLightToggleButton" />
+                </DockPanel>
+            </StackPanel>
+        </Grid>
+    </materialDesign:Card>
 </Window>
