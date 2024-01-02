@@ -251,6 +251,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <TextBox 
+                            x:Name="NoteTitle"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Text="{Binding PageTitle, Mode=TwoWay}"
@@ -386,6 +387,14 @@
                                     Content="{materialDesign:PackIcon Kind=ContentSave}"
                                     ToolTip="Save" 
                                     Command="{Binding SavePageCommand}"/>
+                                <Button
+                                  Content="{materialDesign:PackIcon Kind=ContentSaveAll}"
+                                  ToolTip="Save" 
+                                  Click="Export"/>
+                                <Button
+                                    Content="{materialDesign:PackIcon Kind=FolderOpen}"
+                                    ToolTip="Open" 
+                                    Click="Open"/>
                                 <Separator />
                                 <Button
                                     Command="Cut"

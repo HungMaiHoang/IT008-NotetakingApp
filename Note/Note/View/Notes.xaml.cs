@@ -1,12 +1,14 @@
 ﻿//using MaterialDesignThemes.Wpf;
 using Amazon.Runtime.Documents;
 using Note.Utilities;
+using Microsoft.Win32;
 using Note.ViewModel;
 using Note.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Markup;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -65,12 +67,11 @@ namespace Note.View
             TextPointer selectionStart = richTextBox.Selection.Start;
             TextPointer selectionEnd = richTextBox.Selection.End;
             TextRange selectedTextRange = new TextRange(selectionStart, selectionEnd);
-            if (!selectedTextRange.IsEmpty)
-            {
+           
                 richTextBox.Focus();
                 selectedTextRange.ApplyPropertyValue(property, value);
                 selectedTextRange.Select(selectionStart, selectionEnd);
-            }
+            
         }
         private void SetSelectionAlignment(TextAlignment alignment)
         {
@@ -404,6 +405,53 @@ namespace Note.View
             if (currentBlock is Table)
             {
                 richTextBox.Document.Blocks.Remove(currentBlock);
+            }
+        }
+        private void Export(object sender, RoutedEventArgs e)
+        {
+            // Tạo hộp thoại lưu file
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XAML Files (*.xaml)|*.xaml|All files (*.*)|*.*";
+            saveFileDialog.FileName = NoteTitle.Text;
+
+            // Nếu người dùng chọn nơi để lưu và nhấn OK
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // Lấy đường dẫn tới file đã chọn
+                string filePath = saveFileDialog.FileName;
+
+                // Lấy nội dung của RichTextBox
+                TextRange textRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
+
+                // Lưu nội dung vào file XAML
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    XamlWriter.Save(richTextBox.Document, fileStream);
+                }
+            }
+        }
+
+        private void Open(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XAML Files (*.xaml)|*.xaml|All files (*.*)|*.*";
+
+            // Nếu người dùng chọn file và nhấn OK
+            if (openFileDialog.ShowDialog() == true)
+            {
+                // Lấy đường dẫn tới file đã chọn
+                string filePath = openFileDialog.FileName;
+
+                // Đọc nội dung từ file XAML
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+                {
+                    FlowDocument flowDocument = XamlReader.Load(fileStream) as FlowDocument;
+
+                    // Gán nội dung vào RichTextBox
+                    richTextBox.Document = flowDocument;
+                    string fileName = System.IO.Path.GetFileNameWithoutExtension(filePath);
+                    NoteTitle.Text = fileName;
+                }
             }
         }
     }
