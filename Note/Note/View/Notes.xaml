@@ -109,11 +109,28 @@
                 </Grid>
                 <Grid Grid.Row="1">
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0.5" >
-                        <TextBlock Style="{StaticResource Text_Style}"
+                        <DockPanel LastChildFill="False">
+                            <TextBlock DockPanel.Dock="Left" Style="{StaticResource Text_Style}"
                                Text="2 Notes"
                                Foreground="Black"
                                HorizontalAlignment="Left"
                                Margin="20,0,0,0"></TextBlock>
+                            
+                                <ComboBox DockPanel.Dock="Right" Margin="0 0 30 0"
+                                    ItemsSource="{Binding ComboBoxItems}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <!-- Icon/Image -->
+                                            <materialDesign:PackIcon  Kind="Filter"></materialDesign:PackIcon>
+                                                <!-- TextBlock for displaying text -->
+                                                <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            
+                        </DockPanel>
                     </Border>
                 </Grid>
             </Grid>
