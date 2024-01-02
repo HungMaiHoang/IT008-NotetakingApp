@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Windows.Media.Imaging;
 
 namespace Note.ViewModel
 {
@@ -123,6 +123,8 @@ namespace Note.ViewModel
         //    createTrigger.CreateTriggerDelete();
         }
 
+
+
         private void Search(object obj)
         {
             SearchVM view = SearchVM.Instance;
@@ -140,6 +142,23 @@ namespace Note.ViewModel
             SettingWindow settingWindow = new SettingWindow();
             settingWindow.ShowDialog();
         }
+
+        private BitmapImage bitmapImage;
+        public BitmapImage BitmapImage
+        {
+            get => bitmapImage;
+            set
+            {
+                bitmapImage = value;
+                OnPropertyChanged();
+            }
+        }
+        private string nameUser;
+        public string NameUser
+        {
+            get { return nameUser; } 
+            set { nameUser = value; OnPropertyChanged(); } 
+        }
         public MainWindowVM(MainWindow view)
         {
             CurUser = UserHolder.CurUser;
@@ -153,8 +172,8 @@ namespace Note.ViewModel
             TrashView = TrashVM.Instance;
             ArchivedView = ArchivedVM.Instance;
             SearchView = SearchVM.Instance;
-
-
+            BitmapImage = DataAccess.Instance.ByteArrayToBitmapImage(UserHolder.CurUser.Image);
+            nameUser = UserHolder.CurUser.Name;
             HomeCommand = new RelayCommand(Home);
             NotesCommand = new RelayCommand(Note);
             RemindersCommand = new RelayCommand(Reminder);

@@ -66,6 +66,7 @@ namespace Note.ViewModel
                 ListUnpinnedNote = new ObservableCollection<NoteModel>();
                 ListPinnedNote = new ObservableCollection<NoteModel>();
                 _listPinnedNote.CollectionChanged += listPinnedChange;
+                CountNote = _listNote.Count;
                 foreach (var note in _listNote)
                 {
                     if (note.IsPinned)
@@ -153,6 +154,14 @@ namespace Note.ViewModel
             set { comboBoxItems = value;
                 OnPropertyChanged(nameof(ComboBoxItems));
             }
+        }
+        private int countNote;
+        public int CountNote
+        {
+            get { return countNote; }
+            set { countNote= value;
+                OnPropertyChanged(nameof(CountNote));}
+
         }
         #region Page Things
         // Note Title
@@ -325,12 +334,14 @@ namespace Note.ViewModel
         }
         private void PinNote(object obj)
         {
+           // CurNote = obj as NoteModel;
             CurNote.IsPinned = true;
             ListPinnedNote.Add(CurNote);
             ListUnpinnedNote.Remove(CurNote);
         }
         private void UnpinNote(object obj)
         {
+          //  CurNote = obj as NoteModel;
             CurNote.IsPinned = false;
             ListPinnedNote.Remove(CurNote);
             ListUnpinnedNote.Add(CurNote);
@@ -358,7 +369,7 @@ namespace Note.ViewModel
             {
                 IsListBox1Visible = false;
             }
-
+            CountNote = ListNote.Count;
             FilterListNote = "A->Z";
             Task.Delay(1);
             ChangeOnFilter();
@@ -381,6 +392,7 @@ namespace Note.ViewModel
 
         private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
         {
+            CountNote = ListNote.Count;
             ChangeOnFilter();
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)

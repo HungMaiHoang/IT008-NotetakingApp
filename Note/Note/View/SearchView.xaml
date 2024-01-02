@@ -57,14 +57,14 @@
         <materialDesign:Card DockPanel.Dock="Top" BorderThickness="2"
                              BorderBrush="Black"
                              UniformCornerRadius="10"
-                             Margin="5 5 5 0 "
+                             Margin=" 0 "
                              Background="#fef8e2">
 
             <Border DockPanel.Dock="Top" BorderThickness="0 0 0 0"
                 BorderBrush="Black">
 
                 <Grid DockPanel.Dock="Top"
-              Margin="0 0 0 0"
+              Margin="0 9 0 0"
               Height="100">
                     <materialDesign:Card VerticalAlignment="Center"
                                          HorizontalAlignment="Center" Height="50"
@@ -125,7 +125,7 @@
             </Border>
         </materialDesign:Card>
         <materialDesign:Card UniformCornerRadius="15" Background="#fef8e2"
-                             Margin="5">
+                             Margin="0 5 0 0">
             <Grid Name="GridSearch" Margin="50 0 0 0">
                 <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                               HorizontalScrollBarVisibility="Disabled"

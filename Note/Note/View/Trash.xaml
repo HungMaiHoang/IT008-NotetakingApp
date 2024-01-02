@@ -52,8 +52,14 @@
             <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
         </Style>
     </UserControl.Resources>
-    <DockPanel Background="#fef8e2" LastChildFill="True">
-        <Border DockPanel.Dock="Top" BorderThickness="0 0 0 1"
+    <DockPanel Background="White" LastChildFill="True">
+        <materialDesign:Card DockPanel.Dock="Top" BorderThickness="2"
+                     BorderBrush="Black"
+                     UniformCornerRadius="10"
+                     Margin="0 0 0 0 "
+                     Background="#fef8e2">
+            
+        <Border DockPanel.Dock="Top" BorderThickness="0 0 0 0"
                 BorderBrush="Black">
             
         <Grid DockPanel.Dock="Top"
@@ -67,7 +73,7 @@
                    VerticalAlignment="Top"
                    HorizontalAlignment="Center"
                    Margin="0 20 0 0"></TextBlock>
-                <TextBlock Text="Notes in the Trash are deleted after 7 days."
+                    <TextBlock Text="{Binding Setting ,StringFormat = 'Notes in trash will be delete automatically after {0:G} days'}"
                            Style="{StaticResource MaterialDesignCaptionTextBlock}"
                            FontFamily="Monserrat"
                            FontSize="16"
@@ -106,6 +112,11 @@
             </Button>-->
         </Grid>
         </Border>
+        </materialDesign:Card>
+
+        <materialDesign:Card UniformCornerRadius="15" Background="#fef8e2"
+                     Margin="0 5 0 0">
+            
         <StackPanel Margin="75 0 0 30"
     Name="ListBoxNotes"
     >
@@ -172,5 +183,6 @@
                 </ListBox>
             </ScrollViewer>
         </StackPanel>
+        </materialDesign:Card>
     </DockPanel>
 </UserControl>

@@ -54,6 +54,7 @@ namespace Note.ViewModel
             get { return dayDelete; }
             set { dayDelete = value;
                 UserHolder.CurUser.DayDelete = value;
+                TrashVM.Instance.Setting = value;
                 //DataAccess.Instance.UpdateUser(UserHolder.CurUser);
             OnPropertyChanged(nameof(DayDelete));}
         }
@@ -145,6 +146,7 @@ namespace Note.ViewModel
                 byte[] imagedata = File.ReadAllBytes(pathAvatar);
                 DataAccess.Instance.SaveImageToMongoDb(imagedata,UserHolder.CurUser);
                 BitmapImage = DataAccess.Instance.ByteArrayToBitmapImage(imagedata);
+                MainWindowVM.Instance.BitmapImage = BitmapImage;
             }
         }
     }
