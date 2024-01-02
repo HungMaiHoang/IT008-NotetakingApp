@@ -150,13 +150,16 @@
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\CheckDocument.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
+    <Compile Include="Utilities\FilterList.cs" />
     <Compile Include="Utilities\FrameworkElementExtensions.cs" />
     <Compile Include="Utilities\MyRichTextBox.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
+    <Compile Include="Utilities\ScrollIntoViewForListBox.cs" />
     <Compile Include="Utilities\TimeAgoConvert.cs" />
     <Compile Include="Utilities\UserHolder.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
+    <Compile Include="Utilities\VisualTreeHelperExtensions.cs" />
     <Compile Include="Utilities\WordCounterModel.cs" />
     <Compile Include="ViewModel\ArchivedVM.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />

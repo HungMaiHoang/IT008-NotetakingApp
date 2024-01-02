@@ -131,8 +131,13 @@
             Style="{StaticResource ListBoxStyle1}"
             ItemsSource="{Binding ListNote}" 
             SelectedItem="{Binding CurNote}"
+            SelectionMode="Single"
             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-            Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
+            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
+                    Loaded="ListBox_Loaded">
+                        <in:Interaction.Behaviors>
+                            <ul:ScrollIntoViewForListBox/>
+                        </in:Interaction.Behaviors>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Style.Resources>
@@ -151,8 +156,21 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <view:miniNoteArchived
+                            <Border Margin="-4 -1 -4 -1">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Padding" Value="4 1 4 1"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="#52c7b8" />
+                                                    <Setter Property="BorderThickness" Value="1"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <view:miniNoteArchived
                                     Padding="0 0 0 0"
                                     Margin="-3 -1 -4 -1"
                                     miniNoteArchivedTitle="{Binding Title}" 
@@ -161,7 +179,7 @@
                                     miniNoteArchivedBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
                                     miniNoteArchivedBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.RestoreCommand}">
                                 </view:miniNoteArchived>
-                            </StackPanel>
+                            </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

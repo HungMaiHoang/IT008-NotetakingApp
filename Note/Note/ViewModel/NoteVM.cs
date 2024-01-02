@@ -62,7 +62,64 @@ namespace Note.ViewModel
             set
             {
                 _listNote = value;
+                ListUnpinnedNote = new ObservableCollection<NoteModel>();
+                ListPinnedNote = new ObservableCollection<NoteModel>();
+                foreach (var note in _listNote)
+                {
+                    if (note.IsPinned)
+                    {
+                        ListPinnedNote.Add(note);
+                    }
+                    else
+                    {
+                        ListUnpinnedNote.Add(note);
+                    }
+                }
                 OnPropertyChanged(nameof(ListNote));
+            }
+        }
+        // Unpinned List Note
+        private ObservableCollection<NoteModel> _listUnpinnedNote;
+        public ObservableCollection<NoteModel> ListUnpinnedNote
+        {
+            get => _listUnpinnedNote;
+            set
+            {
+                _listUnpinnedNote = value;
+                OnPropertyChanged(nameof(ListUnpinnedNote));
+            }
+        }
+        // Pinned List Note
+        private ObservableCollection<NoteModel> _listPinnedNote;
+        public ObservableCollection<NoteModel> ListPinnedNote
+        {
+            get => _listPinnedNote;
+            set
+            {
+                _listPinnedNote = value;
+                OnPropertyChanged(nameof(ListPinnedNote));
+            }
+        }
+        // Unpinned List Box
+        private ListBox _presentedListBox;
+        public ListBox PresentedListBox
+        {
+            get => _presentedListBox;
+            set
+            {
+                _presentedListBox = value;
+                OnPropertyChanged(nameof(PresentedListBox));
+            }
+        }
+        // Pinned List Box
+        private ListBox _presentedPinnedListBox;
+        public ListBox PresentedPinnedListBox
+        {
+            get => _presentedPinnedListBox;
+            set
+            {
+                _presentedPinnedListBox = value;
+                OnPropertyChanged(nameof(PresentedPinnedListBox));
             }
         }
 
@@ -183,11 +240,28 @@ namespace Note.ViewModel
             DataAccess.Instance.NoteToTrash(CurNote);
             
             ListNote.Remove(CurNote);
+            if (CurNote.IsPinned)
+            {
+                ListPinnedNote.Remove(CurNote);
+            }
+            else
+            {
+                ListUnpinnedNote.Remove(CurNote);
+            }
         }
         private void NoteToArchived(object obj)
         {
-            DataAccess.Instance.NoteToArchived(CurNote);
+            DataAccess.Instance.NoteToArchived(CurNote);      
+            
             ListNote.Remove(CurNote);
+            if (CurNote.IsPinned)
+            {
+                ListPinnedNote.Remove(CurNote);
+            }
+            else
+            {
+                ListUnpinnedNote.Remove(CurNote);
+            }
         }
         private void ShowInsertTAbleWindow(object obj)
         {
@@ -215,6 +289,7 @@ namespace Note.ViewModel
             // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(UserHolder.CurUser);
             ListNote = new ObservableCollection<NoteModel>(listTemp);
+
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
 

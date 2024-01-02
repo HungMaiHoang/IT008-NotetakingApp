@@ -135,9 +135,10 @@
                               CanContentScroll="True">
                     <DockPanel ScrollViewer.ScrollChanged="ListBoxNotes_ScrollChanged"
                         Margin="0 0 0 0"
-                                Name="ListBoxNotes"
-                                Width="{Binding ActualWidth, ElementName=GridSearch}"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
+                        Name="ListBoxNotes"
+                        Width="{Binding ActualWidth, ElementName=GridSearch}"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                        ScrollViewer.CanContentScroll="True"
                         >
                         <!--<Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
@@ -150,10 +151,10 @@
                         <ListBox DockPanel.Dock="Top" ScrollViewer.CanContentScroll="True"
                                  ScrollViewer.ScrollChanged="ListBox_ScrollChanged"
                                  Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"
-            Style="{StaticResource ListBoxStyle1}"
-            ItemsSource="{Binding ArchivedList}" 
-            SelectedItem="{Binding CurNoteArchived}"
-            Width="{Binding ActualWidth, ElementName=ListBoxNotes}">
+                                Style="{StaticResource ListBoxStyle1}"
+                                ItemsSource="{Binding ArchivedList}" 
+                                SelectedItem="{Binding CurNoteArchived}"
+                                Width="{Binding ActualWidth, ElementName=ListBoxNotes}">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -186,12 +187,16 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
-                        <TextBlock DockPanel.Dock="Top" Text="Notes List" FontWeight="Bold" Margin="10,10,0,0" 
+                        <TextBlock DockPanel.Dock="Top" 
+                                   Text="Notes List" 
+                                   FontWeight="Bold" 
+                                   Margin="10,10,0,0" 
                                    Visibility="{Binding IsListBox2Visible, Converter= {StaticResource VisibilityConverter} }"/>
 
 
                         <ListBox DockPanel.Dock="Top"
-                                            Visibility="{Binding IsListBox2Visible, Converter= {StaticResource VisibilityConverter} }"
+                            Name="NotesListBox"
+                            Visibility="{Binding IsListBox2Visible, Converter= {StaticResource VisibilityConverter} }"
                             Style="{StaticResource ListBoxStyle1}"
                             ItemsSource="{Binding NotesList}" 
                             SelectedItem="{Binding CurNote}"

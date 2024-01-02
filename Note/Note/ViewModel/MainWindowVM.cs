@@ -104,6 +104,15 @@ namespace Note.ViewModel
             //     DataAccess.Instance.CreateTTLIndexForFSFile("timetrash_index", 15);
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
+            NoteVM.Instance.ListNote.Insert(0,note);
+            if (note.IsPinned)
+            {
+                NoteVM.Instance.ListPinnedNote.Insert(0, note);
+            }
+            else
+            {
+                NoteVM.Instance.ListUnpinnedNote.Insert(0, note);
+            }
             if (SettingWindowVM.Instance.IsCheckAddFirst)
             {
                  NoteVM.Instance.ListNote.Insert(0,note);

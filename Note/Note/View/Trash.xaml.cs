@@ -26,5 +26,10 @@ namespace Note.View
             InitializeComponent();
             DataContext = TrashVM.Instance;
         }
+
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            TrashVM.Instance.PresentedListBox = sender as ListBox;
+        }
     }
 }

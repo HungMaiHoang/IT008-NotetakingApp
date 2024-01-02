@@ -35,8 +35,8 @@
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Opacity" Value="0.56"/>
+                            <Trigger Property="IsEnabled" Value="True">
+                                <Setter Property="Opacity" Value=".56"/>
                             </Trigger>
                             <DataTrigger Binding="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource Mode=Self}}" Value="False">
                                 <Setter Property="Visibility" TargetName="MouseOverBorder" Value="Collapsed"/>
@@ -87,7 +87,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280" MinWidth="280" MaxWidth="545"></ColumnDefinition>
+            <ColumnDefinition Width="290" MinWidth="290" MaxWidth="545"></ColumnDefinition>
             <ColumnDefinition Width="3"></ColumnDefinition>
             <ColumnDefinition ></ColumnDefinition>
         </Grid.ColumnDefinitions>
@@ -127,14 +127,22 @@
                         Style="{StaticResource MaterialDesignScrollViewer}"
                         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                         Height="550">
+                        <StackPanel>
                         <ListBox
+                            Name="PinnedNoteListBox"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource ListBoxStyle1}"
-                            ItemsSource="{Binding ListNote}" 
+                            ItemsSource="{Binding ListPinnedNote}" 
                             SelectedItem="{Binding CurNote}"
+                            SelectionMode="Single"
                             Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
+                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
+                            Visibility="Collapsed"
+                            Loaded="PinnedNoteListBox_Loaded">
+                            <in:Interaction.Behaviors>
+                                <ul:ScrollIntoViewForListBox/>
+                            </in:Interaction.Behaviors>
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
                                     <Style.Resources>
@@ -153,9 +161,143 @@
                             </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
+                                    <Border Margin="-4 0 -4 -1">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="10"/>
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="Padding" Value="4 1 4 1"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="#52c7b8" />
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
                                         <view:miniNote 
-                                            Padding="0 0 0 0"
+                    x:Name="MyMiniNote"
+                    Padding="0"
+                    Margin="-3 -1 -4 -1"
+                    miniNoteTitle="{Binding Title}" 
+                    miniNoteHeadLine="{Binding HeadLine}"
+                    miniNoteDate="{Binding LastEdited}"
+                    miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
+                    />
+
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ContextMenu>
+                                <ContextMenu x:Name="ContextMenuPinnedListNote">
+                                    <ContextMenu.Style>
+                                        <Style TargetType="ContextMenu">
+                                            <Setter Property="Height" Value="80"/>
+                                            <Setter Property="Width" Value="230"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Foreground" Value="White"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ContextMenu">
+                                                        <Border Background="#575757" CornerRadius="4" >
+                                                            <StackPanel>
+                                                                <!--<MenuItem x:Name="AddSongToPlayList" Foreground="White" Margin="5 5 5 0" Height="40" Command= "{Binding DataContext.ShowAddSongToPlaylistWindowCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                      CommandParameter="{Binding}">
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Plus" Foreground="White"/>
+                        <TextBlock Text="Add song" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                    </StackPanel>
+                </MenuItem.Header>
+            </MenuItem>-->
+                                                                <MenuItem 
+                                            x:Name="DeleteNote" 
+                                            Foreground="White" 
+                                            Margin="5 0 5 0" 
+                                            Height="40"  
+                                            Command= "{Binding DataContext.NoteToTrashCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                            CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
+                                                                            <TextBlock Text="Remove note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
+                                                                <MenuItem 
+                                            x:Name="ArchivedNote" 
+                                            Foreground="White" 
+                                            Margin="5 0 5 0" 
+                                            Height="40"  
+                                            Command= "{Binding DataContext.NoteToArchivedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                            CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="ArchiveAdd" Foreground="White"/>
+                                                                            <TextBlock Text="Archive note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ContextMenu.Style>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                            <ListBox
+                            Name="NoteUnpinnedListBox"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            Style="{StaticResource ListBoxStyle1}"
+                            ItemsSource="{Binding ListUnpinnedNote}" 
+                            SelectedItem="{Binding CurNote}"
+                            SelectionMode="Single"
+                            Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
+                            Height="{Binding ActualHeight, ElementName=ListBoxNotes}"
+                            Loaded="ListBox_Loaded">
+                                <in:Interaction.Behaviors>
+                                <ul:ScrollIntoViewForListBox/>
+                            </in:Interaction.Behaviors>
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="Margin" Value="10 10 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                        </Style>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="-4 0 -4 -1">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="10"/>
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="Padding" Value="4 1 4 1"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                        <Setter Property="BorderBrush" Value="#52c7b8" />
+                                                        <Setter Property="BorderThickness" Value="1"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <view:miniNote 
+                                            x:Name="MyMiniNote"
+                                            Padding="0"
                                             Margin="-3 -1 -4 -1"
                                             miniNoteTitle="{Binding Title}" 
                                             miniNoteHeadLine="{Binding HeadLine}"
@@ -163,7 +305,7 @@
                                             miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
                                             />
 
-                                    </StackPanel>
+                                    </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                             <ListBox.ContextMenu>
@@ -227,6 +369,7 @@
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
+                        </StackPanel>
                     </ScrollViewer>
                 </StackPanel>
             </Grid>
@@ -251,6 +394,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <TextBox 
+                            x:Name="NoteTitle"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Text="{Binding PageTitle, Mode=TwoWay}"
@@ -386,6 +530,14 @@
                                     Content="{materialDesign:PackIcon Kind=ContentSave}"
                                     ToolTip="Save" 
                                     Command="{Binding SavePageCommand}"/>
+                                <Button
+                                  Content="{materialDesign:PackIcon Kind=ContentSaveAll}"
+                                  ToolTip="Save" 
+                                  Click="Export"/>
+                                <Button
+                                    Content="{materialDesign:PackIcon Kind=FolderOpen}"
+                                    ToolTip="Open" 
+                                    Click="Open"/>
                                 <Separator />
                                 <Button
                                     Command="Cut"

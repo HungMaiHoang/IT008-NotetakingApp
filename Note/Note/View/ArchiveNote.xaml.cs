@@ -26,5 +26,10 @@ namespace Note.View
             InitializeComponent();
             DataContext = ArchivedVM.Instance;
         }
+
+        private void ListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            ArchivedVM.Instance.PresentedListBox = sender as ListBox;
+        }
     }
 }
