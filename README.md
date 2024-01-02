@@ -38,5 +38,5 @@ Leaves is a simple and powerful note management application designed to help you
 ## V.Video demo:
 This is video demo:
 ## VI.Code of conducting
-
+[Code of conducting](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/Code%20of%20conducting)
 ## License
