@@ -87,7 +87,11 @@ namespace Note.Utilities
                 return null;
             }
         }
-
+        /// <summary>
+        /// Get not enable without pin
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public List<NoteModel> GetNoteEnable(UserModel user)
         {
             try
@@ -95,7 +99,36 @@ namespace Note.Utilities
                 var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
                 var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "enable" && p.UserId == user.Id);
                 var results = notesCollection.Find(filter);
-                //var results = notesCollection.Find(p => p.Status == "enable");
+                return results.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+        public List<NoteModel> GetNoteEnableWithoutPin(UserModel user)
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "enable" && p.UserId == user.Id && p.IsPinned == false);
+                var results = notesCollection.Find(filter);
+                return results.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+        public List<NoteModel> GetNoteEnableWithPin(UserModel user)
+        {
+            try
+            {
+                var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
+                var filter = Builders<NoteModel>.Filter.Where(p => p.Status == "enable" && p.UserId == user.Id && p.IsPinned == true);
+                var results = notesCollection.Find(filter);
                 return results.ToList();
             }
             catch (Exception ex)

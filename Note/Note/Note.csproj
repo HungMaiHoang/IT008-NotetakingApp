@@ -150,6 +150,7 @@
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\CheckDocument.cs" />
     <Compile Include="Utilities\DataAccess.cs" />
+    <Compile Include="Utilities\FilterList.cs" />
     <Compile Include="Utilities\FrameworkElementExtensions.cs" />
     <Compile Include="Utilities\MyRichTextBox.cs" />
     <Compile Include="Utilities\PasswordHasher.cs" />

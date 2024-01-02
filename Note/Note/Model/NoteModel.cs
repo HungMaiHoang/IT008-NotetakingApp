@@ -18,6 +18,7 @@ namespace Note.Model
         private DateTime lastEdited;        
         private string headLine;
         private string status;
+        private bool isPinned;
         private ObjectId userId;
         private ObjectId fileId;
         private DateTime timeTrash;
@@ -84,6 +85,19 @@ namespace Note.Model
                 OnPropertyChanged(nameof(Status));
             }
         }
+        [BsonElement("Is Pinned")]
+        public bool IsPinned
+        {
+            get => isPinned;
+            set
+            {
+                isPinned = value;
+                // Update to database
+                DataAccess.Instance.UpdateNote(this);
+                OnPropertyChanged(nameof(IsPinned));
+            }
+        }
+        [BsonElement("User Id")]
         public ObjectId UserId
         {
             get => userId;
@@ -132,6 +146,7 @@ namespace Note.Model
                 LastEdited = DateTime.UtcNow,
                 HeadLine = "",
                 Status="enable",
+                IsPinned=false,
                 TimeTrash = DateTime.MaxValue,
                 UserId = user.Id,
                 FileId = createFileID()

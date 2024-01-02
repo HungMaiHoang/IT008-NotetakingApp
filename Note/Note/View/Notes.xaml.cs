@@ -412,9 +412,9 @@ namespace Note.View
             NoteVM.Instance.PresentedListBox = sender as ListBox;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void PinnedNoteListBox_Loaded(object sender, RoutedEventArgs e)
         {
-            NoteListBox.SelectedIndex = 0;
+            NoteVM.Instance.PresentedPinnedListBox = sender as ListBox;
         }
     }
 }

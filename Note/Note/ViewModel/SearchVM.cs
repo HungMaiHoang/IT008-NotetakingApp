@@ -171,8 +171,15 @@ namespace Note.ViewModel
 
             await Task.Delay(1);
 
-            NoteVM.Instance.PresentedListBox.SelectedIndex = NoteVM.Instance.ListNote.IndexOf(CurNote);
-
+            if (CurNote.IsPinned)
+            {
+                NoteVM.Instance.PresentedListBox.SelectedIndex = NoteVM.Instance.ListPinnedNote.IndexOf(CurNote);
+            }
+            else
+            {
+                NoteVM.Instance.PresentedPinnedListBox.SelectedIndex = NoteVM.Instance.ListUnpinnedNote.IndexOf(CurNote);
+            }
+            
             NoteVM.Instance.CurNote = CurNote;
         }
 
@@ -180,6 +187,7 @@ namespace Note.ViewModel
         {
             CurNoteArchived = obj as NoteModel;
             MainWindowVM.Instance.CurrentView = ArchivedVM.Instance;
+
             await Task.Delay(1);
 
             ArchivedVM.Instance.PresentedListBox.SelectedIndex = ArchivedVM.Instance.ListNote.IndexOf(CurNote);
