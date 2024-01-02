@@ -163,6 +163,7 @@
     <Compile Include="Utilities\WordCounterModel.cs" />
     <Compile Include="ViewModel\ArchivedVM.cs" />
     <Compile Include="ViewModel\BlankVM.cs" />
+    <Compile Include="ViewModel\ChangePasswordVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="Utilities\NavigationVM.cs" />
     <Compile Include="ViewModel\InsertTableVM.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="ViewModel\PageVM.cs" />
     <Compile Include="ViewModel\ReminderVM.cs" />
     <Compile Include="ViewModel\SearchVM.cs" />
+    <Compile Include="ViewModel\SettingWindowVM.cs" />
     <Compile Include="ViewModel\SignUpWindowVM.cs" />
     <Compile Include="ViewModel\TaskVM.cs" />
     <Compile Include="ViewModel\TrashVM.cs" />
@@ -226,6 +228,9 @@
     </Compile>
     <Compile Include="Windows\InsertTableWindow.xaml.cs">
       <DependentUpon>InsertTableWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -334,6 +339,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\ChangePasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -395,6 +404,9 @@
     <Resource Include="Images\user-icon-image-25.png" />
     <Resource Include="Images\key.png" />
     <Resource Include="Images\background2.png" />
+    <None Include="Images\defaultavatar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="mongocrypt.dll" />
   </ItemGroup>
   <ItemGroup />

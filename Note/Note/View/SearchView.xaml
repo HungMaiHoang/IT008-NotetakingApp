@@ -130,10 +130,10 @@
                 <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                               HorizontalScrollBarVisibility="Disabled"
                               VerticalScrollBarVisibility="Auto"
-                              Style="{StaticResource MaterialDesignScrollViewer}"
-                              Name="OuterScrollViewer"
+                          Style="{StaticResource MaterialDesignScrollViewer}"
+                              x:Name="outerScrollViewer" ScrollChanged="OuterScrollViewer_ScrollChanged"
                               CanContentScroll="True">
-                    <DockPanel 
+                    <DockPanel ScrollViewer.ScrollChanged="ListBoxNotes_ScrollChanged"
                         Margin="0 0 0 0"
                         Name="ListBoxNotes"
                         Width="{Binding ActualWidth, ElementName=GridSearch}"
@@ -148,9 +148,8 @@
                         <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
                         <TextBlock DockPanel.Dock="Top" Text="Archived List" FontWeight="Bold" Margin="10,10,0,0"
                                    Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"/>
-                        <ListBox DockPanel.Dock="Top" 
-                                 Name="ArchivedListBox"
-                                 ScrollViewer.CanContentScroll="True"
+                        <ListBox DockPanel.Dock="Top" ScrollViewer.CanContentScroll="True"
+                                 ScrollViewer.ScrollChanged="ListBox_ScrollChanged"
                                  Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"
                                 Style="{StaticResource ListBoxStyle1}"
                                 ItemsSource="{Binding ArchivedList}" 

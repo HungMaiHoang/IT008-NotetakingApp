@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Note.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,28 @@ namespace Note.Windows
         public SettingWindow()
         {
             InitializeComponent();
+            DataContext = SettingWindowVM.Instance;
+            SettingWindowVM.Instance.CloseAction = ()=> Application.Current.Shutdown();
+            SettingWindowVM.Instance.CloseWindowSetting = () => Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            Close();
+        }
+
+        private void txtName_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                TextBox tBox = (TextBox)sender;
+                DependencyProperty prop = TextBox.TextProperty;
+
+                BindingExpression binding = BindingOperations.GetBindingExpression(tBox, prop);
+                if (binding != null) { binding.UpdateSource(); }
+            SettingWindowVM.Instance.CheckTextBox = true;
+            }
         }
     }
 }

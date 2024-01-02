@@ -9,16 +9,28 @@
         xmlns:vm="clr-namespace:Note.ViewModel"
         xmlns:Menu="clr-namespace:Note.Utilities"
         mc:Ignorable="d"
-        Title="SettingWindow" Height="600" Width="400"
-        WindowStyle="None">
-    <materialDesign:Card>
+        Title="SettingWindow" Height="700" Width="400"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True">
+    <Border CornerRadius="25" BorderBrush="#2a5747"
+                                BorderThickness="3">
+        
+    <materialDesign:Card UniformCornerRadius="25"
+                         Background="#fef8e2"
+                         BorderBrush="#2a5747"
+                         BorderThickness="10"
+                         
+                         >
+        
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" ></RowDefinition>
+                <RowDefinition Height="70" ></RowDefinition>
                 <RowDefinition></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <materialDesign:Card Grid.Row="0" >
+            <materialDesign:Card Grid.Row="0" Background="#fef8e2" >
                 
             <TextBlock Grid.Row="0" Text="Setting" 
                        Style="{StaticResource MaterialDesignHeadline4TextBlock}"
@@ -29,38 +41,73 @@
                        Padding="0 10 0 0"
                        ></TextBlock>
             </materialDesign:Card>
-            <materialDesign:Card Grid.Row="1">
-                <DockPanel LastChildFill="False">
-                    
-                <Canvas Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
-                    <Ellipse Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="/Images/leaves.png" />
-                               
-                        </Ellipse.Fill>
-                    </Ellipse>
-                </Canvas>
-                    <TextBlock Text="Mai Hung" 
-                               Margin=" 20 0 0 0"
-                               FontSize="24"
+            <materialDesign:Card Grid.Row="1" Background="#fef8e2" >
+                <StackPanel>
+                    <Grid>
+                        <Canvas Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+                            <Ellipse Width="100" Height="100" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="{Binding BitmapImage}" />
+
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Canvas>
+                        <Button Margin="0 0 0 0" Height="100" Width="100"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding ChangeAvatarCommand}"
+        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" 
+        Background="Transparent"
+        BorderBrush="Transparent"/>
+                    </Grid>
+                    <Grid Margin="0 40 0 0" 
+                          Width="400">
+                        
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBox Text="{Binding NameUser}" IsReadOnly="{Binding CheckTextBox}"
+                               Margin=" 60 0 0 0"
+                                     x:Name="txtName"
+                               FontSize="30"
+                                     
                                VerticalAlignment="Center" 
-                               HorizontalAlignment="Center"></TextBlock>
-                    <StackPanel DockPanel.Dock="Right" Margin=" 0 0 10 0">
-                        <Button 
-                        Margin="0 60 0 0"
+                               HorizontalAlignment="Left"
+                                   KeyUp="txtName_KeyUp"></TextBox>
+                            <Button Margin="20 0 0  0" Height="50" Width="50"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Command="{Binding RenameCommand}"
+                        Style="{StaticResource MaterialDesignIconForegroundButton}" 
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                                    ToolTip="Rename User">
+                                <materialDesign:PackIcon Kind="Pencil" Height="20" Width="20"></materialDesign:PackIcon>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <StackPanel
+                                Margin=" 0 50 0 0" Orientation="Horizontal">
+                        <Button Margin="60 0 0 0"
+                        
                         Content="Change Password"
                         Background="Snow"
                         Foreground="Black"
-                        Width="auto"></Button>
-                    <Button 
-                            Margin="0 10 0 0"
-                            Content="Sign Out"
-                            Background="Red"
-                            Foreground="White"
-                            Width="auto"></Button>
+                        Width="auto"
+                            Command="{Binding ChangePasswordCommand}">
+                        </Button>
+                        <Button 
+                            Command="{Binding SignOutCommand}"
+        Margin="40 0 0 0"
+        Content="Sign Out"
+        Background="Red"
+        Foreground="White"
+        Width="auto"></Button>
                     </StackPanel>
-                </DockPanel>
+
+                  
+                </StackPanel>
             </materialDesign:Card>
+                <materialDesign:Card Grid.Row="2" Background="#fef8e2">
+                    
             <StackPanel Grid.Row="2">
                 
             <TextBlock Grid.Row="2" 
@@ -70,31 +117,58 @@
                        HorizontalAlignment="Left"
                        FontFamily="Montserrat"
                        FontWeight="Medium"
-                       Margin="10 10 0 0"
+                       Margin="20 30 0 0"
                        Foreground="DeepSkyBlue"/>
                 <DockPanel LastChildFill="False" Margin="0 5 0 0">
                     <TextBlock DockPanel.Dock="Left"
-                               Margin="10 0 0 0"
+                               Margin="10 10 0 0"
                                Text="Add new note on top"
                                FontSize="15"/>
                     <ToggleButton DockPanel.Dock="Right"
-                                  Margin="0 0 50 0"
-                          IsChecked="True"
+                                  Margin="0 10 60 0"
+                          IsChecked="{Binding IsCheckAddFirst, Mode=TwoWay}"
                           Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
                           ToolTip="MaterialDesignSwitchLightToggleButton" />
                 </DockPanel>
-                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                <!--<DockPanel LastChildFill="False" Margin="0 5 0 0">
                     <TextBlock DockPanel.Dock="Left"
                                Margin="10 0 0 0"
                                FontSize="16"
                                Text="Dark mode"/>
                     <ToggleButton DockPanel.Dock="Right"
-                                  Margin="0 0 50 0"
+                                  Margin="0 0 60 0"
                           IsChecked="False"
                           Style="{StaticResource MaterialDesignSwitchLightToggleButton}"
                           ToolTip="MaterialDesignSwitchLightToggleButton" />
+                </DockPanel>-->
+                <DockPanel LastChildFill="False" Margin="0 5 0 0">
+                    <TextBlock DockPanel.Dock="Left"
+               Margin="10 10 0 0"
+               FontSize="16"
+               Text="Remove note in trash after"/>
+                    <TextBlock DockPanel.Dock="Right" 
+                               Margin=" 0 10 30 0"
+                               FontSize="16"
+                               Text="days"
+                               ></TextBlock>
+                        <ComboBox DockPanel.Dock="Right" 
+                                  ItemsSource="{Binding ListDayDelete}"
+                                 SelectedItem="{Binding DayDelete, Mode=TwoWay}"
+                                  Margin="0 10 5 0" 
+                                  BorderThickness="0">
+                       
+                                    </ComboBox>
+                    
                 </DockPanel>
+                <Button Command="{Binding CloseWindowCommand}"
+                    Margin="0 55 0 0"
+                    Content="Save And Close"
+                    Background="#008080"
+                    Foreground="White"
+                    Width="130"></Button>
             </StackPanel>
+                </materialDesign:Card>
         </Grid>
     </materialDesign:Card>
+    </Border>
 </Window>

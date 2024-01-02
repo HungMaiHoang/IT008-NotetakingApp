@@ -17,6 +17,7 @@ using Note.View;
 using System.Windows.Markup;
 using System.Collections.ObjectModel;
 using MongoDB.Driver.Core.Operations;
+using System.Windows.Media.Imaging;
 
 namespace Note.Utilities
 {
@@ -209,7 +210,7 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public async Task NoteToTrash(NoteModel note)
+        public Task NoteToTrash(NoteModel note)
         {
             //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
@@ -219,7 +220,7 @@ namespace Note.Utilities
             note.Status = "disable";
             note.TimeTrash = DateTime.Now;
             // AddPropertyToGridFSFilesCollection("TimetoTrash", "hah");
-            await UpdateNote(note);
+            return UpdateNote(note);
          //   AddPropertyToGridFSFilesCollection("TimetoTrash", "he");
 
          //   await SetTimeTrashFSFile(note, DateTime.Now);
@@ -254,7 +255,7 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public  async Task RestoreNote(NoteModel note)
+        public  Task RestoreNote(NoteModel note)
         {
             //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
@@ -263,7 +264,7 @@ namespace Note.Utilities
 
             note.Status = "enable";
             note.TimeTrash = DateTime.MaxValue;
-            await UpdateNote(note);
+            return UpdateNote(note);
        //     AddPropertyToGridFSFilesCollection("TimetoTrash", "he");
         //    await SetTimeTrashFSFile(note, DateTime.MaxValue);
             
@@ -369,6 +370,25 @@ namespace Note.Utilities
             long totalUser = await usersCollection.CountDocumentsAsync(filter);
             if (totalUser == 0) return true;
             else return false;
+        }
+
+        public void SaveImageToMongoDb(byte[] data, UserModel user)
+        {
+            var collection = ConnectToMongo<UserModel>(UserCollection);
+            user.Image = data;
+        }
+
+        public  BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
+        {
+            using (MemoryStream memoryStream = new MemoryStream(byteArray))
+            {
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.EndInit();
+                return bitmapImage;
+            }
         }
         #endregion
 

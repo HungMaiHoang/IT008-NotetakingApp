@@ -283,7 +283,7 @@
                             </Grid>
                         </Menu:Btn>
                         <Menu:Btn Margin="0 10 0 0"
-                                 Command="{Binding ArchivedCommand}"
+                                 Command="{Binding SettingCommand}"
                                  Style="{StaticResource MaterialDesignFlatButton}" 
                                  Height="40" 
                                  Width="255">

@@ -33,7 +33,7 @@ namespace Note
             CheckDocument checkDocument = new CheckDocument();
            // Timer timer = new Timer(checkDocument.CheckAndDeleteDocuments,null,TimeSpan.Zero,TimeSpan.FromSeconds(1));
             DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromDays(1);
+            timer.Interval = TimeSpan.FromMinutes(1);
             timer.Tick += checkDocument.CheckAndDeleteDocuments;
             timer.Start();
         }
