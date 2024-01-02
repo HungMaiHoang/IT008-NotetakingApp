@@ -17,6 +17,7 @@
            xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
 
     <UserControl.Resources>
+        <ul:BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
         <Style x:Key="ListBoxStyle1" TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -90,7 +91,7 @@
                            VerticalAlignment="Bottom"
                            HorizontalAlignment="Center"
                            Margin="0 0 0 5" ></TextBlock>-->
-                    <!--<TextBlock VerticalAlignment="Bottom" 
+                        <!--<TextBlock VerticalAlignment="Bottom" 
                            HorizontalAlignment="Right"
                            Margin="0 0 150 10"
                            FontSize="16"
@@ -108,7 +109,7 @@
                 </Hyperlink>
 
                 </TextBlock>-->
-                    <!--<Button HorizontalAlignment="Right" Margin="0 0 30 0"
+                        <!--<Button HorizontalAlignment="Right" Margin="0 0 30 0"
                     
     Style="{StaticResource MaterialDesignFloatingActionButton}">
                 
@@ -125,58 +126,218 @@
         </materialDesign:Card>
         <materialDesign:Card UniformCornerRadius="15" Background="#fef8e2"
                              Margin="5">
-
-            <StackPanel Margin="75 0 0 30"
-    Name="ListBoxNotes"
-    >
-                <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
-                <ScrollViewer
-        HorizontalScrollBarVisibility="Hidden"
-        Style="{StaticResource MaterialDesignScrollViewer}"
-        materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
-        Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
-                    <ListBox
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            <Grid Name="GridSearch" Margin="50 0 0 0">
+                <ScrollViewer materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto"
+                          Style="{StaticResource MaterialDesignScrollViewer}"
+                              
+                              CanContentScroll="True">
+                    <DockPanel 
+                        Margin="0 0 0 0"
+                                Name="ListBoxNotes"
+                                Width="{Binding ActualWidth, ElementName=GridSearch}"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
+                        >
+                        <!--<Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>-->
+                        <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
+                        <TextBlock DockPanel.Dock="Top" Text="Archived List" FontWeight="Bold" Margin="10,10,0,0"
+                                   Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"/>
+                        <ListBox DockPanel.Dock="Top" ScrollViewer.CanContentScroll="True"
+                                 Visibility="{Binding IsListBox1Visible, Converter= {StaticResource VisibilityConverter} }"
             Style="{StaticResource ListBoxStyle1}"
             ItemsSource="{Binding ArchivedList}" 
-            SelectedItem="{Binding CurNote}"
-            Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
-            Height="{Binding ActualHeight, ElementName=ListBoxNotes}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Style.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="10"/>
-                                        <Setter Property="Margin" Value="25 25 0 0"/>
-                                        <Setter Property="Padding" Value="0 0 0 0"/>
-                                    </Style>
-                                </Style.Resources>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <view:miniNoteArchived
+            SelectedItem="{Binding CurNoteArchived}"
+            Width="{Binding ActualWidth, ElementName=ListBoxNotes}">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="Margin" Value="25 25 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                        </Style>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <view:miniNoteArchived
                                     Padding="0 0 0 0"
                                     Margin="-3 -1 -4 -1"
                                     miniNoteArchivedTitle="{Binding Title}" 
                                     miniNoteArchivedHeadLine="{Binding HeadLine}"
                                     miniNoteArchivedDate="{Binding LastEdited}"
-                                    miniNoteArchivedBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
+                                    miniNoteArchivedBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.GoToArchivedCommand}"
                                     miniNoteArchivedBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.RestoreCommand}">
-                                    </view:miniNoteArchived>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                                        </view:miniNoteArchived>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <TextBlock DockPanel.Dock="Top" Text="Notes List" FontWeight="Bold" Margin="10,10,0,0" 
+                                   Visibility="{Binding IsListBox2Visible, Converter= {StaticResource VisibilityConverter} }"/>
+
+
+                        <ListBox DockPanel.Dock="Top"
+                                            Visibility="{Binding IsListBox2Visible, Converter= {StaticResource VisibilityConverter} }"
+                            Style="{StaticResource ListBoxStyle1}"
+                            ItemsSource="{Binding NotesList}" 
+                            SelectedItem="{Binding CurNote}"
+                            Width="{Binding ActualWidth, ElementName=ListBoxNotes}"
+                            
+                            >
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="Margin" Value="25 25 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                        </Style>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <view:miniNote 
+                    Padding="0 0 0 0"
+                    Margin="-3 -1 -4 -1"
+                    miniNoteTitle="{Binding Title}" 
+                    miniNoteHeadLine="{Binding HeadLine}"
+                    miniNoteDate="{Binding LastEdited}"
+                    miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.GoToNoteCommand}"
+                    />
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.ContextMenu>
+                                <ContextMenu x:Name="ContextMenuListNote">
+                                    <ContextMenu.Style>
+                                        <Style TargetType="ContextMenu">
+                                            <Setter Property="Height" Value="80"/>
+                                            <Setter Property="Width" Value="230"/>
+                                            <Setter Property="Background" Value="Transparent"/>
+                                            <Setter Property="Padding" Value="0"/>
+                                            <Setter Property="Foreground" Value="White"></Setter>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ContextMenu">
+                                                        <Border Background="#575757" CornerRadius="4" >
+                                                            <StackPanel>
+                                                                <MenuItem x:Name="AddSongToPlayList" Foreground="White" Margin="5 5 5 0" Height="40" Command= "{Binding DataContext.ShowAddSongToPlaylistWindowCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                      CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="Plus" Foreground="White"/>
+                                                                            <TextBlock Text="Add song" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
+                                                                <MenuItem 
+                                            x:Name="DeleteNote" 
+                                            Foreground="White" 
+                                            Margin="5 0 5 0" 
+                                            Height="40"  
+                                            Command= "{Binding DataContext.NoteToTrashCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                            CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="DeleteOutline" Foreground="White"/>
+                                                                            <TextBlock Text="Remove note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
+                                                                <MenuItem 
+                                            x:Name="ArchivedNote" 
+                                            Foreground="White" 
+                                            Margin="5 0 5 0" 
+                                            Height="40"  
+                                            Command= "{Binding DataContext.NoteToArchivedCommand,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ContextMenu}}" 
+                                            CommandParameter="{Binding}">
+                                                                    <MenuItem.Header>
+                                                                        <StackPanel Orientation="Horizontal">
+                                                                            <materialDesign:PackIcon Kind="ArchiveAdd" Foreground="White"/>
+                                                                            <TextBlock Text="Archive note" FontSize="14" FontWeight="SemiBold" Margin="10 0 0 0"/>
+                                                                        </StackPanel>
+                                                                    </MenuItem.Header>
+                                                                </MenuItem>
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ContextMenu.Style>
+                                </ContextMenu>
+                            </ListBox.ContextMenu>
+                        </ListBox>
+                        <TextBlock DockPanel.Dock="Top" Text="Trash List" FontWeight="Bold" Margin="10,10,0,0" 
+                                    Visibility="{Binding IsListBox3Visible, Converter= {StaticResource VisibilityConverter} }"/>
+
+
+                        <ListBox DockPanel.Dock="Top"
+                                Visibility="{Binding IsListBox3Visible, Converter= {StaticResource VisibilityConverter} }"
+                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                Style="{StaticResource ListBoxStyle1}"
+                                ItemsSource="{Binding TrashList}" 
+                                SelectedItem="{Binding CurNoteTrash}"
+                                Width="{Binding ActualWidth, ElementName=GridSearch}"
+                                >
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="10"/>
+                                            <Setter Property="Margin" Value="25 25 0 0"/>
+                                            <Setter Property="Padding" Value="0 0 0 0"/>
+                                        </Style>
+                                    </Style.Resources>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <view:miniNoteTrash
+                        Padding="0 0 0 0"
+                        Margin="-3 -1 -4 -1"
+                        miniNoteTrashTitle="{Binding Title}" 
+                        miniNoteTrashHeadLine="{Binding HeadLine}"
+                        miniNoteTrashDate="{Binding LastEdited}"
+                        miniNoteTrashBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
+                        miniNoteTrashBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.RestoreCommand}"
+                        miniNoteTrashBtnDeleteForeverCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteForeverCommand}">
+                                        </view:miniNoteTrash>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </DockPanel>
                 </ScrollViewer>
-            </StackPanel>
+            </Grid>
         </materialDesign:Card>
     </DockPanel>
 </UserControl>

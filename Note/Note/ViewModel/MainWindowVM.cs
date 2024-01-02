@@ -19,7 +19,6 @@ namespace Note.ViewModel
 {
     internal class MainWindowVM : ViewModelBase
     {
-        private MainWindow myView;
         private UserModel _curUser;
         public UserModel CurUser
         {
@@ -30,6 +29,15 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(CurUser));
             }
         }
+        private MainWindow MyView;
+        private static MainWindowVM instance;
+        public static MainWindowVM Instance
+        {
+            get { return instance; }
+            set { instance = value; }
+        }
+
+
         private ViewModelBase _currentView;
         public ViewModelBase CurrentView
         {
@@ -86,27 +94,37 @@ namespace Note.ViewModel
         {
             NoteModel note = NoteModel.CreateNewNote(CurUser);
 
-            DataAccess.Instance.SetTimeTrashFSFile(note, DateTime.MaxValue);
-
+            // await DataAccess.Instance.SetTimeTrashFSFile(note, DateTime.MaxValue);
             DataAccess.Instance.UpdateNote(note);
-            DataAccess.Instance.CreateTTLIndexForNote("TimeTrashTTL", 15);
+     //       DataAccess.Instance.AddPropertyToGridFSFilesCollection("TimetoTrash", DateTime.MaxValue.ToString());
+     //       DataAccess.Instance.CreateTTLIndexForNote("TimeTrashTTL", 15);
 
-            DataAccess.Instance.CreateTTLIndexForFSFile("TimeTrashFSTTL", 15);
-
+       //     DataAccess.Instance.CreateTTLIndexForFSFile("timetrash_index", 15);
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
             NoteVM.Instance.ListNote.Insert(0,note);
             CurrentView = NotesView;
+      //      CreateTrigger createTrigger = new CreateTrigger();
+        //    createTrigger.CreateTriggerDelete();
         }
 
         private void Search(object obj)
         {
+            SearchVM view = SearchVM.Instance;
             CurrentView = SearchView;
+            view.SearchText = string.Empty;
+            view.NotesList?.Clear();
+            view.TrashList?.Clear();
+            view.ArchivedList?.Clear();
+            view.IsListBox1Visible = false;
+            view.IsListBox2Visible = false;
+            view.IsListBox3Visible = false;
         }
         public MainWindowVM(MainWindow view)
         {
-            myView = view;
             CurUser = UserHolder.CurUser;
+            Instance = this;
+            MyView = view;
 
             HomeView = new HomeVM();
             NotesView = NoteVM.Instance;

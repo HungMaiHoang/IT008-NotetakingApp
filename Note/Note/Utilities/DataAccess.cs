@@ -176,7 +176,7 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public Task NoteToTrash(NoteModel note)
+        public async Task NoteToTrash(NoteModel note)
         {
             //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
@@ -185,14 +185,15 @@ namespace Note.Utilities
 
             note.Status = "disable";
             note.TimeTrash = DateTime.Now;
+            // AddPropertyToGridFSFilesCollection("TimetoTrash", "hah");
+            await UpdateNote(note);
+         //   AddPropertyToGridFSFilesCollection("TimetoTrash", "he");
 
-            UpdateNote(note);
-
-            return SetTimeTrashFSFile(note, DateTime.Now);
+         //   await SetTimeTrashFSFile(note, DateTime.Now);
         }
         public Task NoteToArchived(NoteModel note)
         {
-            
+
             note.Status = "archived";
             return UpdateNote(note);
         }
@@ -220,7 +221,7 @@ namespace Note.Utilities
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public Task RestoreNote(NoteModel note)
+        public  async Task RestoreNote(NoteModel note)
         {
             //var notesCollection = ConnectToMongo<NoteModel>(NoteCollection);
             //var filter = Builders<NoteModel>.Filter.Eq("Id", note.Id);
@@ -229,10 +230,10 @@ namespace Note.Utilities
 
             note.Status = "enable";
             note.TimeTrash = DateTime.MaxValue;
-
-            SetTimeTrashFSFile(note, DateTime.MaxValue);
-
-            return UpdateNote(note);
+            await UpdateNote(note);
+       //     AddPropertyToGridFSFilesCollection("TimetoTrash", "he");
+        //    await SetTimeTrashFSFile(note, DateTime.MaxValue);
+            
         }
 
         public void CreateTTLIndexForNote(string indexName, int expireAfterSeconds)
@@ -249,19 +250,39 @@ namespace Note.Utilities
 
             notesCollection.Indexes.CreateOne(indexModel);
         }
-        public Task SetTimeTrashFSFile(NoteModel note, DateTime time)
+
+        public async void AddPropertyToGridFSFilesCollection(string newproperty, string defaultvalue)
         {
             var filesCollection = database.GetCollection<BsonDocument>("fs.files");
+            var filter = Builders<BsonDocument>.Filter.Not(Builders<BsonDocument>.Filter.Exists(newproperty));
+            var update = Builders<BsonDocument>.Update.Set(newproperty, DateTime.Now.AddDays(6));
+            var updateresult = await filesCollection.UpdateManyAsync(filter, update);
+        }
+        public async Task SetTimeTrashFSFile(NoteModel note, DateTime time)
+        {
+   //         AddPropertyToGridFSFilesCollection("TimetoTrash", DateTime.MaxValue.ToString());
+            CreateTTLIndexForFSFile("timetrash_index", 15);
+            var filesCollection = database.GetCollection<BsonDocument>("fs.files");
             var filter = Builders<BsonDocument>.Filter.Eq("_id", note.FileId);
-            var update = Builders<BsonDocument>.Update.Set("TimeTrash", time);
-            return filesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+            var update = Builders<BsonDocument>.Update.Set("TimetoTrash", time);
+            var result = await filesCollection.UpdateOneAsync(filter, update);
+            if (!result.IsAcknowledged || result.ModifiedCount == 0)
+            {
+                var retrycount = 3;
+                while(retrycount > 0 && !result.IsAcknowledged)
+                {
+                    result = await filesCollection.UpdateOneAsync(filter, update);
+                    retrycount--;
+                }
+            }
+           // return filesCollection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
         }
         public void CreateTTLIndexForFSFile(string indexName, int expireAfterSeconds)
         {
             var filesCollection = ConnectToMongo<BsonDocument>("fs.files");
 
             var indexModel = new CreateIndexModel<BsonDocument>(
-                Builders<BsonDocument>.IndexKeys.Ascending("TimeTrash"),
+                Builders<BsonDocument>.IndexKeys.Ascending("TimetoTrash"),
                 new CreateIndexOptions
                 {
                     ExpireAfter = TimeSpan.FromSeconds(expireAfterSeconds),

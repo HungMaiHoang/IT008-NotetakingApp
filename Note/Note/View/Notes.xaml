@@ -127,7 +127,7 @@
                         Style="{StaticResource MaterialDesignScrollViewer}"
                         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
                         Height="550">
-                        <ListBox 
+                        <ListBox
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                             Style="{StaticResource ListBoxStyle1}"

@@ -148,7 +148,7 @@ namespace Note.ViewModel
         public ICommand TestCommand { get; set; }
         public ICommand NoteToArchivedCommand {  get; set; }
 
-        private async void LoadPage(object obj)
+        public async void LoadPage(object obj)
         {
             try
             {
@@ -215,7 +215,6 @@ namespace Note.ViewModel
             // Get database in ListNote
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(UserHolder.CurUser);
             ListNote = new ObservableCollection<NoteModel>(listTemp);
-
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
 
