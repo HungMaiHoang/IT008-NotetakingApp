@@ -8,13 +8,15 @@
         xmlns:v="clr-namespace:Note.View"
         mc:Ignorable="d"
         Title="Insert Table" Height="150" Width="220"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        WindowStyle="None">
     <Window.DataContext>
         <vm:InsertTableVM/>
     </Window.DataContext>
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <StackPanel >
+            <StackPanel Margin="0 5 0 0">
                 <Label Content="Number of columns :  " ></Label>
                 <Label Content="Number of Rows :  "></Label>
             </StackPanel>

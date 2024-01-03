@@ -100,6 +100,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Margin="125,0,0,1"
+                           Padding="0 0 0 5"
                     Text="{Binding miniNoteHeadLine, RelativeSource={RelativeSource AncestorType=view:miniNote}}"
                     TextWrapping="NoWrap"
                     TextTrimming="CharacterEllipsis"
