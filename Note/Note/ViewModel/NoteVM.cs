@@ -46,7 +46,7 @@ namespace Note.ViewModel
                 if (CurNote is NoteModel && CurNote != null)
                 {
                     //PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n", string.Empty);
-
+                        
                     DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
                     DataAccess.Instance.UpdateNote(CurNote);
                 }

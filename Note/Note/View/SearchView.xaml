@@ -294,6 +294,7 @@
                                 </ContextMenu>
                             </ListBox.ContextMenu>
                         </ListBox>
+                        
                         <TextBlock DockPanel.Dock="Top" Text="Trash List" FontWeight="Bold" Margin="10,10,0,0" 
                                     Visibility="{Binding IsListBox3Visible, Converter= {StaticResource VisibilityConverter} }"/>
 
@@ -326,16 +327,13 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <view:miniNoteTrash
-                        Padding="0 0 0 0"
-                        Margin="-3 -1 -4 -1"
-                        miniNoteTrashTitle="{Binding Title}" 
-                        miniNoteTrashHeadLine="{Binding HeadLine}"
-                        miniNoteTrashDate="{Binding LastEdited}"
-                        miniNoteTrashBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.LoadPageCommand}"
-                        miniNoteTrashBtnRestoreCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.RestoreCommand}"
-                        miniNoteTrashBtnDeleteForeverCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteForeverCommand}">
-                                        </view:miniNoteTrash>
+                                        <view:miniNote
+                                            Padding="0 0 0 0"
+                                            Margin="-3 -1 -4 -1"
+                                            miniNoteTitle="{Binding Title}" 
+                                            miniNoteHeadLine="{Binding HeadLine}"
+                                            miniNoteDate="{Binding LastEdited}"
+                                            miniNoteBtnCommand="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}},Path=DataContext.GoToTrashCommand}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
