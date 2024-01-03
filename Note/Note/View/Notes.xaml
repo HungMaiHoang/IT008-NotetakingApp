@@ -432,13 +432,14 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBox 
+                        <TextBox MinWidth="100" IsReadOnly="{Binding CheckRichtxt}"
                             x:Name="NoteTitle"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Text="{Binding PageTitle, Mode=TwoWay}"
                             FontSize="32"
-                            KeyUp="TextBox_KeyEnterUpdate">
+                            KeyUp="TextBox_KeyEnterUpdate"
+                            Margin="0 0 0 5">
                         </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -598,7 +599,7 @@
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox 
+                <RichTextBox IsReadOnly="{Binding CheckRichtxt}"
                     x:Name="richTextBox" 
                     FontSize="12"
                     FontFamily="Arial"

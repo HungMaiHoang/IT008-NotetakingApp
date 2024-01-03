@@ -117,6 +117,8 @@
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"
+                        TextWrapping="NoWrap"
+                           TextTrimming="CharacterEllipsis"
                        Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                        Text="{Binding miniNoteArchivedTitle, RelativeSource={RelativeSource AncestorType=view:miniNoteArchived}}"
                        FontSize="18"/>

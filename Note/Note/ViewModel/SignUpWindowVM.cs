@@ -72,18 +72,21 @@ namespace Note.ViewModel
                     else
                     {
                         MessageBox.Show("This user name already exist!");
+                        return;
                     }
                 }
                 else
                 {
                     MessageBox.Show("Password and Confirm Password must be the same!");
+                    return;
                 }
             }
             else
             {
                 MessageBox.Show("Information can not be null!");
+                return;
             }
-            
+            MessageBox.Show("Sign Up Successful");
         }
         private void Login(object obj)
         {

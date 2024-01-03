@@ -51,6 +51,11 @@ namespace Note.ViewModel
                     DataAccess.Instance.UpdateNote(CurNote);
                 }
 
+                if (value == null)
+                {
+                    CheckRichtxt = true;
+                }
+                else CheckRichtxt = false;
                 _curNote = value;
                 OnPropertyChanged(nameof(CurNote));
             }
@@ -222,6 +227,17 @@ namespace Note.ViewModel
         }
         #endregion
 
+
+        private bool checkRichtxt;
+        public bool CheckRichtxt
+        {
+            get { return checkRichtxt; }
+            set
+            {
+                checkRichtxt = value;
+                OnPropertyChanged(nameof(CheckRichtxt));
+            }
+        }
         #region Word Counting
         private WordCounterModel wordCounterModel;
         private int wordCount;
@@ -341,8 +357,8 @@ namespace Note.ViewModel
         {
           //  CurNote = obj as NoteModel;
             CurNote.IsPinned = false;
-            ListPinnedNote.Remove(CurNote);
             ListUnpinnedNote.Add(CurNote);
+            ListPinnedNote.Remove(CurNote);
         }
         private void Test(object obj)
         {
@@ -368,9 +384,7 @@ namespace Note.ViewModel
                 IsListBox1Visible = false;
             }
             CountNote = ListNote.Count;
-            FilterListNote = "A->Z";
-            Task.Delay(1);
-            ChangeOnFilter();
+            CheckRichtxt = true;
 
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
@@ -391,7 +405,6 @@ namespace Note.ViewModel
         private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
         {
             CountNote = ListNote.Count;
-            ChangeOnFilter();
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
         {
