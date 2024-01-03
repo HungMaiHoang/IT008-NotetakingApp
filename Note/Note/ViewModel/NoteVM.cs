@@ -330,8 +330,8 @@ namespace Note.ViewModel
         private void UnpinNote(object obj)
         {
             CurNote.IsPinned = false;
-            ListPinnedNote.Remove(CurNote);
             ListUnpinnedNote.Add(CurNote);
+            ListPinnedNote.Remove(CurNote);
         }
         private void Test(object obj)
         {
