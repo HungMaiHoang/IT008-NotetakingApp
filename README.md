@@ -21,7 +21,7 @@ Leaves is a simple and powerful note management application designed to help you
 * Manage your account for maintaining security and safety.
 ## II.Installation
 ### 1.Install MongoDB: [Link](https://www.mongodb.com/try/download/community)
-### 2.Install Leaves:
+### 2.Install Leaves: [Link](https://drive.google.com/drive/folders/1RUWJhM2mHd4e0UYsyAVGJwh3b_N-h-Ul)
 ### 3.Run Leaves
 ## III.How to use
 ### 1.Login: 
