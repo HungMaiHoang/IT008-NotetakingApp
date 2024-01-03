@@ -104,8 +104,6 @@ namespace Note.ViewModel
             //     DataAccess.Instance.CreateTTLIndexForFSFile("timetrash_index", 15);
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
-            NoteVM.Instance.ListNote.Insert(0,note);
-
             //if (note.IsPinned)
             //{
             //    NoteVM.Instance.ListPinnedNote.Insert(0, note);
@@ -139,6 +137,7 @@ namespace Note.ViewModel
                     NoteVM.Instance.ListUnpinnedNote.Add(note);
                 }
             }
+            NoteVM.Instance.CountNote=NoteVM.Instance.ListNote.Count();
                 CurrentView = NotesView;
       //      CreateTrigger createTrigger = new CreateTrigger();
         //    createTrigger.CreateTriggerDelete();

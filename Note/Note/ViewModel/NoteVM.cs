@@ -71,7 +71,7 @@ namespace Note.ViewModel
                 ListUnpinnedNote = new ObservableCollection<NoteModel>();
                 ListPinnedNote = new ObservableCollection<NoteModel>();
                 _listPinnedNote.CollectionChanged += listPinnedChange;
-                CountNote = _listNote.Count;
+                CountNote = _listNote.Count();
                 foreach (var note in _listNote)
                 {
                     if (note.IsPinned)
@@ -312,7 +312,7 @@ namespace Note.ViewModel
             {
                 ListUnpinnedNote.Remove(CurNote);
             }
-            
+            listNoteChange(null,null);
         }
         private void NoteToArchived(object obj)
         {
@@ -329,7 +329,7 @@ namespace Note.ViewModel
             {
                 ListUnpinnedNote.Remove(CurNote);
             }
-            
+            listNoteChange(null, null);
         }
         private void ShowInsertTAbleWindow(object obj)
         {
@@ -374,7 +374,7 @@ namespace Note.ViewModel
             
             _listNote.CollectionChanged += listNoteChange;
             _listPinnedNote.CollectionChanged += listPinnedChange;
-
+            _listUnpinnedNote.CollectionChanged += listUnpinnedChange;
             if (ListPinnedNote.Count > 0)
             {
                 IsListBox1Visible = true;
@@ -383,7 +383,7 @@ namespace Note.ViewModel
             {
                 IsListBox1Visible = false;
             }
-            CountNote = ListNote.Count;
+            CountNote = ListNote.Count();
             CheckRichtxt = true;
 
             // Set up World Counter
@@ -402,9 +402,13 @@ namespace Note.ViewModel
             UnpinNoteCommand = new RelayCommand(UnpinNote);
         }
 
+        private void listUnpinnedChange(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            CountNote= ListNote.Count();
+        }
         private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
         {
-            CountNote = ListNote.Count;
+            CountNote = ListNote.Count();
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -416,6 +420,7 @@ namespace Note.ViewModel
             {
                 IsListBox1Visible = false;
             }
+            CountNote = ListNote.Count();
         }
         private void ChangeOnFilter()
         {

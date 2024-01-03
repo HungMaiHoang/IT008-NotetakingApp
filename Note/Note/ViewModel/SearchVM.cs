@@ -181,6 +181,7 @@ namespace Note.ViewModel
                 NoteVM.Instance.PresentedPinnedListBox.SelectedIndex = NoteVM.Instance.ListUnpinnedNote.IndexOf(CurNote);
             }
             
+            NoteVM.Instance.LoadPage(CurNote);
             NoteVM.Instance.CurNote = CurNote;
         }
 
