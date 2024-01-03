@@ -41,7 +41,7 @@ Leaves is a simple and powerful note management application designed to help you
 ## V.Supervisors
 - Nguyễn Tấn Toàn
 ## VI.Video demo:
-This is video demo:
+This is video demo:[Demo](https://www.youtube.com/watch?v=CQ3ot6gQZO8&ab_channel=B%C3%B9iHuy)
 ## VII.Code of conducting
 [Code of conducting](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/Code%20of%20conducting)
 
