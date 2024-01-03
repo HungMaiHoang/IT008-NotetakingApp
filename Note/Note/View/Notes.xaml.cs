@@ -470,6 +470,11 @@ namespace Note.View
             if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 NoteVM.Instance.SavePageCommand.Execute(null);
+                TextBox tBox = NoteTitle;
+                DependencyProperty prop = TextBox.TextProperty;
+
+                BindingExpression binding = BindingOperations.GetBindingExpression(tBox, prop);
+                if (binding != null) { binding.UpdateSource(); }
             }
         }
     }

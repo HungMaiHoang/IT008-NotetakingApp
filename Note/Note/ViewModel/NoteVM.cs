@@ -43,13 +43,13 @@ namespace Note.ViewModel
             set
             {
                 // Update note to database before change the value
-                if (CurNote is NoteModel && CurNote != null)
-                {
-                    //PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n", string.Empty);
+                //if (CurNote is NoteModel && CurNote != null)
+                //{
+                //    //PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n", string.Empty);
                         
-                    DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
-                    DataAccess.Instance.UpdateNote(CurNote);
-                }
+                //    DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
+                //    DataAccess.Instance.UpdateNote(CurNote);
+                //}
 
                 if (value == null)
                 {
@@ -286,6 +286,7 @@ namespace Note.ViewModel
             PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n|\r", string.Empty);
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
+            CurNote.Title = PageTitle;
             CurNote.LastEdited = DateTime.UtcNow;
         }
         private void DeleteNote(object obj)
