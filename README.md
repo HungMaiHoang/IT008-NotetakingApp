@@ -19,8 +19,10 @@ Leaves is a simple and powerful note management application designed to help you
 *Register a new account if you don't have one.
 ### 5.Account Management:
 * Manage your account for maintaining security and safety.
-
-## II.How to use
+## II.Installation
+### 1.Install MongoDB: [Link](https://www.mongodb.com/try/download/community)
+### 2.Install Leaves:
+## III.How to use
 ### 1.Login: 
 * Log in with your account or register if you don't have one.
 ### 2.Create Note:
@@ -29,18 +31,18 @@ Leaves is a simple and powerful note management application designed to help you
 * Use the search bar for a quick search of notes based on titles or content.
 ### 4.Manage Notes:
 * You can edit or delete your notes using the note management options.
-## III.Contributor
+## IV.Contributor
 - Leader: Mai Hoàng Hưng - 22520510 - [Github](https://github.com/HungMaiHoang)
 - Member: Bùi Trọng Hoàng Huy - 22520533 - [Github](https://github.com/BuiTrongHoangHuy)
 - Member: Ngô Duy Hưng - 22520511 - [Github](https://github.com/NgoDuyHung2305)
-## IV.Supervisors
+## V.Supervisors
 - Nguyễn Tấn Toàn
-## V.Video demo:
+## VI.Video demo:
 This is video demo:
-## VI.Code of conducting
+## VII.Code of conducting
 [Code of conducting](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/Code%20of%20conducting)
 
-## VII.License
+## VIII.License
 [MIT](https://github.com/HungMaiHoang/IT008-NotetakingApp/blob/main/LICENSE) © 2023,[Leaves]
 
 Thank you for choosing Visic! We hope you enjoy the app.
