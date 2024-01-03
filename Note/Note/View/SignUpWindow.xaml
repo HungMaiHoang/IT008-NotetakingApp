@@ -15,7 +15,7 @@
         AllowsTransparency="True"
         MouseDown="Window_MouseDown"
         xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
-        xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf">
+        xmlns:converters="clr-namespace:MaterialDesignThemes.Wpf.Converters;assembly=MaterialDesignThemes.Wpf" Icon="/View/leaveslogo.png">
     <Window.Resources>
 
         <Style x:Key="MaterialDesignRaisedButton" TargetType="{x:Type ButtonBase}">

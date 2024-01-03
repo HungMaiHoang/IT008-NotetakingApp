@@ -456,7 +456,7 @@
                                   />
 
                                 <ComboBox
-                                    
+                                    ToolTip="Font Family"
                                     Width="80"
                                     x:Name="FontBox"
                                     ItemsSource="{x:Static Fonts.SystemFontFamilies}"
@@ -481,40 +481,25 @@
                                 <Separator />
                                 <ListBox
                                     SelectedIndex="0">
-                                    <ListBox.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock
-                                                Text="MaterialDesignToolToggleFlatListBox" />
-                                            <TextBlock
-                                                Text="Exclusive selection" />
-                                            <TextBlock
-                                                Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
-                                        </StackPanel>
-                                    </ListBox.ToolTip>
-                                    <ListBoxItem Name="LeftAlign" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" Selected="AlignLeft" Unselected="UnselectedAlign" />
-                                    <ListBoxItem Name="CenterAlign" Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"  Selected="AlignCenter" Unselected="UnselectedAlign"/>
-                                    <ListBoxItem Name="RightAlign" Content="{materialDesign:PackIcon Kind=FormatAlignRight}" Selected="AlignRight" Unselected="UnselectedAlign" />
-                                    <ListBoxItem Name="JustifyAlign" Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="LeftAlign" ToolTip="AlignLeft" Content="{materialDesign:PackIcon Kind=FormatAlignLeft}" Selected="AlignLeft" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="CenterAlign" ToolTip="AlignCenter"  Content="{materialDesign:PackIcon Kind=FormatAlignCenter}"  Selected="AlignCenter" Unselected="UnselectedAlign"/>
+                                    <ListBoxItem Name="RightAlign" ToolTip="AlignRight"  Content="{materialDesign:PackIcon Kind=FormatAlignRight}" Selected="AlignRight" Unselected="UnselectedAlign" />
+                                    <ListBoxItem Name="JustifyAlign" ToolTip="AlignJusify"  Content="{materialDesign:PackIcon Kind=FormatAlignJustify}" Selected="AlignJustify" Unselected="UnselectedAlign" />
                                 </ListBox>
                                 <Separator />
                                 
                                 <ListBox SelectionMode="Extended">
-                                    <ListBox.ToolTip>
-                                        <StackPanel>
-                                            <TextBlock Text="MaterialDesignToolToggleListBox" />
-                                            <TextBlock Text="Multiple selection" />
-                                            <TextBlock Text="ListBoxAssist.IsToggle allows more natural toggle behaviour" />
-                                        </StackPanel>
-                                    </ListBox.ToolTip>
-                                    <ListBoxItem Name="Boldbutton"  Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
-                                    <ListBoxItem Name="Italicbutton" Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
-                                    <ListBoxItem Name="Underlinebutton" Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
+
+                                    <ListBoxItem Name="Boldbutton" ToolTip="Bold"  Content="{materialDesign:PackIcon Kind=FormatBold}" Selected="Bold" Unselected="UnBold"/>
+                                    <ListBoxItem Name="Italicbutton" ToolTip="Italic"  Content="{materialDesign:PackIcon Kind=FormatItalic}" Selected="Italic" Unselected="UnItalic"  />
+                                    <ListBoxItem Name="Underlinebutton" ToolTip="Underline"  Content="{materialDesign:PackIcon Kind=FormatUnderline}" Selected="UnderLine" Unselected="UnUnderLine"/>
                                 </ListBox>
                                 <Separator />
 
                                 <Label
                                     VerticalAlignment="Center"
-                                    Content="Font size:" />
+                                    Content="Font size:"
+                                    ToolTip="Font Size" />
                                 <ComboBox 
                                     x:Name="FontSizeBox"
                                     IsEditable="True" 
@@ -572,7 +557,7 @@
                                     Command="{Binding SavePageCommand}"/>
                                 <Button
                                   Content="{materialDesign:PackIcon Kind=ContentSaveAll}"
-                                  ToolTip="Save" 
+                                  ToolTip="Save As" 
                                   Click="Export"/>
                                 <Button
                                     Content="{materialDesign:PackIcon Kind=FolderOpen}"

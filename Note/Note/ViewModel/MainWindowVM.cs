@@ -150,14 +150,14 @@ namespace Note.ViewModel
             set
             {
                 bitmapImage = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(BitmapImage));
             }
         }
         private string nameUser;
         public string NameUser
         {
             get { return nameUser; } 
-            set { nameUser = value; OnPropertyChanged(); } 
+            set { nameUser = value; OnPropertyChanged(nameof(NameUser)); } 
         }
         public MainWindowVM(MainWindow view)
         {

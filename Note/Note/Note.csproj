@@ -386,7 +386,6 @@
     <Resource Include="Images\ic24-notes.png" />
     <Resource Include="Images\ic24-search.png" />
     <Resource Include="Images\ic24-settings.png" />
-    <Resource Include="Images\leaves.png" />
     <Resource Include="Images\shutdown_def.png" />
     <Resource Include="Images\shutdown_mo.png" />
     <Resource Include="Images\trash.png" />
@@ -395,6 +394,7 @@
     <Analyzer Include="..\packages\AWSSDK.SecurityToken.3.7.100.14\analyzers\dotnet\cs\AWSSDK.SecurityToken.CodeAnalysis.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="View\leaveslogo.png" />
     <Resource Include="Images\backgroundUI.jpg" />
     <Resource Include="Images\background.jpg" />
     <Resource Include="Images\login.jpg" />
@@ -407,6 +407,7 @@
     <None Include="Images\defaultavatar.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Images\OIG.jpg" />
     <Content Include="mongocrypt.dll" />
   </ItemGroup>
   <ItemGroup />

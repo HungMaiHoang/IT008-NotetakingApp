@@ -13,7 +13,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
         WindowStyle="None"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Icon="/View/leaveslogo.png">
     <Window.Resources>
         <Style TargetType="Button" x:Key="ButtonEX">
             <Setter Property="Width" Value="263"></Setter>
@@ -176,9 +176,11 @@
 
                     </StackPanel>
                     <Button Command="{Binding SearchCommand}"
+                           ToolTip="Search"
                 Width="200 " Height=" 35" VerticalAlignment="Top"
                     Margin="0,30,0,0" Background="#40A0A0" BorderBrush="#2e9797"
                     Style="{DynamicResource MaterialDesignFlatButton}">
+                        
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="4">
@@ -193,6 +195,7 @@
                     </Button>
                     <Button Width="200 " 
                     Height=" 35" 
+                            ToolTip="New Note"
                     VerticalAlignment="Top"
                     Margin="0,20,0,0" 
                     Background="#40A0A0" 
@@ -220,6 +223,7 @@
                         VerticalAlignment="Top"
                         Margin="0,30,0,0">
                         <Menu:Btn  Command="{Binding NotesCommand}" Margin="0 10 0 0"
+                                   ToolTip="Notes"
                     Style="{StaticResource MaterialDesignFlatButton}"  Height="50" Width="255">
                             <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Image  Style="{StaticResource Image_Style}" Source="Images/ic24-notes.png"/>
@@ -233,7 +237,9 @@
                              Command="{Binding ArchivedCommand}"
                              Style="{StaticResource MaterialDesignFlatButton}" 
                              Height="50" 
+                                  ToolTip="Archived Notes"
                              Width="255">
+                            
                             <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Image  Source="Images/archived.png" Style="{StaticResource Image_Style}"/>
                                 <TextBlock  Style="{StaticResource Text_Style}" Text="Archived Notes"/>
@@ -243,6 +249,7 @@
                          Style="{StaticResource MaterialDesignFlatButton}" 
                          Height="50" 
                          Width="255"
+                                  ToolTip="Trash"
                          Command="{Binding TrashCommand}">
                             <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Image  Source="Images/Trash.png" Style="{StaticResource Image_Style}"/>
@@ -254,7 +261,8 @@
                                  Command="{Binding SettingCommand}"
                                  Style="{StaticResource MaterialDesignFlatButton}" 
                                  Height="50" 
-                                 Width="255">
+                                 Width="255"
+                                  ToolTip="Setting">
                             <Grid Height="40" Width="255" VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <Image  Source="Images/ic24-settings.png" Style="{StaticResource Image_Style}"/>
                                 <TextBlock  Style="{StaticResource Text_Style}" Text="Setting"/>
