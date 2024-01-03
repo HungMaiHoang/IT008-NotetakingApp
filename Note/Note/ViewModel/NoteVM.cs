@@ -234,8 +234,20 @@ namespace Note.ViewModel
             get { return checkRichtxt; }
             set
             {
+                CheckToolbar = !value;
                 checkRichtxt = value;
                 OnPropertyChanged(nameof(CheckRichtxt));
+            }
+        }
+        
+        private bool checkToolbar;
+        public bool CheckToolbar
+        {
+            get { return checkToolbar; }
+            set
+            {
+                checkToolbar = value;
+                OnPropertyChanged(nameof(CheckToolbar));
             }
         }
         #region Word Counting
@@ -284,6 +296,8 @@ namespace Note.ViewModel
         private void SavePage(object obj)
         {
             PageHeadLine = Regex.Replace(PlainText.Length > 20 ? PlainText.Substring(0, 19) : PlainText, "\n|\r", string.Empty);
+            if (CurNote == null)
+                return;
 
             DataAccess.Instance.UpdateRTFNote(CurNote.FileId, PageContent.Document);
             CurNote.Title = PageTitle;
@@ -386,7 +400,7 @@ namespace Note.ViewModel
             }
             CountNote = ListNote.Count();
             CheckRichtxt = true;
-
+            checkToolbar = false;
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
 

@@ -432,7 +432,7 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBox MinWidth="100" IsReadOnly="{Binding CheckRichtxt}"
+                        <TextBox MinWidth="100" IsReadOnly="{Binding CheckRichtxt}" Visibility="{Binding CheckToolbar, Converter={StaticResource VisibilityConverter}}"
                             x:Name="NoteTitle"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
@@ -443,7 +443,7 @@
                         </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ToolBarTray>
+                        <ToolBarTray Visibility="{Binding CheckToolbar, Converter={StaticResource VisibilityConverter}}">
                             <ToolBar 
                                 ClipToBounds="False"
                                 Style="{StaticResource MaterialDesignToolBar}"
@@ -498,7 +498,7 @@
 
                                 <Label
                                     VerticalAlignment="Center"
-                                    Content="Font size:"
+                                    Content="Size:"
                                     ToolTip="Font Size" />
                                 <ComboBox 
                                     x:Name="FontSizeBox"
@@ -584,7 +584,7 @@
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox IsReadOnly="{Binding CheckRichtxt}"
+                <RichTextBox IsReadOnly="{Binding CheckRichtxt}" Visibility="{Binding CheckToolbar, Converter={StaticResource VisibilityConverter}}"
                     x:Name="richTextBox" 
                     FontSize="12"
                     FontFamily="Arial"
