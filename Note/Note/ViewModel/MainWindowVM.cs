@@ -73,7 +73,7 @@ namespace Note.ViewModel
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteEnable(CurUser);
             NotesView.ListNote.Clear();
             NotesView.ListNote = new ObservableCollection<NoteModel>(listTemp);
-
+            NoteVM.Instance.CountNote = listTemp.Count;
             CurrentView = NotesView;
         }
         private void Reminder(object obj) => CurrentView = RemindersView;
@@ -105,6 +105,7 @@ namespace Note.ViewModel
             //NotesView.ListNote.Add(note);
             // sua lai them vao dau danh sach
             NoteVM.Instance.ListNote.Insert(0,note);
+            
             if (note.IsPinned)
             {
                 NoteVM.Instance.ListPinnedNote.Insert(0, note);
