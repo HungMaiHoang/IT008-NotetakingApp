@@ -51,6 +51,11 @@ namespace Note.ViewModel
                     DataAccess.Instance.UpdateNote(CurNote);
                 }
 
+                if (value == null)
+                {
+                    CheckRichtxt = true;
+                }
+                else CheckRichtxt = false;
                 _curNote = value;
                 OnPropertyChanged(nameof(CurNote));
             }
@@ -66,6 +71,7 @@ namespace Note.ViewModel
                 ListUnpinnedNote = new ObservableCollection<NoteModel>();
                 ListPinnedNote = new ObservableCollection<NoteModel>();
                 _listPinnedNote.CollectionChanged += listPinnedChange;
+                CountNote = _listNote.Count;
                 foreach (var note in _listNote)
                 {
                     if (note.IsPinned)
@@ -154,6 +160,14 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(ComboBoxItems));
             }
         }
+        private int countNote;
+        public int CountNote
+        {
+            get { return countNote; }
+            set { countNote= value;
+                OnPropertyChanged(nameof(CountNote));}
+
+        }
         #region Page Things
         // Note Title
         private string _pageTitle;
@@ -213,6 +227,17 @@ namespace Note.ViewModel
         }
         #endregion
 
+
+        private bool checkRichtxt;
+        public bool CheckRichtxt
+        {
+            get { return checkRichtxt; }
+            set
+            {
+                checkRichtxt = value;
+                OnPropertyChanged(nameof(CheckRichtxt));
+            }
+        }
         #region Word Counting
         private WordCounterModel wordCounterModel;
         private int wordCount;
@@ -323,12 +348,14 @@ namespace Note.ViewModel
         }
         private void PinNote(object obj)
         {
+           // CurNote = obj as NoteModel;
             CurNote.IsPinned = true;
             ListPinnedNote.Add(CurNote);
             ListUnpinnedNote.Remove(CurNote);
         }
         private void UnpinNote(object obj)
         {
+          //  CurNote = obj as NoteModel;
             CurNote.IsPinned = false;
             ListUnpinnedNote.Add(CurNote);
             ListPinnedNote.Remove(CurNote);
@@ -356,6 +383,8 @@ namespace Note.ViewModel
             {
                 IsListBox1Visible = false;
             }
+            CountNote = ListNote.Count;
+            CheckRichtxt = true;
 
             // Set up World Counter
             wordCounterModel = new WordCounterModel();
@@ -375,6 +404,7 @@ namespace Note.ViewModel
 
         private void listNoteChange(object sender, NotifyCollectionChangedEventArgs e)
         {
+            CountNote = ListNote.Count;
         }
         private void listPinnedChange(object sender, NotifyCollectionChangedEventArgs e)
         {

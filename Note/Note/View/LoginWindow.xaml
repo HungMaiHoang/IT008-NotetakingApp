@@ -95,7 +95,7 @@
                         Stretch="UniformToFill"/>
         </Border.Background>
         <Border CornerRadius="10"
-            BorderThickness="5"
+            BorderThickness="0"
                 Opacity="0.90">
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -248,7 +248,6 @@
                                     Margin="0 15 0 0"></TextBlock>
 
                         <PasswordBox x:Name="txtPassword"
-                                     Style="{StaticResource MaterialDesignFilledRevealPasswordBox}"
                                  FontSize="13"
                                  FontWeight="Medium"
                                  FontFamily="Montserrat"
@@ -286,18 +285,6 @@
                                     HorizontalAlignment="Center"
                                     Margin="0 15 0 0">
                             
-                        <TextBlock Text="Forgot Password?"
-                                   Foreground="DarkGray"
-                                   FontSize="12"
-                                   FontWeight="Medium"
-                                   FontFamily="Montserrat"/>
-                            <TextBlock Text="Reset"
-                                   Foreground="White"
-                                   FontSize="12"
-                                   FontWeight="Medium"
-                                   FontFamily="monserrat"
-                                   Cursor="Hand"
-                                   Margin=" 8 0 0 0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center"

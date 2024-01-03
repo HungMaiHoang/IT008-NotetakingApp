@@ -71,6 +71,12 @@ namespace Note.ViewModel
                 OnPropertyChanged(nameof(PageContent));
             }
         }
+        private string setting;
+        public string Setting
+        {
+            get { return setting; }
+            set { setting = value; OnPropertyChanged(); }
+        }
         public ICommand RestoreCommand { get; set; }
         public ICommand DeleteForeverCommand { get; set; }
         public ICommand LoadPageCommand { get; set; }
@@ -79,6 +85,7 @@ namespace Note.ViewModel
         {
             List<NoteModel> listTemp = DataAccess.Instance.GetNoteDisable(UserHolder.CurUser);
             _listnote = new ObservableCollection<NoteModel>(listTemp);
+            setting = UserHolder.CurUser.DayDelete;
             RestoreCommand = new RelayCommand(Restore);
             DeleteForeverCommand = new RelayCommand(DeleteForever);
             LoadPageCommand = new RelayCommand(LoadPage);

@@ -111,7 +111,7 @@
                     <Border BorderBrush="Black" BorderThickness="0,0,0,0.5" >
                         <DockPanel LastChildFill="False">
                             <TextBlock DockPanel.Dock="Left" Style="{StaticResource Text_Style}"
-                               Text="2 Notes"
+                               Text="{Binding CountNote, StringFormat=' {0:G} notes'}"
                                Foreground="Black"
                                HorizontalAlignment="Left"
                                Margin="20,0,0,0"></TextBlock>
@@ -135,17 +135,20 @@
                     </Border>
                 </Grid>
             </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1"
+                  x:Name="gridnote">
 
                 <StackPanel
                     Name="ListBoxNotes"
-                    Height="550">
+                    >
                     <!--<view:miniNote Padding="10,10" ></view:miniNote >-->
                     <ScrollViewer
                         HorizontalScrollBarVisibility="Hidden"
                         Style="{StaticResource MaterialDesignScrollViewer}"
                         materialDesign:ScrollViewerAssist.IsAutoHideEnabled="True"
-                        Height="550">
+                        VerticalScrollBarVisibility="Auto"
+                        Height="{Binding ActualHeight, ElementName=gridnote}"
+                        >
                         <DockPanel LastChildFill="False">
                             <TextBlock 
                                 DockPanel.Dock="Top" 
@@ -299,7 +302,7 @@
                                     <Style.Resources>
                                         <Style TargetType="Border">
                                             <Setter Property="CornerRadius" Value="10"/>
-                                            <Setter Property="Margin" Value="10 10 0 0"/>
+                                            <Setter Property="Margin" Value="10 5 0 5"/>
                                             <Setter Property="Padding" Value="0 0 0 0"/>
                                         </Style>
                                     </Style.Resources>
@@ -429,13 +432,14 @@
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <TextBox 
+                        <TextBox MinWidth="100" IsReadOnly="{Binding CheckRichtxt}"
                             x:Name="NoteTitle"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
                             Text="{Binding PageTitle, Mode=TwoWay}"
                             FontSize="32"
-                            KeyUp="TextBox_KeyEnterUpdate">
+                            KeyUp="TextBox_KeyEnterUpdate"
+                            Margin="0 0 0 5">
                         </TextBox>
                     </Grid>
                     <Grid Grid.Row="1">
@@ -595,7 +599,7 @@
                         </ToolBarTray>
                     </Grid>
                 </Grid>
-                <RichTextBox 
+                <RichTextBox IsReadOnly="{Binding CheckRichtxt}"
                     x:Name="richTextBox" 
                     FontSize="12"
                     FontFamily="Arial"
