@@ -593,7 +593,7 @@
                     Grid.ColumnSpan="2"
                     Loaded="richTextBox_Loaded"
                     TextChanged="TextBox_TextChanged"
-                    MouseDoubleClick="RichTextBox_MouseDoubleClick">
+                    MouseDoubleClick="RichTextBox_MouseDoubleClick" KeyDown="richTextBox_KeyDown">
                     <FlowDocument Name="myFlowDocument">
                     </FlowDocument>
                     <in:Interaction.Triggers>

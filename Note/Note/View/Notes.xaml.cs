@@ -464,5 +464,13 @@ namespace Note.View
                 }
             }
         }
+
+        private void richTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                NoteVM.Instance.SavePageCommand.Execute(null);
+            }
+        }
     }
 }
