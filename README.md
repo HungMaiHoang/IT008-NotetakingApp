@@ -22,6 +22,7 @@ Leaves is a simple and powerful note management application designed to help you
 ## II.Installation
 ### 1.Install MongoDB: [Link](https://www.mongodb.com/try/download/community)
 ### 2.Install Leaves:
+### 3.Run Leaves
 ## III.How to use
 ### 1.Login: 
 * Log in with your account or register if you don't have one.
