@@ -86,6 +86,7 @@ namespace Note.ViewModel
             get => nameUser;
             set { nameUser = value;
                 CheckTextBox =true;
+                MainWindowVM.Instance.NameUser = value;
             OnPropertyChanged();}
         }
 

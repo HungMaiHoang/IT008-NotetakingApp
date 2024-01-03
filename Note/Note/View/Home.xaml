@@ -9,6 +9,6 @@
              d:DesignHeight="704" d:DesignWidth="1025">
 
     <Grid>
-        <Image Source="/Images/home.jpg" Stretch="UniformToFill"/>
+        <Image Source="/Images/OIG.jpg" Stretch="UniformToFill"/>
     </Grid>
 </UserControl>
